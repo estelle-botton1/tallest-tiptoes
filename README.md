@@ -1,45 +1,16 @@
-[README.md](https://github.com/user-attachments/files/28112148/README.md)[Uploading RE# Tallest Tiptoes
+# React + Vite
 
-Website wireframes and creative brief for Tallest Tiptoes — a fashion and lifestyle site.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Structure
+Currently, two official plugins are available:
 
-```
-pages/
-  homepage-final.jsx    — Full homepage with hero animation
-  the-forum.jsx         — Editorial content hub (essays, vlogs, recs, podcasts)
-  the-edit.jsx          — Outfit posts, Pinterest-style grid
-  the-shop.jsx          — Personal shop (made, collected, closet)
-  his-not-hers.jsx      — Men's section (splurge, basics, outfit guide)
-  the-guide.jsx         — Restaurants, hosting, weekend, travel
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-docs/
-  tallest-tiptoes-creative-brief.md — Full creative brief with colors, typography, content strategy
-```
+## React Compiler
 
-## Sections
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-- **The Forum** — Editorial hub, serialized content drops
-- **The Edit** — Quick outfit posts, mirror selfie grid
-- **The Shop** — Evening bags, vacation finds, closet pieces
-- **His Not Hers** — Men's picks, direct and simple
-- **The Guide** — Restaurants, hosting, weekend plans, travel
+## Expanding the ESLint configuration
 
-## Palette
-
-- Black `#1A1A1A`
-- Cream `#F6F0E8`
-- Terracotta Red `#A33B2E`
-- Old Rose `#B98589`
-- Nude `#F0DDD0`
-
-## Typography
-
-- **DM Serif Display** — Headings
-- **Cormorant Garamond** — Body text
-- **Caveat** — Handwritten / pencil style
-
-## Notes
-
-These are React wireframes built as visual specifications. All text content is placeholder. Image areas are represented by colored blocks. A developer would use these as blueprints to build the production site.
-ADME.md…]()
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
