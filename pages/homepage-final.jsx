@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import NavBar from "../src/NavBar";
 
 var c = {
   red: "#A33B2E",

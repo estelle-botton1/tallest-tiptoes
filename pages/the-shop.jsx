@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import NavBar from "../src/NavBar";
 
 const C = {
   cream: "#FBF6F0",
