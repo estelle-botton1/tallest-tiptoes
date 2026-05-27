@@ -4,6 +4,7 @@ import TheForum from "../pages/the-forum";
 import TheShop from "../pages/the-shop";
 import HisNotHers from "../pages/his-not-hers";
 import TheGuide from "../pages/the-guide";
+import TheEdit from "../pages/the-edit";
 
 function App() {
   return (
