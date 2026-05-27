@@ -126,21 +126,9 @@ export default function Homepage() {
     <div style={{ minHeight: "100vh", background: c.cream, fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
       <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&family=Dancing+Script:wght@400;500;600&display=swap" rel="stylesheet" />
 
-      {/* Nav */}
-      <nav style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 20px", borderBottom: "1px solid " + c.pale, position: "sticky", top: 0, background: c.cream + "F2", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", zIndex: 50, ...fadeIn(0) }}>
-        <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: "18px", color: c.black }}>Tallest Tiptoes</span>
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px", cursor: "pointer" }}>
-          <div style={{ width: "20px", height: "1.5px", background: c.black }} />
-          <div style={{ width: "14px", height: "1.5px", background: c.black }} />
-        </div>
-      </nav>
+      <NavBar />
 
-      {/* Section nav */}
-      <div style={{ display: "flex", gap: "20px", padding: "14px 20px", borderBottom: "1px solid " + c.pale, overflowX: "auto", WebkitOverflowScrolling: "touch", scrollbarWidth: "none", ...fadeIn(0.05) }}>
-        {sections.map(function(item, i) {
-          return <span key={i} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", fontWeight: "500", color: i === 0 ? c.black : c.muted, whiteSpace: "nowrap", cursor: "pointer", borderBottom: i === 0 ? "1px solid " + c.black : "none", paddingBottom: "2px" }}>{item}</span>;
-        })}
-      </div>
+      <NavBar />
 
       {/* Hero — Tiptoe feet + handwritten name */}
       <div style={{ background: c.nude, padding: "48px 20px 40px", display: "flex", flexDirection: "column", alignItems: "center", opacity: loaded ? 1 : 0, transition: "opacity 0.6s ease 0.2s" }}>

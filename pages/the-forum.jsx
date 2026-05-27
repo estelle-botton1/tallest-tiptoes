@@ -507,26 +507,7 @@ export default function TheForum() {
       }} />
 
       {/* Nav */}
-      <nav style={{
-        display: "flex", justifyContent: "space-between", alignItems: "center",
-        padding: "18px 20px", borderBottom: `1px solid ${C.palePink}`,
-        position: "sticky", top: 0, background: `${C.cream}F2`,
-        backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", zIndex: 50,
-        opacity: loaded ? 1 : 0, transition: "opacity 0.5s",
-      }}>
-        <span style={{
-          fontFamily: "'Cormorant Garamond', serif",
-          fontSize: "13px", color: C.muted, cursor: "pointer",
-        }}>← Home</span>
-        <span style={{
-          fontFamily: "'DM Serif Display', serif",
-          fontSize: "18px", color: C.black,
-        }}>Tallest Tiptoes</span>
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px", cursor: "pointer" }}>
-          <div style={{ width: "20px", height: "1.5px", background: C.black }} />
-          <div style={{ width: "14px", height: "1.5px", background: C.black }} />
-        </div>
-      </nav>
+      <NavBar />
 
       {/* Page header */}
       <div style={{

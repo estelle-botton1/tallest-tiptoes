@@ -278,26 +278,7 @@ export default function CollectedShop() {
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&family=Dancing+Script:wght@400;500;600&display=swap" rel="stylesheet" />
 
       {/* Nav */}
-      <nav style={{
-        display: "flex", justifyContent: "space-between", alignItems: "center",
-        padding: "18px 20px", borderBottom: `1px solid ${C.palePink}`,
-        position: "sticky", top: 0, background: `${C.cream}F2`,
-        backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", zIndex: 50,
-        opacity: loaded ? 1 : 0, transition: "opacity 0.5s",
-      }}>
-        <span style={{
-          fontFamily: "'Cormorant Garamond', serif",
-          fontSize: "13px", color: C.muted, cursor: "pointer",
-        }}>← Home</span>
-        <span style={{
-          fontFamily: "'DM Serif Display', serif",
-          fontSize: "18px", color: C.black,
-        }}>Tallest Tiptoes</span>
-        <span style={{
-          fontFamily: "'Cormorant Garamond', serif",
-          fontSize: "13px", color: C.dark, cursor: "pointer",
-        }}>Bag (0)</span>
-      </nav>
+     <NavBar />
 
       {/* Page header */}
       <div style={{

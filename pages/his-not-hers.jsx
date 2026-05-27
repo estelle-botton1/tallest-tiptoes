@@ -193,14 +193,7 @@ export default function HisNotHers() {
     <div style={{ minHeight: "100vh", background: C.cream, fontFamily: "'Playfair Display', Georgia, serif", color: C.black }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&family=Dancing+Script:wght@400;500;600&display=swap" rel="stylesheet" />
 
-      <nav style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 20px", borderBottom: "1px solid " + C.palePink, position: "sticky", top: 0, background: C.cream + "F2", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", zIndex: 50, opacity: loaded ? 1 : 0, transition: "opacity 0.5s" }}>
-        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: C.muted, cursor: "pointer" }}>Home</span>
-        <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: "18px", color: C.black }}>Tallest Tiptoes</span>
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px", cursor: "pointer" }}>
-          <div style={{ width: "20px", height: "1.5px", background: C.black }} />
-          <div style={{ width: "14px", height: "1.5px", background: C.black }} />
-        </div>
-      </nav>
+      <NavBar />
 
       <div style={{ padding: "32px 20px 0", opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(16px)", transition: "all 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s" }}>
         <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "32px", fontWeight: "400", margin: "0 0 6px" }}>His Not Hers</h1>
