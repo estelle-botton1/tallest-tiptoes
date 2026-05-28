@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Homepage from "../pages/homepage-final";
 import TheForum from "../pages/the-forum";
+import TheEdit from "../pages/the-edit";
 import TheShop from "../pages/the-shop";
 import HisNotHers from "../pages/his-not-hers";
 import TheGuide from "../pages/the-guide";
-import TheEdit from "../pages/the-edit";
 
 function App() {
   return (
