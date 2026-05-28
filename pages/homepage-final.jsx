@@ -128,8 +128,6 @@ export default function Homepage() {
 
       <NavBar />
 
-      <NavBar />
-
       {/* Hero — Tiptoe feet + handwritten name */}
       <div style={{ background: c.nude, padding: "48px 20px 40px", display: "flex", flexDirection: "column", alignItems: "center", opacity: loaded ? 1 : 0, transition: "opacity 0.6s ease 0.2s" }}>
         <div style={{ opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(15px)", transition: "all 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s" }}>
