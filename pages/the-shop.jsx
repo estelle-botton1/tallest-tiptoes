@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import NavBar from "../src/NavBar";
+import HonestyBox from "../src/HonestyBox";
 
 const C = {
   cream: "#FBF6F0",
@@ -429,58 +430,7 @@ export default function CollectedShop() {
           </div>
         ))}
       </div>
-
-      {/* Drop notification */}
-      <div style={{
-        padding: "40px 20px",
-        opacity: loaded ? 1 : 0, transition: "opacity 0.5s 0.4s",
-      }}>
-        <div style={{
-          background: C.black, padding: "28px 24px", textAlign: "center",
-          position: "relative", overflow: "hidden",
-        }}>
-          <div style={{
-            position: "absolute", top: "-30px", right: "-30px",
-            width: "120px", height: "120px", borderRadius: "50%",
-            background: `radial-gradient(circle, ${C.deepPink}15, transparent)`,
-          }} />
-          <span style={{
-            fontFamily: "'Cormorant Garamond', serif", fontSize: "10px",
-            letterSpacing: "3px", textTransform: "uppercase", color: C.deepPink,
-          }}>DON'T MISS A DROP</span>
-          <h3 style={{
-            fontFamily: "'DM Serif Display', serif",
-            fontSize: "20px", fontWeight: "400", fontStyle: "italic",
-            color: C.cream, margin: "8px 0 16px",
-          }}>Get notified first</h3>
-          <div style={{ display: "flex", gap: "0" }}>
-            <div style={{
-              flex: 1, padding: "11px 14px",
-              background: "rgba(255,255,255,0.08)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              borderRight: "none",
-              display: "flex", alignItems: "center",
-            }}>
-              <span style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "13px", fontStyle: "italic", color: C.light, opacity: 0.4,
-              }}>Your email</span>
-            </div>
-            <div style={{
-              padding: "11px 20px",
-              background: C.deepPink,
-              display: "flex", alignItems: "center", cursor: "pointer",
-            }}>
-              <span style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "11px", fontWeight: "600",
-                letterSpacing: "1.5px", textTransform: "uppercase", color: C.cream,
-              }}>JOIN</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <HonestyBox />
       {/* Footer */}
       <footer style={{
         padding: "24px 24px 40px", textAlign: "center",

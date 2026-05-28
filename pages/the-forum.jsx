@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import NavBar from "../src/NavBar";
+import HonestyBox from "../src/HonestyBox";
 
 const C = {
   cream: "#FBF6F0",
@@ -733,7 +734,7 @@ export default function TheForum() {
           </div>
         ))}
       </div>
-
+      <HonestyBox />
       {/* Footer */}
       <footer style={{
         padding: "24px 24px 40px", textAlign: "center",

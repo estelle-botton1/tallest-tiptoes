@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import NavBar from "../src/NavBar";
+import HonestyBox from "../src/HonestyBox";
 
 const C = {
   cream: "#FBF6F0",
@@ -259,7 +260,7 @@ export default function HisNotHers() {
           </div>
         </div>
       </div>
-
+         <HonestyBox />
       <footer style={{ padding: "24px 24px 40px", textAlign: "center", borderTop: "1px solid " + C.palePink }}>
         <p style={{ fontFamily: "'Dancing Script', cursive", fontSize: "20px", color: C.black, margin: "0" }}>Tallest Tiptoes</p>
       </footer>
