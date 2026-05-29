@@ -17,7 +17,7 @@ var c = {
   white: "#FBF8F4",
 };
 
-var moods = ["All", "Errands", "Dinner", "Weekend", "Airport", "Night Out", "Work"];
+var moods = ["All", "Errands", "Dinner", "Weekend", "Event", "Night Out", "Work", "Vacation"];
 
 export default function TheEdit() {
   const [outfits, setOutfits] = useState([]);
