@@ -301,7 +301,7 @@ export default function Homepage() {
       <footer style={{ padding: "32px 24px 48px", textAlign: "center", borderTop: "1px solid " + c.pale }}>
         <p style={{ fontFamily: "'Caveat', cursive", fontSize: "24px", color: c.black, margin: "0 0 16px" }}>Tallest Tiptoes</p>
         <div style={{ display: "flex", justifyContent: "center", gap: "24px", marginBottom: "20px" }}>
-          {["Instagram", "TikTok", "Pinterest"].map(function(s, i) {
+          {["Instagram", "Substack", "Pinterest"].map(function(s, i) {
             return <span key={i} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.muted }}>{s}</span>;
           })}
         </div>

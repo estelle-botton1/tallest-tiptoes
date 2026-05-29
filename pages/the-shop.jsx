@@ -82,7 +82,7 @@ export default function TheShop() {
             var img = product.images && product.images.length > 0 ? product.images[0] : null;
             return (
               <div key={product._id} onClick={function () { setSelected(product); }} style={{ cursor: "pointer" }}>
-                <div style={{ aspectRatio: "1", overflow: "hidden", background: img ? "none" : "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+                <div style={{ aspectRatio: "4/5", maxHeight: "200px", overflow: "hidden", background: img ? "none" : "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
                   {img ? (
                     <img src={urlFor(img).width(400).url()} alt={product.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   ) : (
