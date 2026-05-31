@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import NavBar from "../src/NavBar";
 import HonestyBox from "../src/HonestyBox";
+import SubscribeBox from "../src/SubscribeBox";
 
 var c = {
   red: "#A33B2E",
@@ -295,7 +296,8 @@ export default function Homepage() {
 
       <Divider />
 
-    <HonestyBox />
+    <SubscribeBox />
+  <HonestyBox />
 
       {/* Footer */}
       <footer style={{ padding: "32px 24px 48px", textAlign: "center", borderTop: "1px solid " + c.pale }}>
