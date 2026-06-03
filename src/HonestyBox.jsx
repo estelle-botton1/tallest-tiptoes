@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-var FORM_ID = "YOUR_FORM_ID"; // Replace with your Formspree form ID
+var FORM_ID = "xredjrza";
 
 export default function HonestyBox() {
   var c = {
@@ -8,6 +8,7 @@ export default function HonestyBox() {
     cream: "#F6F0E8",
     light: "#F0DDD0",
     pale: "#EAE2D8",
+    warm: "#E0D2C2",
     muted: "#8A7E72",
     ink: "#3D3633",
     black: "#1A1A1A",
@@ -18,7 +19,6 @@ export default function HonestyBox() {
 
   function handleSubmit() {
     if (!message.trim()) return;
-
     setStatus("sending");
 
     fetch("https://formspree.io/f/" + FORM_ID, {
@@ -30,7 +30,7 @@ export default function HonestyBox() {
         if (res.ok) {
           setStatus("sent");
           setMessage("");
-          setTimeout(function () { setStatus("idle"); }, 4000);
+          setTimeout(function () { setStatus("idle"); }, 5000);
         } else {
           setStatus("error");
           setTimeout(function () { setStatus("idle"); }, 3000);
@@ -49,44 +49,73 @@ export default function HonestyBox() {
         <div style={{ flex: 1, height: "1px", background: c.pale }} />
       </div>
       <section style={{ padding: "0 20px 40px" }}>
-        <div style={{ background: c.red, borderRadius: "3px", padding: "36px 24px", textAlign: "center" }}>
-          <span style={{
-            fontFamily: "'Cormorant Garamond', serif", fontSize: "10px",
-            letterSpacing: "3px", textTransform: "uppercase", color: c.cream,
-          }}>ANONYMOUS</span>
-
+        <div style={{
+          background: c.cream,
+          border: "1px solid " + c.warm,
+          borderRadius: "3px",
+          padding: "36px 28px",
+          position: "relative",
+        }}>
+          {/* Title — handwritten style */}
           <h2 style={{
-            fontFamily: "'DM Serif Display', serif", fontSize: "28px",
-            fontWeight: "400", fontStyle: "italic", color: c.cream, margin: "8px 0 10px",
-          }}>The Honesty Box</h2>
+            fontFamily: "'Caveat', cursive",
+            fontSize: "36px",
+            fontWeight: "500",
+            color: c.ink,
+            margin: "0 0 16px",
+            lineHeight: "1.1",
+          }}>Honesty Box</h2>
 
+          {/* Subtitle */}
           <p style={{
-            fontFamily: "'Cormorant Garamond', serif", fontSize: "14px",
-            fontStyle: "italic", color: c.light, margin: "0 0 20px",
-          }}>Say what you really think</p>
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "16px",
+            fontStyle: "italic",
+            color: c.ink,
+            margin: "0 0 20px",
+            lineHeight: "1.5",
+          }}>Tell me what you really think. I'll never know it's you.</p>
 
           {status === "sent" ? (
-            <div style={{ padding: "20px 0" }}>
+            <div style={{ padding: "20px 0", textAlign: "center" }}>
               <p style={{
-                fontFamily: "'Cormorant Garamond', serif", fontSize: "16px",
-                fontStyle: "italic", color: c.cream, margin: "0",
-              }}>Received. Thank you for your honesty.</p>
+                fontFamily: "'Caveat', cursive",
+                fontSize: "22px",
+                color: c.ink,
+                margin: "0 0 6px",
+              }}>Received.</p>
+              <p style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "14px",
+                fontStyle: "italic",
+                color: c.muted,
+                margin: "0",
+              }}>Your secret is safe.</p>
             </div>
           ) : (
             <div>
+              {/* Prompt */}
+              <p style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "14px",
+                color: c.muted,
+                margin: "0 0 10px",
+              }}>Got a thought? Send it.</p>
+
+              {/* Text area */}
               <textarea
                 value={message}
                 onChange={function (e) { setMessage(e.target.value); }}
-                placeholder="Questions, confessions, hot takes..."
+                placeholder="An idea, a request, a hot take, a random thought..."
                 maxLength={1000}
                 style={{
                   width: "100%",
-                  minHeight: "100px",
+                  minHeight: "110px",
                   padding: "14px",
-                  background: "rgba(255,255,255,0.1)",
-                  border: "1px solid rgba(255,255,255,0.2)",
+                  background: c.light + "44",
+                  border: "1px solid " + c.warm,
                   borderRadius: "3px",
-                  color: c.cream,
+                  color: c.ink,
                   fontFamily: "'Cormorant Garamond', serif",
                   fontSize: "15px",
                   fontStyle: "italic",
@@ -97,40 +126,40 @@ export default function HonestyBox() {
               />
 
               <div style={{
-                display: "flex", justifyContent: "space-between",
-                alignItems: "center", marginTop: "8px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginTop: "12px",
               }}>
+                {/* Anonymous note */}
                 <span style={{
-                  fontFamily: "'Cormorant Garamond', serif", fontSize: "11px",
-                  color: c.light, opacity: 0.5,
-                }}>{message.length}/1000</span>
+                  fontFamily: "'Caveat', cursive",
+                  fontSize: "16px",
+                  color: c.muted,
+                }}>Anonymous, always.</span>
 
-                <span style={{
-                  fontFamily: "'Cormorant Garamond', serif", fontSize: "11px",
-                  fontStyle: "italic", color: c.light, opacity: 0.5,
-                }}>Completely anonymous</span>
-              </div>
-
-              <div
-                onClick={handleSubmit}
-                style={{
-                  display: "inline-block",
-                  padding: "10px 28px",
-                  border: "1px solid " + c.cream,
-                  borderRadius: "2px",
-                  cursor: message.trim() && status !== "sending" ? "pointer" : "default",
-                  opacity: message.trim() && status !== "sending" ? 1 : 0.5,
-                  marginTop: "16px",
-                  transition: "opacity 0.2s",
-                }}
-              >
-                <span style={{
-                  fontFamily: "'Cormorant Garamond', serif", fontSize: "13px",
-                  fontWeight: "600", letterSpacing: "1.5px", textTransform: "uppercase",
-                  color: c.cream,
-                }}>
-                  {status === "sending" ? "SENDING..." : status === "error" ? "TRY AGAIN" : "SUBMIT"}
-                </span>
+                {/* Submit button */}
+                <div
+                  onClick={handleSubmit}
+                  style={{
+                    padding: "9px 24px",
+                    background: message.trim() && status !== "sending" ? c.red : c.warm,
+                    borderRadius: "2px",
+                    cursor: message.trim() && status !== "sending" ? "pointer" : "default",
+                    transition: "background 0.2s",
+                  }}
+                >
+                  <span style={{
+                    fontFamily: "'Cormorant Garamond', serif",
+                    fontSize: "12px",
+                    fontWeight: "600",
+                    letterSpacing: "1.5px",
+                    textTransform: "uppercase",
+                    color: c.cream,
+                  }}>
+                    {status === "sending" ? "SENDING..." : status === "error" ? "TRY AGAIN" : "SEND IT"}
+                  </span>
+                </div>
               </div>
             </div>
           )}
