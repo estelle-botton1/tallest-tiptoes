@@ -7,50 +7,35 @@ var c = {
 };
 
 export default function HeroDynamic() {
-  const [phase, setPhase] = useState(0);
+  const [drawRope, setDrawRope] = useState(false);
 
   useEffect(function () {
-    setTimeout(function () { setPhase(1); }, 100);
-    setTimeout(function () { setPhase(2); }, 2000);
-    setTimeout(function () { setPhase(3); }, 2800);
+    setTimeout(function () { setDrawRope(true); }, 100);
   }, []);
 
-  // Rope path matching the reference image exactly:
-  // enters left → big loop lower-left → sweeps up to center → 
-  // loop right of figure → smaller loop → exits right
   var ropePath = [
-    // enter from left edge, slightly angled down
-    "M-20 140",
-    "C10 145 30 150 50 158",
-    // curve down toward big loop
-    "C70 166 85 180 90 195",
-    // big counterclockwise loop (bottom-left)
-    "C95 215 90 235 78 242",
-    "C66 249 50 245 42 232",
-    "C34 219 38 198 50 182",
-    "C62 166 80 152 100 142",
-    // sweep upward to center where figure stands
-    "C120 132 145 122 175 115",
-    "C205 108 240 103 275 100",
-    // flatter section under figure
-    "C310 97 345 96 375 98",
-    // past figure, start descending
-    "C405 100 425 105 445 112",
-    "C465 120 478 132 485 145",
-    // clockwise loop (right side)
-    "C492 160 490 178 480 186",
-    "C470 194 456 190 452 178",
-    "C448 166 454 148 468 138",
-    // continue right
-    "C482 128 500 120 520 116",
-    "C540 112 555 112 570 118",
-    // smaller loop
-    "C582 124 588 136 585 145",
-    "C582 154 572 156 568 148",
-    "C564 140 568 128 578 122",
-    // exit right
-    "C588 116 610 112 640 114",
-    "C670 116 700 122 740 128",
+    "M-20 135",
+    "C20 135 60 135 100 135",
+    "C130 135 150 140 165 150",
+    "C180 160 188 178 185 195",
+    "C182 215 170 228 155 230",
+    "C140 232 128 222 125 205",
+    "C122 188 130 168 145 155",
+    "C160 142 180 135 210 130",
+    "C240 125 270 122 300 120",
+    "C330 118 360 118 390 120",
+    "C420 122 445 128 465 135",
+    "C480 142 490 155 492 168",
+    "C494 182 488 195 478 198",
+    "C468 201 458 194 456 180",
+    "C454 166 460 152 472 142",
+    "C484 132 500 128 520 126",
+    "C535 124 545 130 548 142",
+    "C551 154 546 164 538 166",
+    "C530 168 526 160 527 148",
+    "C528 136 535 128 548 126",
+    "C565 124 590 124 630 126",
+    "C670 128 710 132 750 135",
   ].join(" ");
 
   return (
@@ -61,9 +46,9 @@ export default function HeroDynamic() {
         width: "100%",
         maxWidth: "720px",
         margin: "0 auto",
-        aspectRatio: "720 / 340",
+        aspectRatio: "720 / 310",
       }}>
-        {/* SVG rope layer */}
+        {/* Rope — draws slowly */}
         <svg
           viewBox="0 0 720 300"
           style={{
@@ -83,57 +68,44 @@ export default function HeroDynamic() {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeDasharray="2400"
-            strokeDashoffset={phase >= 1 ? "0" : "2400"}
-            style={{ transition: "stroke-dashoffset 1.8s cubic-bezier(0.22, 1, 0.36, 1)" }}
+            strokeDashoffset={drawRope ? "0" : "2400"}
+            style={{ transition: "stroke-dashoffset 15s cubic-bezier(0.22, 1, 0.36, 1)" }}
           />
         </svg>
 
-        {/* Girl figure — positioned on the rope */}
+        {/* Static girl */}
         <img
           src="/figure.png"
           alt="Figure on tiptoes"
           style={{
             position: "absolute",
-            height: "58%",
+            height: "55%",
             left: "50%",
-            bottom: "38%",
             transform: "translateX(-50%)",
+            top: "0.5%",
             zIndex: 2,
             objectFit: "contain",
-            opacity: phase >= 2 ? 1 : 0,
-            transition: "opacity 0.8s ease",
             pointerEvents: "none",
           }}
         />
 
-        {/* Text — Tallest Tiptoes */}
-        <svg
-          viewBox="0 0 720 300"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "auto",
-            zIndex: 3,
-            pointerEvents: "none",
-          }}
-        >
-          <text
-            x="360"
-            y="285"
-            textAnchor="middle"
-            style={{
-              fontFamily: "'DM Serif Display', serif",
-              fontSize: "24px",
-              fontWeight: "400",
-              letterSpacing: "5px",
-              fill: c.ink,
-              opacity: phase >= 3 ? 1 : 0,
-              transition: "opacity 0.8s ease",
-            }}
-          >Tallest Tiptoes</text>
-        </svg>
+        {/* Static text — DM Serif Display, no animation */}
+        <div style={{
+          position: "absolute",
+          bottom: "2%",
+          left: 0,
+          right: 0,
+          textAlign: "center",
+          zIndex: 3,
+        }}>
+          <span style={{
+            fontFamily: "'DM Serif Display', serif",
+            fontSize: "24px",
+            fontWeight: "400",
+            letterSpacing: "5px",
+            color: c.ink,
+          }}>Tallest Tiptoes</span>
+        </div>
       </div>
     </div>
   );
