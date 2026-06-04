@@ -69,7 +69,7 @@ export default function HeroDynamic() {
             strokeLinejoin="round"
             strokeDasharray="2400"
             strokeDashoffset={drawRope ? "0" : "2400"}
-            style={{ transition: "stroke-dashoffset 15s cubic-bezier(0.22, 1, 0.36, 1)" }}
+            style={{ transition: "stroke-dashoffset 20s cubic-bezier(0.22, 1, 0.36, 1)" }}
           />
         </svg>
 
@@ -89,23 +89,6 @@ export default function HeroDynamic() {
           }}
         />
 
-        {/* Static text — DM Serif Display, no animation */}
-        <div style={{
-          position: "absolute",
-          bottom: "2%",
-          left: 0,
-          right: 0,
-          textAlign: "center",
-          zIndex: 3,
-        }}>
-          <span style={{
-            fontFamily: "'DM Serif Display', serif",
-            fontSize: "24px",
-            fontWeight: "400",
-            letterSpacing: "5px",
-            color: c.ink,
-          }}>Tallest Tiptoes</span>
-        </div>
       </div>
     </div>
   );
