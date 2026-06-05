@@ -122,7 +122,11 @@ export default function TheShop() {
 }
 
 function ProductDetail({ product, onClose }) {
-  var img = product.images && product.images.length > 0 ? product.images[0] : null;
+  const [activeImg, setActiveImg] = useState(0);
+  const [zoomed, setZoomed] = useState(false);
+
+  var images = product.images || [];
+  var img = images.length > 0 ? images[activeImg] : null;
 
   return (
     <div style={{ minHeight: "100vh", background: c.cream, fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
@@ -134,22 +138,47 @@ function ProductDetail({ product, onClose }) {
         <div style={{ width: "40px" }} />
       </div>
 
-      <div style={{ height: "420px", overflow: "hidden", background: img ? "none" : "linear-gradient(135deg, " + c.warm + ", " + c.parchment + ")", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+      {/* Main image — tap to zoom */}
+      <div
+        onClick={function () { setZoomed(!zoomed); }}
+        style={{
+          height: zoomed ? "auto" : "420px",
+          maxHeight: zoomed ? "none" : "420px",
+          overflow: zoomed ? "visible" : "hidden",
+          background: img ? "none" : "linear-gradient(135deg, " + c.warm + ", " + c.parchment + ")",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          position: "relative", cursor: zoomed ? "zoom-out" : "zoom-in",
+        }}
+      >
         {img ? (
-          <img src={urlFor(img).width(1000).url()} alt={product.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <img src={urlFor(img).width(zoomed ? 1600 : 1000).url()} alt={product.title} style={{
+            width: "100%",
+            height: zoomed ? "auto" : "100%",
+            objectFit: zoomed ? "contain" : "cover",
+          }} />
         ) : null}
         {product.status === "Sold" && (
           <div style={{ position: "absolute", top: "16px", right: "16px", padding: "5px 14px", background: c.black }}>
             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", fontWeight: "600", letterSpacing: "1.5px", textTransform: "uppercase", color: c.cream }}>Sold Out</span>
           </div>
         )}
+        {!zoomed && images.length > 1 && (
+          <div style={{ position: "absolute", bottom: "10px", right: "10px", padding: "4px 10px", background: "rgba(0,0,0,0.5)", borderRadius: "2px" }}>
+            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", color: "#fff" }}>{activeImg + 1} / {images.length}</span>
+          </div>
+        )}
       </div>
 
-      {product.images && product.images.length > 1 && (
-        <div style={{ display: "flex", gap: "6px", padding: "10px 20px" }}>
-          {product.images.map(function (img2, i) {
+      {/* Thumbnail strip — click to switch images */}
+      {images.length > 1 && (
+        <div style={{ display: "flex", gap: "6px", padding: "10px 20px", overflowX: "auto", scrollbarWidth: "none" }}>
+          {images.map(function (img2, i) {
             return (
-              <div key={i} style={{ flex: 1, height: "60px", overflow: "hidden", border: i === 0 ? "2px solid " + c.ink : "1px solid " + c.pale }}>
+              <div key={i} onClick={function () { setActiveImg(i); setZoomed(false); }} style={{
+                width: "60px", height: "60px", flexShrink: 0, overflow: "hidden",
+                border: i === activeImg ? "2px solid " + c.ink : "1px solid " + c.pale,
+                cursor: "pointer",
+              }}>
                 <img src={urlFor(img2).width(200).url()} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
             );

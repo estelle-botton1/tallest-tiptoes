@@ -232,11 +232,11 @@ function PostDetail({ post, onClose }) {
             if (block.style === "blockquote") {
               return (
                 <div key={i} style={{ padding: "20px", margin: "16px 0", borderLeft: "3px solid " + c.red, borderRight: "3px solid " + c.red, textAlign: "center" }}>
-                  <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "18px", fontStyle: "italic", color: c.ink, margin: 0, lineHeight: "1.4" }}>{text}</p>
+                  <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "16px", fontStyle: "italic", color: c.ink, margin: 0, lineHeight: "1.4" }}>{text}</p>
                 </div>
               );
             }
-            return <p key={i} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", color: c.ink, margin: "0 0 16px", lineHeight: "1.7" }}>{text}</p>;
+            return <p key={i} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "22px", color: c.ink, margin: "0 0 16px", lineHeight: "1.7" }}>{text}</p>;
           }
           if (block._type === "image" && block.asset) {
             return (

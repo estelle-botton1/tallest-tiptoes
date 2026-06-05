@@ -4,6 +4,7 @@ import HonestyBox from "../src/HonestyBox";
 import SubscribeBox from "../src/SubscribeBox";
 import HeroDynamic from "../src/HeroDynamic";
 import { client, urlFor } from "../src/sanityClient";
+import { Link } from "react-router-dom";
 
 var c = {
   red: "#A33B2E",
@@ -91,7 +92,7 @@ function ForumPreview() {
   }
 
   return (
-    <div>
+    <Link to="/the-forum" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
       <div style={{ height: "220px", borderRadius: "3px", overflow: "hidden", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", background: featured.image ? "none" : "linear-gradient(135deg, " + c.parchment + ", " + c.warm + "88)", marginBottom: "12px" }}>
         {featured.image && <img src={urlFor(featured.image).width(800).url()} alt={featured.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
         {featured.format && (
@@ -118,7 +119,7 @@ function ForumPreview() {
           })}
         </div>
       )}
-    </div>
+    </Link>
   );
 }
 
@@ -131,16 +132,18 @@ function EditPreview() {
 
   if (outfits.length === 0) {
     return (
-      <div style={{ display: "flex", gap: "10px" }}>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px" }}>
-          <div style={{ height: "210px", background: "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")", borderRadius: "3px" }} />
-          <div style={{ height: "150px", background: "linear-gradient(160deg, " + c.parchment + ", " + c.cream + ")", borderRadius: "3px" }} />
+      <Link to="/the-edit" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px" }}>
+            <div style={{ height: "210px", background: "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")", borderRadius: "3px" }} />
+            <div style={{ height: "150px", background: "linear-gradient(160deg, " + c.parchment + ", " + c.cream + ")", borderRadius: "3px" }} />
+          </div>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", marginTop: "28px" }}>
+            <div style={{ height: "190px", background: "linear-gradient(160deg, " + c.cream + ", " + c.warm + "66)", borderRadius: "3px" }} />
+            <div style={{ height: "170px", background: "linear-gradient(160deg, " + c.pale + ", " + c.cream + ")", borderRadius: "3px" }} />
+          </div>
         </div>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", marginTop: "28px" }}>
-          <div style={{ height: "190px", background: "linear-gradient(160deg, " + c.cream + ", " + c.warm + "66)", borderRadius: "3px" }} />
-          <div style={{ height: "170px", background: "linear-gradient(160deg, " + c.pale + ", " + c.cream + ")", borderRadius: "3px" }} />
-        </div>
-      </div>
+      </Link>
     );
   }
 
@@ -148,7 +151,7 @@ function EditPreview() {
   var right = outfits.filter(function (_, i) { return i % 2 === 1; });
 
   return (
-    <div>
+    <Link to="/the-edit" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
       <div style={{ display: "flex", gap: "10px" }}>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px" }}>
           {left.map(function (o) {
@@ -178,7 +181,7 @@ function EditPreview() {
           <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.red, fontStyle: "italic" }}>{outfits[0].mood}</span>
         </div>
       )}
-    </div>
+    </Link>
   );
 }
 
@@ -191,7 +194,7 @@ function ShopPreview() {
 
   if (products.length === 0) {
     return (
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
+      <Link to="/the-shop" style={{ textDecoration: "none", color: "inherit", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
         {[{ label: "MADE BY ME", bg: c.black, t: c.cream }, { label: "COLLECTED", bg: c.warm, t: c.black }, { label: "MY CLOSET", bg: c.parchment, t: c.black }].map(function (item, i) {
           return (
             <div key={i} style={{ cursor: "pointer" }}>
@@ -202,12 +205,12 @@ function ShopPreview() {
             </div>
           );
         })}
-      </div>
+      </Link>
     );
   }
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
+    <Link to="/the-shop" style={{ textDecoration: "none", color: "inherit", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
       {products.map(function (product) {
         var img = product.images && product.images.length > 0 ? product.images[0] : null;
         return (
@@ -220,7 +223,7 @@ function ShopPreview() {
           </div>
         );
       })}
-    </div>
+    </Link>
   );
 }
 
@@ -232,7 +235,7 @@ function HisNotHersPreview() {
   }, []);
 
   return (
-    <div>
+    <Link to="/his-not-hers" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
       {["Splurge", "Wardrobe Basics", "Outfit Guide"].map(function (cat, i) {
         return (
           <div key={cat} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 0", borderBottom: i < 2 ? "1px solid " + c.pale : "none", cursor: "pointer" }}>
@@ -259,7 +262,7 @@ function HisNotHersPreview() {
           })}
         </div>
       )}
-    </div>
+    </Link>
   );
 }
 
@@ -274,7 +277,7 @@ function GuidePreview() {
 
   if (guides.length === 0) {
     return (
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+      <Link to="/the-guide" style={{ textDecoration: "none", color: "inherit", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
         {[{ title: "Restaurants", bg: c.warm }, { title: "Hosting", bg: c.parchment }, { title: "Weekend", bg: c.pale }, { title: "Travel", bg: c.nude + "88" }].map(function (g, i) {
           return (
             <div key={i} style={{ background: g.bg, borderRadius: "3px", padding: "20px 16px", display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: "100px" }}>
@@ -283,12 +286,12 @@ function GuidePreview() {
             </div>
           );
         })}
-      </div>
+      </Link>
     );
   }
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+    <Link to="/the-guide" style={{ textDecoration: "none", color: "inherit", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
       {guides.map(function (guide) {
         var bg = catBgs[guide.category] || c.warm;
         return (
@@ -301,7 +304,7 @@ function GuidePreview() {
           </div>
         );
       })}
-    </div>
+    </Link>
   );
 }
 
@@ -313,6 +316,8 @@ export default function Homepage() {
     return { opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(24px)", transition: "all 0.7s cubic-bezier(0.22, 1, 0.36, 1) " + (delay || 0) + "s" };
   };
 
+  var linkStyle = { fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.red, fontStyle: "italic", textDecoration: "none" };
+
   return (
     <div style={{ minHeight: "100vh", background: c.cream, fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
       <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
@@ -323,11 +328,11 @@ export default function Homepage() {
       {/* 01 — THE FORUM */}
       <section style={{ padding: "28px 20px 0", ...fadeIn(0.15) }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-          <div>
+          <Link to="/the-forum" style={{ textDecoration: "none", color: "inherit" }}>
             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>01</span>
             <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Forum</h2>
-          </div>
-          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.red, fontStyle: "italic", cursor: "pointer" }}>View all</span>
+          </Link>
+          <Link to="/the-forum" style={linkStyle}>View all</Link>
         </div>
         <ForumPreview />
       </section>
@@ -338,11 +343,11 @@ export default function Homepage() {
       <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.2) }}>
         <FigureWalking style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15 }} />
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-          <div>
+          <Link to="/the-edit" style={{ textDecoration: "none", color: "inherit" }}>
             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>02</span>
             <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Edit</h2>
-          </div>
-          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.red, fontStyle: "italic", cursor: "pointer" }}>See all</span>
+          </Link>
+          <Link to="/the-edit" style={linkStyle}>See all</Link>
         </div>
         <EditPreview />
       </section>
@@ -352,12 +357,12 @@ export default function Homepage() {
       {/* 03 — THE SHOP */}
       <section style={{ padding: "0 20px", ...fadeIn(0.25) }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-          <div>
+          <Link to="/the-shop" style={{ textDecoration: "none", color: "inherit" }}>
             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>03</span>
             <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Shop</h2>
             <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", fontStyle: "italic", color: c.muted, margin: "4px 0 0" }}>Made, found and from my closet</p>
-          </div>
-          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.red, fontStyle: "italic", cursor: "pointer" }}>View all</span>
+          </Link>
+          <Link to="/the-shop" style={linkStyle}>View all</Link>
         </div>
         <ShopPreview />
       </section>
@@ -367,11 +372,11 @@ export default function Homepage() {
       {/* 04 — HIS NOT HERS */}
       <section style={{ padding: "0 20px", ...fadeIn(0.3) }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-          <div>
+          <Link to="/his-not-hers" style={{ textDecoration: "none", color: "inherit" }}>
             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>04</span>
             <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>His Not Hers</h2>
-          </div>
-          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.red, fontStyle: "italic", cursor: "pointer" }}>Explore</span>
+          </Link>
+          <Link to="/his-not-hers" style={linkStyle}>Explore</Link>
         </div>
         <HisNotHersPreview />
       </section>
@@ -382,11 +387,11 @@ export default function Homepage() {
       <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.35) }}>
         <FigureSitting style={{ position: "absolute", top: "-8px", right: "20px", opacity: 0.15 }} />
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-          <div>
+          <Link to="/the-guide" style={{ textDecoration: "none", color: "inherit" }}>
             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>05</span>
             <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Guide</h2>
-          </div>
-          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.red, fontStyle: "italic", cursor: "pointer" }}>Browse</span>
+          </Link>
+          <Link to="/the-guide" style={linkStyle}>Browse</Link>
         </div>
         <GuidePreview />
       </section>
