@@ -4,6 +4,7 @@ export default {
   type: 'document',
   fields: [
     { name: 'title', title: 'Title', type: 'string' },
+    { name: 'sortOrder', title: 'Display Order (1 = first)', type: 'number' },
     { name: 'category', title: 'Category', type: 'string', options: { list: ['Splurge', 'Outfit Guide', 'The Thing'] } },
     { name: 'brand', title: 'Brand', type: 'string' },
     { name: 'price', title: 'Price', type: 'string' },
@@ -14,6 +15,7 @@ export default {
     { name: 'outfitPieces', title: 'Pieces / Options', type: 'array', of: [{ type: 'object', fields: [
       { name: 'name', title: 'Name', type: 'string' },
       { name: 'brand', title: 'Brand', type: 'string' },
+      { name: 'price', title: 'Price', type: 'string' },
       { name: 'link', title: 'Shop Link', type: 'url' },
       { name: 'image', title: 'Image', type: 'image' },
     ]}] },

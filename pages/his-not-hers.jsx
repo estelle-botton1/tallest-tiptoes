@@ -26,7 +26,7 @@ export default function HisNotHers() {
   const [loading, setLoading] = useState(true);
 
   useEffect(function () {
-    client.fetch('*[_type == "mensItem"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, category, brand, price, note, image, images, outfitPieces }')
+    client.fetch('*[_type == "mensItem"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, category, brand, price, link, note, image, images, outfitPieces }')
       .then(function (data) { setItems(data); setLoading(false); })
       .catch(function () { setLoading(false); });
   }, []);
@@ -39,7 +39,6 @@ export default function HisNotHers() {
 
       <NavBar />
 
-      {/* Header */}
       <div style={{ borderBottom: "1px solid " + c.pale, padding: "20px 24px 0" }}>
         <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", letterSpacing: "0.15em", color: c.oldRose, marginBottom: "4px" }}>HIS NOT HERS</div>
         <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, marginBottom: "20px", fontStyle: "italic" }}>We did the research. You just pick.</div>
@@ -63,7 +62,6 @@ export default function HisNotHers() {
         </div>
       </div>
 
-      {/* Content */}
       <div style={{ padding: "0 0 40px" }}>
 
         {loading && (
@@ -112,6 +110,7 @@ export default function HisNotHers() {
                                   <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: "14px", fontStyle: "italic" }}>{piece.name}</div>
                                   <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.muted, marginTop: "2px" }}>{piece.brand}</div>
                                 </div>
+                                {piece.price && <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.red }}>{piece.price}</div>}
                               </div>
                             );
                           })}
@@ -135,8 +134,8 @@ export default function HisNotHers() {
           <div>
             <div style={{ padding: "24px 24px 8px", fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, fontStyle: "italic" }}>If you are going to buy one thing, buy this.</div>
             {filtered.map(function (item) {
-              return (
-                <div key={item._id} style={{ marginBottom: "2px" }}>
+              var content = (
+                <div style={{ marginBottom: "2px" }}>
                   <div style={{ height: "320px", overflow: "hidden" }}>
                     {item.image ? (
                       <img src={urlFor(item.image).width(800).url()} alt={item.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.92)" }} />
@@ -156,6 +155,11 @@ export default function HisNotHers() {
                   </div>
                 </div>
               );
+
+              if (item.link) {
+                return <a key={item._id} href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit" }}>{content}</a>;
+              }
+              return <div key={item._id}>{content}</div>;
             })}
           </div>
         )}
@@ -185,8 +189,8 @@ export default function HisNotHers() {
                       <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "0.15em", color: c.oldRose, marginBottom: "16px" }}>THE OPTIONS</div>
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                         {item.outfitPieces.map(function (piece, i) {
-                          return (
-                            <div key={i} style={{ background: c.white, padding: "16px", border: "1px solid " + c.pale }}>
+                          var pieceCard = (
+                            <div style={{ background: c.white, padding: "16px", border: "1px solid " + c.pale, cursor: piece.link ? "pointer" : "default" }}>
                               {piece.image && (
                                 <div style={{ height: "100px", overflow: "hidden", marginBottom: "10px" }}>
                                   <img src={urlFor(piece.image).width(300).url()} alt={piece.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -194,8 +198,14 @@ export default function HisNotHers() {
                               )}
                               <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: "13px", fontStyle: "italic", marginBottom: "4px" }}>{piece.name}</div>
                               <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.muted, letterSpacing: "0.05em" }}>{piece.brand}</div>
+                              {piece.price && <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.red, marginTop: "6px" }}>{piece.price}</div>}
                             </div>
                           );
+
+                          if (piece.link) {
+                            return <a key={i} href={piece.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit" }}>{pieceCard}</a>;
+                          }
+                          return <div key={i}>{pieceCard}</div>;
                         })}
                       </div>
                     </div>
@@ -254,8 +264,8 @@ function OutfitGuideDetail({ outfit, onBack }) {
         <div style={{ padding: "20px 24px" }}>
           <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "0.15em", color: c.oldRose, marginBottom: "16px" }}>THE BREAKDOWN</div>
           {outfit.outfitPieces.map(function (piece, i) {
-            return (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: "14px", padding: "12px 0", borderBottom: "1px solid " + c.pale }}>
+            var pieceContent = (
+              <div style={{ display: "flex", alignItems: "center", gap: "14px", padding: "12px 0", borderBottom: "1px solid " + c.pale, cursor: piece.link ? "pointer" : "default" }}>
                 <div style={{ width: "62px", height: "62px", flexShrink: 0, overflow: "hidden", background: piece.image ? "none" : c.pale }}>
                   {piece.image && <img src={urlFor(piece.image).width(150).url()} alt={piece.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
                 </div>
@@ -263,8 +273,14 @@ function OutfitGuideDetail({ outfit, onBack }) {
                   <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: "16px", fontStyle: "italic" }}>{piece.name}</div>
                   <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.muted, marginTop: "3px" }}>{piece.brand}</div>
                 </div>
+                {piece.price && <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", fontWeight: "600", color: c.red }}>{piece.price}</div>}
               </div>
             );
+
+            if (piece.link) {
+              return <a key={i} href={piece.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit" }}>{pieceContent}</a>;
+            }
+            return <div key={i}>{pieceContent}</div>;
           })}
         </div>
       )}
