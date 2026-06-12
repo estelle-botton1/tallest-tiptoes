@@ -26,7 +26,7 @@ export default function TheEdit() {
   const [selected, setSelected] = useState(null);
 
   useEffect(function () {
-    client.fetch('*[_type == "outfit"] | order(_createdAt desc) { _id, title, mood, date, image, note, items }')
+   client.fetch('*[_type == "outfit"] | order(_createdAt desc) { _id, title, mood, date, image, images, note, items }')
       .then(function (data) { setOutfits(data); setLoading(false); })
       .catch(function () { setLoading(false); });
   }, []);
@@ -115,6 +115,12 @@ function OutfitCard({ outfit, onClick }) {
 }
 
 function OutfitDetail({ outfit, onClose }) {
+  const [currentImg, setCurrentImg] = useState(0);
+  var allImages = [];
+  if (outfit.image) allImages.push(outfit.image);
+  if (outfit.images) allImages = allImages.concat(outfit.images);
+  if (allImages.length === 0) allImages = [null];
+
   return (
     <div style={{ minHeight: "100vh", background: c.cream, fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
@@ -125,10 +131,22 @@ function OutfitDetail({ outfit, onClose }) {
         <div style={{ width: "40px" }} />
       </div>
 
-      <div style={{ height: "460px", overflow: "hidden", background: outfit.image ? "none" : "linear-gradient(135deg, " + c.warm + ", " + c.parchment + ")", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        {outfit.image ? (
-          <img src={urlFor(outfit.image).width(1000).url()} alt={outfit.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      <div style={{ position: "relative", height: "460px", overflow: "hidden", background: "linear-gradient(135deg, " + c.warm + ", " + c.parchment + ")" }}>
+        {allImages[currentImg] ? (
+          <img src={urlFor(allImages[currentImg]).width(1000).url()} alt={outfit.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         ) : null}
+
+        {allImages.length > 1 && (
+          <div>
+            <div onClick={function () { setCurrentImg(currentImg > 0 ? currentImg - 1 : allImages.length - 1); }} style={{ position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)", width: "36px", height: "36px", borderRadius: "50%", background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#fff", fontSize: "18px" }}>‹</div>
+            <div onClick={function () { setCurrentImg(currentImg < allImages.length - 1 ? currentImg + 1 : 0); }} style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", width: "36px", height: "36px", borderRadius: "50%", background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#fff", fontSize: "18px" }}>›</div>
+            <div style={{ position: "absolute", bottom: "12px", left: "50%", transform: "translateX(-50%)", display: "flex", gap: "6px" }}>
+              {allImages.map(function (_, i) {
+                return <div key={i} style={{ width: "7px", height: "7px", borderRadius: "50%", background: i === currentImg ? "#fff" : "rgba(255,255,255,0.4)" }} />;
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       <div style={{ padding: "24px 20px 8px" }}>

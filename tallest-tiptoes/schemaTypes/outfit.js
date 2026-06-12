@@ -4,9 +4,10 @@ export default {
   type: 'document',
   fields: [
     { name: 'title', title: 'Title', type: 'string' },
-    { name: 'mood', title: 'Mood', type: 'string', options: { list: ['Errands', 'Dinner', 'Weekend', 'Airport', 'Night Out', 'Work'] } },
+    { name: 'mood', title: 'Mood', type: 'string', options: { list: ['Errands', 'Dinner', 'Weekend', 'Event', 'Daytime', 'Night Out', 'Work', 'Vacation'] } },
     { name: 'date', title: 'Date', type: 'date' },
-    { name: 'image', title: 'Mirror Selfie', type: 'image' },
+    { name: 'image', title: 'Main Image', type: 'image' },
+    { name: 'images', title: 'Additional Images (swipeable)', type: 'array', of: [{ type: 'image' }] },
     { name: 'note', title: 'Note', type: 'text' },
     { name: 'items', title: 'Outfit Items', type: 'array', of: [{ type: 'object', fields: [
       { name: 'piece', title: 'Piece', type: 'string' },
