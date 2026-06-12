@@ -4,13 +4,14 @@ export default {
   type: 'document',
   fields: [
     { name: 'title', title: 'Title', type: 'string' },
-    { name: 'category', title: 'Category', type: 'string', options: { list: ['Splurge', 'Wardrobe Basics', 'Outfit Guide'] } },
+    { name: 'category', title: 'Category', type: 'string', options: { list: ['Splurge', 'Outfit Guide', 'The Thing'] } },
     { name: 'brand', title: 'Brand', type: 'string' },
     { name: 'price', title: 'Price', type: 'string' },
-    { name: 'note', title: 'Note (one line)', type: 'string' },
-    { name: 'image', title: 'Image', type: 'image' },
-    { name: 'outfitPieces', title: 'Outfit Pieces (for Outfit Guide only)', type: 'array', of: [{ type: 'object', fields: [
-      { name: 'name', title: 'Piece Name', type: 'string' },
+    { name: 'note', title: 'Note', type: 'text' },
+    { name: 'image', title: 'Main Image', type: 'image' },
+    { name: 'images', title: 'Multiple Images (swipeable)', type: 'array', of: [{ type: 'image' }] },
+    { name: 'outfitPieces', title: 'Pieces / Options', type: 'array', of: [{ type: 'object', fields: [
+      { name: 'name', title: 'Name', type: 'string' },
       { name: 'brand', title: 'Brand', type: 'string' },
       { name: 'image', title: 'Image', type: 'image' },
     ]}] },
