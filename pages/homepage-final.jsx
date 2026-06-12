@@ -73,7 +73,7 @@ function Divider() {
 function ForumPreview() {
   const [posts, setPosts] = useState([]);
   useEffect(function () {
-    client.fetch('*[_type == "forumPost"] | order(date desc) [0...3] { _id, title, format, date, preview, image }')
+    client.fetch('*[_type == "forumPost"] | order(_createdAt desc) [0...3] { _id, title, format, date, preview, image }')
       .then(function (data) { setPosts(data); });
   }, []);
 
@@ -126,7 +126,7 @@ function ForumPreview() {
 function EditPreview() {
   const [outfits, setOutfits] = useState([]);
   useEffect(function () {
-    client.fetch('*[_type == "outfit"] | order(date desc) [0...4] { _id, title, mood, image }')
+    client.fetch('*[_type == "outfit"] | order(_createdAt desc) [0...4] { _id, title, mood, image }')
       .then(function (data) { setOutfits(data); });
   }, []);
 
@@ -269,7 +269,7 @@ function HisNotHersPreview() {
 function GuidePreview() {
   const [guides, setGuides] = useState([]);
   useEffect(function () {
-    client.fetch('*[_type == "guide"] | order(date desc) [0...4] { _id, title, category, image }')
+    client.fetch('*[_type == "guide"] | order(_createdAt desc) [0...4] { _id, title, category, image }')
       .then(function (data) { setGuides(data); });
   }, []);
 

@@ -26,7 +26,7 @@ export default function TheEdit() {
   const [selected, setSelected] = useState(null);
 
   useEffect(function () {
-    client.fetch('*[_type == "outfit"] | order(date desc) { _id, title, mood, date, image, note, items }')
+    client.fetch('*[_type == "outfit"] | order(_createdAt desc) { _id, title, mood, date, image, note, items }')
       .then(function (data) { setOutfits(data); setLoading(false); })
       .catch(function () { setLoading(false); });
   }, []);
@@ -153,8 +153,8 @@ function OutfitDetail({ outfit, onClose }) {
             <div style={{ flex: 1, height: "1px", background: c.pale }} />
           </div>
           {outfit.items.map(function (item, i) {
-            return (
-              <div key={i} style={{ display: "flex", alignItems: "stretch", marginBottom: "8px", borderRadius: "3px", overflow: "hidden", border: "1px solid " + c.pale, background: c.white }}>
+            var itemContent = (
+              <div style={{ display: "flex", alignItems: "stretch", marginBottom: "8px", borderRadius: "3px", overflow: "hidden", border: "1px solid " + c.pale, background: c.white, cursor: item.link ? "pointer" : "default" }}>
                 <div style={{ width: "80px", flexShrink: 0, overflow: "hidden", background: item.image ? "none" : "linear-gradient(135deg, " + c.pale + ", " + c.warm + "44)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   {item.image ? (
                     <img src={urlFor(item.image).width(200).url()} alt={item.piece} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -171,6 +171,11 @@ function OutfitDetail({ outfit, onClose }) {
                 </div>
               </div>
             );
+
+            if (item.link) {
+              return <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit" }}>{itemContent}</a>;
+            }
+            return <div key={i}>{itemContent}</div>;
           })}
         </div>
       )}

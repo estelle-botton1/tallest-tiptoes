@@ -28,7 +28,7 @@ export default function TheGuide() {
   const [selected, setSelected] = useState(null);
 
   useEffect(function () {
-    client.fetch('*[_type == "guide"] | order(date desc) { _id, title, category, date, image, preview, body }')
+    client.fetch('*[_type == "guide"] | order(_createdAt desc) { _id, title, category, date, image, preview, body }')
       .then(function (data) { setGuides(data); setLoading(false); })
       .catch(function () { setLoading(false); });
   }, []);
