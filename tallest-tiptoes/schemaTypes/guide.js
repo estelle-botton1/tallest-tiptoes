@@ -4,6 +4,7 @@ export default {
   type: 'document',
   fields: [
     { name: 'title', title: 'Title', type: 'string' },
+    { name: 'sortOrder', title: 'Display Order (1 = first)', type: 'number' },
     { name: 'category', title: 'Category', type: 'string', options: { list: ['Restaurants', 'Hosting', 'Weekend', 'Travel'] } },
     { name: 'date', title: 'Date', type: 'date' },
     { name: 'image', title: 'Cover Image', type: 'image' },

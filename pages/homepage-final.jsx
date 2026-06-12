@@ -73,7 +73,7 @@ function Divider() {
 function ForumPreview() {
   const [posts, setPosts] = useState([]);
   useEffect(function () {
-    client.fetch('*[_type == "forumPost"] | order(_createdAt desc) [0...3] { _id, title, format, date, preview, image }')
+    client.fetch('*[_type == "forumPost"] |  order(coalesce(sortOrder, 999) asc, _createdAt desc) [0...3] { _id, title, format, date, preview, image }')
       .then(function (data) { setPosts(data); });
   }, []);
 

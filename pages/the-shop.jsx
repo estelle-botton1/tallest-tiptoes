@@ -31,7 +31,7 @@ export default function TheShop() {
   const [selected, setSelected] = useState(null);
 
   useEffect(function () {
-    client.fetch('*[_type == "product"] | order(_createdAt desc) { _id, title, category, price, status, edition, story, location, images }')
+    client.fetch('*[_type == "product"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, category, price, status, edition, story, location, images }')
       .then(function (data) { setProducts(data); setLoading(false); })
       .catch(function () { setLoading(false); });
   }, []);

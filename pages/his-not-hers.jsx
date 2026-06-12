@@ -26,7 +26,7 @@ export default function HisNotHers() {
   const [loading, setLoading] = useState(true);
 
   useEffect(function () {
-    client.fetch('*[_type == "mensItem"] | order(_createdAt desc) { _id, title, category, brand, price, note, image, images, outfitPieces }')
+    client.fetch('*[_type == "mensItem"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, category, brand, price, note, image, images, outfitPieces }')
       .then(function (data) { setItems(data); setLoading(false); })
       .catch(function () { setLoading(false); });
   }, []);

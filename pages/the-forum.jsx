@@ -33,7 +33,7 @@ export default function TheForum() {
   useEffect(function () {
     client
       .fetch(
-        '*[_type == "forumPost"] | order(_createdAt desc) { _id, title, format, date, preview, videoUrl, image, body }'
+        '*[_type == "forumPost"] | order(coalesce(sortOrder, 999) asc, _createdAt desc)) { _id, title, format, date, preview, videoUrl, image, body }'
       )
       .then(function (data) {
         setPosts(data);

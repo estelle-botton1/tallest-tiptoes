@@ -4,6 +4,7 @@ export default {
   type: 'document',
   fields: [
     { name: 'title', title: 'Title', type: 'string' },
+    { name: 'sortOrder', title: 'Display Order (1 = first)', type: 'number' },
     { name: 'format', title: 'Format', type: 'string', options: { list: ['Essay', 'Vlog', 'Movie Rec', 'Podcast', 'Photo Essay'] } },
     { name: 'date', title: 'Date', type: 'date' },
     { name: 'image', title: 'Featured Image', type: 'image' },

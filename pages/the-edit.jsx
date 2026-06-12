@@ -26,7 +26,7 @@ export default function TheEdit() {
   const [selected, setSelected] = useState(null);
 
   useEffect(function () {
-   client.fetch('*[_type == "outfit"] | order(_createdAt desc) { _id, title, mood, date, image, images, note, items }')
+   client.fetch('*[_type == "outfit"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, mood, date, image, images, note, items }')
       .then(function (data) { setOutfits(data); setLoading(false); })
       .catch(function () { setLoading(false); });
   }, []);

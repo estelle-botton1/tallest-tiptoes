@@ -4,6 +4,7 @@ export default {
   type: 'document',
   fields: [
     { name: 'title', title: 'Title', type: 'string' },
+    { name: 'sortOrder', title: 'Display Order (1 = first)', type: 'number' },
     { name: 'category', title: 'Category', type: 'string', options: { list: ['Made by Me', 'Collected', 'From My Closet'] } },
     { name: 'price', title: 'Price', type: 'string' },
     { name: 'status', title: 'Status', type: 'string', options: { list: ['Available', 'Sold', 'Coming Soon'] } },
