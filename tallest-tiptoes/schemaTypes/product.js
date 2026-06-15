@@ -7,6 +7,7 @@ export default {
     { name: 'sortOrder', title: 'Display Order (1 = first)', type: 'number' },
     { name: 'category', title: 'Category', type: 'string', options: { list: ['Made by Me', 'Collected', 'From My Closet'] } },
     { name: 'price', title: 'Price', type: 'string' },
+    { name: 'shopUrl', title: 'Shopify / Purchase Link', type: 'url' },
     { name: 'status', title: 'Status', type: 'string', options: { list: ['Available', 'Sold', 'Coming Soon'] } },
     { name: 'edition', title: 'Edition Info', type: 'string' },
     { name: 'story', title: 'The Story', type: 'text' },
