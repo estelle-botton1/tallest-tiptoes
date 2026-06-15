@@ -26,7 +26,7 @@ export default function SubscribeBox() {
     if (selected.indexOf(id) >= 0) {
       setSelected(selected.filter(function (s) { return s !== id; }));
     } else {
-      setSelected(selected.concat([id]));
+      setSelected(selected.concat([id])); 
     }
   }
 
@@ -87,7 +87,7 @@ export default function SubscribeBox() {
   return (
     <section style={{ padding: "0 20px 20px" }}>
       <div style={{
-        background: c.black, borderRadius: "3px", padding: "32px 24px",
+       background: c.red, borderRadius: "3px", padding: "32px 24px",
       }}>
         <div style={{ textAlign: "center", marginBottom: "24px" }}>
           <span style={{
@@ -131,8 +131,8 @@ export default function SubscribeBox() {
                 placeholder="(555) 123-4567"
                 style={{
                   width: "100%", padding: "12px 14px",
-                  background: "rgba(255,255,255,0.08)",
-                  border: "1px solid rgba(255,255,255,0.15)",
+                  background: "rgba(255,255,255,0.15)",
+                  border: "1px solid rgba(255,255,255,0.25)",
                   borderRadius: "3px", color: c.cream,
                   fontFamily: "'Cormorant Garamond', serif", fontSize: "16px",
                   outline: "none", boxSizing: "border-box",
@@ -173,14 +173,14 @@ export default function SubscribeBox() {
                   >
                     <div style={{
                       width: "18px", height: "18px", flexShrink: 0,
-                      border: "1px solid " + (isChecked ? c.red : "rgba(255,255,255,0.2)"),
-                      background: isChecked ? c.red : "transparent",
+                      border: "1px solid " + (isChecked ? c.cream : "rgba(255,255,255,0.3)"),
+                      background: isChecked ? c.cream : "transparent",
                       borderRadius: "2px",
                       display: "flex", alignItems: "center", justifyContent: "center",
                       transition: "all 0.2s",
                     }}>
                       {isChecked && (
-                        <span style={{ color: c.cream, fontSize: "12px", lineHeight: "1" }}>&#10003;</span>
+                       <span style={{ color: c.red, fontSize: "12px", lineHeight: "1" }}>&#10003;</span>
                       )}
                     </div>
                     <div style={{ flex: 1 }}>
@@ -203,7 +203,7 @@ export default function SubscribeBox() {
               onClick={handleSubmit}
               style={{
                 textAlign: "center", padding: "13px",
-                background: isValid && status !== "sending" ? c.red : "rgba(255,255,255,0.08)",
+                background: isValid && status !== "sending" ? c.cream : "rgba(255,255,255,0.15)",
                 borderRadius: "3px",
                 cursor: isValid && status !== "sending" ? "pointer" : "default",
                 transition: "background 0.2s",
