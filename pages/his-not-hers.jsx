@@ -17,7 +17,7 @@ var c = {
   white: "#FBF8F4",
 };
 
-var navItems = ["Outfit Guide", "Splurge", "The Thing"];
+var navItems = ["Outfit Guide", "Splurge", "Closet Staples"];
 
 export default function HisNotHers() {
   const [activeSection, setActiveSection] = useState("Outfit Guide");
@@ -146,8 +146,8 @@ export default function HisNotHers() {
           </div>
         )}
 
-        {/* THE THING LIST */}
-        {activeSection === "The Thing" && !loading && filtered.length > 0 && (
+        {/* Closet Staples LIST */}
+        {activeSection === "Closet Staples" && !loading && filtered.length > 0 && (
           <div>
             <div style={{ padding: "24px 24px 8px", fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, fontStyle: "italic" }}>One item. Done right.</div>
             {filtered.map(function (item) {
@@ -264,7 +264,7 @@ function ItemDetail({ item, section, onClose }) {
       {item.outfitPieces && item.outfitPieces.length > 0 && (
         <div style={{ padding: "0 24px 20px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px" }}>
-            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>{section === "The Thing" ? "THE OPTIONS" : "THE BREAKDOWN"}</span>
+            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>{section === "Closet Staples" ? "THE OPTIONS" : "THE BREAKDOWN"}</span>
             <div style={{ flex: 1, height: "1px", background: c.pale }} />
           </div>
           {item.outfitPieces.map(function (piece, i) {
