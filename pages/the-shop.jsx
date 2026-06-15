@@ -31,7 +31,7 @@ export default function TheShop() {
   const [selected, setSelected] = useState(null);
 
   useEffect(function () {
-    client.fetch('*[_type == "product"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, category, price, status, edition, story, location, images }')
+    client.fetch('*[_type == "product"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, category, price, status, edition, story, location, images, shopUrl }')
       .then(function (data) { setProducts(data); setLoading(false); })
       .catch(function () { setLoading(false); });
   }, []);
@@ -138,7 +138,6 @@ function ProductDetail({ product, onClose }) {
         <div style={{ width: "40px" }} />
       </div>
 
-      {/* Main image — tap to zoom */}
       <div
         onClick={function () { setZoomed(!zoomed); }}
         style={{
@@ -169,7 +168,6 @@ function ProductDetail({ product, onClose }) {
         )}
       </div>
 
-      {/* Thumbnail strip — click to switch images */}
       {images.length > 1 && (
         <div style={{ display: "flex", gap: "6px", padding: "10px 20px", overflowX: "auto", scrollbarWidth: "none" }}>
           {images.map(function (img2, i) {
@@ -208,9 +206,16 @@ function ProductDetail({ product, onClose }) {
       )}
 
       <div style={{ padding: "4px 20px 20px" }}>
-        {product.status === "Available" && (
-          <div style={{ textAlign: "center", padding: "15px", background: c.black, cursor: "pointer" }}>
-            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase", color: c.cream }}>ADD TO BAG</span>
+        {product.status === "Available" && product.shopUrl && (
+          <a href={product.shopUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+            <div style={{ textAlign: "center", padding: "15px", background: c.black, cursor: "pointer" }}>
+              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase", color: c.cream }}>BUY NOW</span>
+            </div>
+          </a>
+        )}
+        {product.status === "Available" && !product.shopUrl && (
+          <div style={{ textAlign: "center", padding: "15px", background: c.black, opacity: 0.5 }}>
+            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase", color: c.cream }}>COMING SOON</span>
           </div>
         )}
         {product.status === "Sold" && (
