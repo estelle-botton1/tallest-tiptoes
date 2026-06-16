@@ -85,23 +85,6 @@ export default function HeroDynamic() {
           }}
         />
 
-        {/* Static title */}
-        <div style={{
-          position: "absolute",
-          bottom: "14%",
-          left: 0, right: 0,
-          textAlign: "center",
-          zIndex: 3,
-        }}>
-          <span style={{
-            fontFamily: "'DM Serif Display', serif",
-            fontSize: "24px",
-            fontWeight: "400",
-            letterSpacing: "5px",
-            color: c.ink,
-          }}>Tallest Tiptoes</span>
-        </div>
-
         {/* Animated signature */}
         <div style={{
           position: "absolute",

@@ -360,7 +360,7 @@ export default function Homepage() {
           <Link to="/the-shop" style={{ textDecoration: "none", color: "inherit" }}>
             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>03</span>
             <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Shop</h2>
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", fontStyle: "italic", color: c.muted, margin: "4px 0 0" }}>Made, found and from my closet</p>
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", fontStyle: "italic", color: c.muted, margin: "4px 0 0" }}>Made, found, and from my closet</p>
           </Link>
           <Link to="/the-shop" style={linkStyle}>View all</Link>
         </div>

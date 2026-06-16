@@ -49,7 +49,7 @@ export default function TheShop() {
 
       <div style={{ padding: "32px 20px 0" }}>
         <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "32px", fontWeight: "400", margin: "0 0 6px" }}>The Shop</h1>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", fontStyle: "italic", color: c.muted, margin: "0" }}>Things I have made, found and loved</p>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", fontStyle: "italic", color: c.muted, margin: "0" }}>Things I have made, found, and loved</p>
       </div>
 
       <div style={{ display: "flex", gap: "0", padding: "20px 20px 0", borderBottom: "1px solid " + c.pale, overflowX: "auto", scrollbarWidth: "none" }}>
