@@ -18,7 +18,7 @@ var c = {
   white: "#FBF8F4",
 };
 
-var categories = ["All", "What I'm Eating", "Hosting", "Weekend", "Travel"];
+var categories = ["All", "What I'm Eating", "Where I'm Going", "How I'm Hosting", "Things I'm Liking"];
 var catBgs = { "What I'm Eating": c.warm, Hosting: c.parchment, Weekend: c.pale, Travel: c.nude };
 
 export default function TheGuide() {
