@@ -15,6 +15,18 @@ export default function HeroDynamic() {
     setTimeout(function () { setShowSig(true); }, 2000);
   }, []);
 
+  const [sigLen, setSigLen] = useState(0);
+  var sigText = "xx tallest tiptoes";
+
+  useEffect(function () {
+    if (!showSig) return;
+    if (sigLen >= sigText.length) return;
+    var timer = setTimeout(function () {
+      setSigLen(sigLen + 1);
+    }, 120);
+    return function () { clearTimeout(timer); };
+  }, [showSig, sigLen]);
+
   var ropePath = [
     "M-20 135",
     "C20 135 60 135 100 135",
@@ -85,24 +97,19 @@ export default function HeroDynamic() {
           }}
         />
 
-        {/* Handwritten signature — reveals left to right */}
-        <div style={{
+     {/* Handwritten signature — one letter at a time */}
+     <div style={{
           position: "absolute",
           bottom: "3%",
           right: "8%",
           zIndex: 3,
-          overflow: "hidden",
-          whiteSpace: "nowrap",
-          maxWidth: showSig ? "200px" : "0px",
-          transition: "max-width 2.5s cubic-bezier(0.22, 1, 0.36, 1)",
         }}>
           <span style={{
             fontFamily: "'Caveat', cursive",
             fontSize: "20px",
             fontWeight: "400",
             color: c.ink,
-            display: "inline-block",
-          }}>xx tallest tiptoes</span>
+          }}>{sigText.slice(0, sigLen)}</span>
         </div>
       </div>
     </div>
