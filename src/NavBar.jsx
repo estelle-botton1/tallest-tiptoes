@@ -20,12 +20,13 @@ export default function NavBar() {
 
   return (
     <div>
-      {/* Top nav */}
       <nav style={{
         display: "flex", justifyContent: "space-between", alignItems: "center",
         padding: "18px 20px", borderBottom: "1px solid " + c.pale,
-        position: "sticky", top: 0, background: c.cream + "F2",
-        backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", zIndex: 50,
+        position: "fixed", top: 0, left: 0, width: "100%",
+        background: c.cream + "F2",
+        backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
+        zIndex: 50, boxSizing: "border-box",
       }}>
         <Link to="/" style={{ fontFamily: "'DM Serif Display', serif", fontSize: "18px", color: c.black, textDecoration: "none" }}>
           Tallest Tiptoes
@@ -36,11 +37,14 @@ export default function NavBar() {
         </div>
       </nav>
 
-      {/* Section nav */}
       <div style={{
         display: "flex", gap: "20px", padding: "14px 20px",
         borderBottom: "1px solid " + c.pale,
         overflowX: "auto", WebkitOverflowScrolling: "touch", scrollbarWidth: "none",
+        position: "fixed", top: "57px", left: 0, width: "100%",
+        background: c.cream + "F2",
+        backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
+        zIndex: 49, boxSizing: "border-box",
       }}>
         {sections.map(function(section, i) {
           var isActive = location.pathname === section.path;
@@ -63,6 +67,8 @@ export default function NavBar() {
           );
         })}
       </div>
+
+      <div style={{ height: "100px" }} />
     </div>
   );
 }
