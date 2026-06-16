@@ -9,6 +9,7 @@ export default {
     { name: 'date', title: 'Date', type: 'date' },
     { name: 'image', title: 'Featured Image', type: 'image' },
     { name: 'preview', title: 'Preview Text', type: 'text' },
+    { name: 'link', title: 'External Link', type: 'url' },
     { name: 'body', title: 'Body', type: 'array', of: [{ type: 'block' }, { type: 'image' }] },
     { name: 'videoUrl', title: 'Video URL (for vlogs)', type: 'url' },
   ],
