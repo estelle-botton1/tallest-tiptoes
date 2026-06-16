@@ -8,9 +8,11 @@ var c = {
 
 export default function HeroDynamic() {
   const [drawRope, setDrawRope] = useState(false);
+  const [showSig, setShowSig] = useState(false);
 
   useEffect(function () {
     setTimeout(function () { setDrawRope(true); }, 100);
+    setTimeout(function () { setShowSig(true); }, 2000);
   }, []);
 
   var ropePath = [
@@ -40,24 +42,19 @@ export default function HeroDynamic() {
 
   return (
     <div style={{ background: c.cream, padding: "10px 0 0", overflow: "hidden" }}>
-      <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
       <div style={{
         position: "relative",
         width: "100%",
         maxWidth: "720px",
         margin: "0 auto",
-        aspectRatio: "720 / 310",
+        aspectRatio: "720 / 350",
       }}>
-        {/* Rope — draws slowly */}
         <svg
           viewBox="0 0 720 300"
           style={{
             position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "auto",
-            zIndex: 1,
+            top: 0, left: 0, width: "100%", height: "auto", zIndex: 1,
           }}
         >
           <path
@@ -69,11 +66,10 @@ export default function HeroDynamic() {
             strokeLinejoin="round"
             strokeDasharray="2400"
             strokeDashoffset={drawRope ? "0" : "2400"}
-            style={{ transition: "stroke-dashoffset 20s cubic-bezier(0.22, 1, 0.36, 1)" }}
+            style={{ transition: "stroke-dashoffset 9.5s cubic-bezier(0.22, 1, 0.36, 1)" }}
           />
         </svg>
 
-        {/* Static girl */}
         <img
           src="/figure.png"
           alt="Figure on tiptoes"
@@ -89,6 +85,53 @@ export default function HeroDynamic() {
           }}
         />
 
+        {/* Static title */}
+        <div style={{
+          position: "absolute",
+          bottom: "14%",
+          left: 0, right: 0,
+          textAlign: "center",
+          zIndex: 3,
+        }}>
+          <span style={{
+            fontFamily: "'DM Serif Display', serif",
+            fontSize: "24px",
+            fontWeight: "400",
+            letterSpacing: "5px",
+            color: c.ink,
+          }}>Tallest Tiptoes</span>
+        </div>
+
+        {/* Animated signature */}
+        <div style={{
+          position: "absolute",
+          bottom: "3%",
+          left: 0, right: 0,
+          textAlign: "center",
+          zIndex: 3,
+        }}>
+          <svg viewBox="0 0 300 40" style={{ width: "180px", height: "auto", display: "inline-block" }}>
+            <text x="150" y="30" textAnchor="middle" style={{
+              fontFamily: "'Caveat', cursive",
+              fontSize: "28px",
+              fontWeight: "400",
+              fill: "none",
+              stroke: c.ink,
+              strokeWidth: "0.6",
+              strokeDasharray: "500",
+              strokeDashoffset: showSig ? "0" : "500",
+              transition: "stroke-dashoffset 2.5s cubic-bezier(0.22, 1, 0.36, 1)",
+            }}>xx tallest tiptoes</text>
+            <text x="150" y="30" textAnchor="middle" style={{
+              fontFamily: "'Caveat', cursive",
+              fontSize: "28px",
+              fontWeight: "400",
+              fill: c.ink,
+              opacity: showSig ? 1 : 0,
+              transition: "opacity 0.8s ease 2.2s",
+            }}>xx tallest tiptoes</text>
+          </svg>
+        </div>
       </div>
     </div>
   );
