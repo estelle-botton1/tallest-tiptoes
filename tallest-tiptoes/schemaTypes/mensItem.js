@@ -5,7 +5,7 @@ export default {
   fields: [
     { name: 'title', title: 'Title', type: 'string' },
     { name: 'sortOrder', title: 'Display Order (1 = first)', type: 'number' },
-    { name: 'category', title: 'Category', type: 'string', options: { list: ['Splurge', 'Outfit Guide', 'The Thing'] } },
+    { name: 'category', title: 'Category', type: 'string', options: { list: ['Splurge', 'Outfit Guide', 'Closet Staples'] } },
     { name: 'brand', title: 'Brand', type: 'string' },
     { name: 'price', title: 'Price', type: 'string' },
     { name: 'link', title: 'Shop Link', type: 'url' },

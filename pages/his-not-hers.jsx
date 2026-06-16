@@ -20,18 +20,24 @@ var c = {
 var navItems = ["Outfit Guide", "Splurge", "Closet Staples"];
 
 export default function HisNotHers() {
-  const [activeSection, setActiveSection] = useState("Outfit Guide");
+  const [activeSection, setActiveSection] = useState(null);
   const [selected, setSelected] = useState(null);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(function () {
-    client.fetch('*[_type == "mensItem"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, category, brand, price, link, note, image, images, outfitPieces }')
-      .then(function (data) { setItems(data); setLoading(false); })
+    client.fetch('*[_type == "mensItem"] | order(_createdAt desc) { _id, title, category, brand, price, link, note, image, images, outfitPieces, _createdAt }')
+      .then(function (data) {
+        setItems(data);
+        setLoading(false);
+        if (data.length > 0 && !activeSection) {
+          setActiveSection(data[0].category || "Outfit Guide");
+        }
+      })
       .catch(function () { setLoading(false); });
   }, []);
 
-  var filtered = items.filter(function (item) { return item.category === activeSection; });
+  var filtered = activeSection ? items.filter(function (item) { return item.category === activeSection; }) : [];
 
   if (selected) {
     return <ItemDetail item={selected} section={activeSection} onClose={function () { setSelected(null); }} />;
@@ -146,7 +152,7 @@ export default function HisNotHers() {
           </div>
         )}
 
-        {/* Closet Staples LIST */}
+        {/* CLOSET STAPLES LIST */}
         {activeSection === "Closet Staples" && !loading && filtered.length > 0 && (
           <div>
             <div style={{ padding: "24px 24px 8px", fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, fontStyle: "italic" }}>One item. Done right.</div>
@@ -225,25 +231,41 @@ function PieceRow({ piece }) {
 }
 
 function ItemDetail({ item, section, onClose }) {
+  const [copied, setCopied] = useState(false);
+
   var allImages = [];
   if (item.image) allImages.push(item.image);
   if (item.images) allImages = allImages.concat(item.images);
+
+  function handleShare() {
+    var shareData = {
+      title: item.title + " — His Not Hers",
+      text: "Check this out on Tallest Tiptoes: " + item.title,
+      url: "https://tallest-tiptoes.com/his-not-hers",
+    };
+
+    if (navigator.share) {
+      navigator.share(shareData);
+    } else {
+      navigator.clipboard.writeText(shareData.url + " — " + item.title).then(function () {
+        setCopied(true);
+        setTimeout(function () { setCopied(false); }, 2000);
+      });
+    }
+  }
 
   return (
     <div style={{ background: c.cream, minHeight: "100vh", fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet" />
 
-      {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 20px", borderBottom: "1px solid " + c.pale, position: "sticky", top: 0, background: c.cream + "F2", backdropFilter: "blur(12px)", zIndex: 10 }}>
         <span onClick={onClose} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, cursor: "pointer" }}>Back</span>
         <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: "16px", color: c.black }}>His Not Hers</span>
-        <div style={{ width: "40px" }} />
+        <span onClick={handleShare} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: copied ? c.red : c.muted, cursor: "pointer" }}>{copied ? "Copied!" : "Share"}</span>
       </div>
 
-      {/* Swipeable images */}
       <ImageGallery images={allImages} title={item.title} />
 
-      {/* Title / meta */}
       <div style={{ padding: "24px 24px 8px" }}>
         <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: c.red }}>{section}</span>
         <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", fontStyle: "italic", margin: "6px 0 0", lineHeight: "1.3" }}>{item.title}</h2>
@@ -251,7 +273,6 @@ function ItemDetail({ item, section, onClose }) {
         {item.price && <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: "22px", color: c.black, marginTop: "8px" }}>{item.price}</div>}
       </div>
 
-      {/* Note */}
       {item.note && (
         <div style={{ padding: "12px 24px 20px" }}>
           <div style={{ padding: "16px", background: c.parchment, borderRadius: "3px", borderLeft: "3px solid " + c.red }}>
@@ -260,7 +281,6 @@ function ItemDetail({ item, section, onClose }) {
         </div>
       )}
 
-      {/* Pieces / Options breakdown */}
       {item.outfitPieces && item.outfitPieces.length > 0 && (
         <div style={{ padding: "0 24px 20px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px" }}>
@@ -273,7 +293,6 @@ function ItemDetail({ item, section, onClose }) {
         </div>
       )}
 
-      {/* Shop link button */}
       {item.link && (
         <div style={{ padding: "0 24px 24px" }}>
           <a href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
