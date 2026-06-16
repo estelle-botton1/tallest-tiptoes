@@ -85,35 +85,24 @@ export default function HeroDynamic() {
           }}
         />
 
-        {/* Animated signature */}
+        {/* Handwritten signature — reveals left to right */}
         <div style={{
           position: "absolute",
           bottom: "3%",
-          left: 0, right: 0,
-          textAlign: "center",
+          right: "8%",
           zIndex: 3,
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          maxWidth: showSig ? "200px" : "0px",
+          transition: "max-width 2.5s cubic-bezier(0.22, 1, 0.36, 1)",
         }}>
-          <svg viewBox="0 0 300 40" style={{ width: "180px", height: "auto", display: "inline-block" }}>
-            <text x="150" y="30" textAnchor="middle" style={{
-              fontFamily: "'Caveat', cursive",
-              fontSize: "28px",
-              fontWeight: "400",
-              fill: "none",
-              stroke: c.ink,
-              strokeWidth: "0.6",
-              strokeDasharray: "500",
-              strokeDashoffset: showSig ? "0" : "500",
-              transition: "stroke-dashoffset 2.5s cubic-bezier(0.22, 1, 0.36, 1)",
-            }}>xx tallest tiptoes</text>
-            <text x="150" y="30" textAnchor="middle" style={{
-              fontFamily: "'Caveat', cursive",
-              fontSize: "28px",
-              fontWeight: "400",
-              fill: c.ink,
-              opacity: showSig ? 1 : 0,
-              transition: "opacity 0.8s ease 2.2s",
-            }}>xx tallest tiptoes</text>
-          </svg>
+          <span style={{
+            fontFamily: "'Caveat', cursive",
+            fontSize: "20px",
+            fontWeight: "400",
+            color: c.ink,
+            display: "inline-block",
+          }}>xx tallest tiptoes</span>
         </div>
       </div>
     </div>
