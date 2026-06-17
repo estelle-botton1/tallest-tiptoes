@@ -62,10 +62,8 @@ function FigureSitting({ style }) {
 
 function Divider() {
   return (
-    <div style={{ display: "flex", alignItems: "center", padding: "32px 20px", gap: "16px" }}>
-      <div style={{ flex: 1, height: "1px", background: c.pale }} />
-      <StarSketch />
-      <div style={{ flex: 1, height: "1px", background: c.pale }} />
+    <div style={{ padding: "28px 40px" }}>
+      <div style={{ height: "3.5px", background: "#9B5B3A" }} />
     </div>
   );
 }
@@ -324,6 +322,8 @@ export default function Homepage() {
 
       <NavBar />
       <HeroDynamic />
+
+      <Divider />
 
       {/* 01 — THE FORUM */}
       <section style={{ padding: "28px 20px 0", ...fadeIn(0.15) }}>
