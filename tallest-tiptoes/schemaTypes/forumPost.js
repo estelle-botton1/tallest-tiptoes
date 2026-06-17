@@ -12,5 +12,12 @@ export default {
     { name: 'link', title: 'External Link', type: 'url' },
     { name: 'body', title: 'Body', type: 'array', of: [{ type: 'block' }, { type: 'image' }] },
     { name: 'videoUrl', title: 'Video URL (for vlogs)', type: 'url' },
+    { name: 'shopLinks', title: 'Shopping Links', type: 'array', of: [{ type: 'object', fields: [
+      { name: 'name', title: 'Item Name', type: 'string' },
+      { name: 'brand', title: 'Brand', type: 'string' },
+      { name: 'price', title: 'Price', type: 'string' },
+      { name: 'link', title: 'Shop Link', type: 'url' },
+      { name: 'image', title: 'Product Image', type: 'image' },
+    ]}] },
   ],
 }
