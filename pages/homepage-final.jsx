@@ -63,9 +63,9 @@ function FigureSitting({ style }) {
 function Divider() {
   return (
     <div style={{ display: "flex", alignItems: "center", padding: "32px 20px", gap: "16px" }}>
-      <div style={{ flex: 1, height: "3px", background: c.warm }} />
+      <div style={{ flex: 1, height: "2.5px", background: c.warm }} />
       <StarSketch />
-      <div style={{ flex: 1, height: "3px", background: c.warm }} />
+      <div style={{ flex: 1, height: "2.5px", background: c.warm }} />
     </div>
   );
 }
