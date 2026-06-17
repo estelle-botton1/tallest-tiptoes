@@ -5,14 +5,16 @@ export default {
   fields: [
     { name: 'title', title: 'Title', type: 'string' },
     { name: 'sortOrder', title: 'Display Order (1 = first)', type: 'number' },
-    { name: 'category', title: 'Category', type: 'string', options: { list: ['Splurge', 'Outfit Guide', 'Closet Staples'] } },
+    { name: 'category', title: 'Section', type: 'string', options: { list: ['Outfit Guide', 'Explore'] } },
+    { name: 'mood', title: 'Mood (Outfit Guide only)', type: 'string', options: { list: ['Night Out', 'Weekend', 'Workwear', 'Chilled Out', 'Closet Must Haves', 'Little Fancier'] } },
+    { name: 'date', title: 'Date', type: 'date' },
     { name: 'brand', title: 'Brand', type: 'string' },
     { name: 'price', title: 'Price', type: 'string' },
     { name: 'link', title: 'Shop Link', type: 'url' },
     { name: 'note', title: 'Note', type: 'text' },
     { name: 'image', title: 'Main Image', type: 'image' },
-    { name: 'images', title: 'Multiple Images (swipeable)', type: 'array', of: [{ type: 'image' }] },
-    { name: 'outfitPieces', title: 'Pieces / Options', type: 'array', of: [{ type: 'object', fields: [
+    { name: 'images', title: 'Additional Images (swipeable)', type: 'array', of: [{ type: 'image' }] },
+    { name: 'outfitPieces', title: 'Outfit Pieces', type: 'array', of: [{ type: 'object', fields: [
       { name: 'name', title: 'Name', type: 'string' },
       { name: 'brand', title: 'Brand', type: 'string' },
       { name: 'price', title: 'Price', type: 'string' },

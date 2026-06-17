@@ -78,7 +78,7 @@ export default function HeroDynamic() {
             strokeLinejoin="round"
             strokeDasharray="2400"
             strokeDashoffset={drawRope ? "0" : "2400"}
-            style={{ transition: "stroke-dashoffset 9.5s cubic-bezier(0.22, 1, 0.36, 1)" }}
+            style={{ transition: "stroke-dashoffset 17s cubic-bezier(0.22, 1, 0.36, 1)" }}
           />
         </svg>
 
@@ -87,7 +87,7 @@ export default function HeroDynamic() {
           alt="Figure on tiptoes"
           style={{
             position: "absolute",
-            height: "55%",
+            height: "48%",
             left: "50%",
             transform: "translateX(-50%)",
             top: "0.5%",
