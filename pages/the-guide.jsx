@@ -19,7 +19,12 @@ var c = {
 };
 
 var categories = ["All", "What I'm Eating", "Where I'm Going", "How I'm Hosting", "Things I'm Liking"];
-var catBgs = { "What I'm Eating": c.warm, Hosting: c.parchment, Weekend: c.pale, Travel: c.nude };
+var catBgs = {
+  "What I'm Eating": c.warm,
+  "Where I'm Going": c.nude,
+  "How I'm Hosting": c.parchment,
+  "Things I'm Liking": c.pale,
+};
 
 export default function TheGuide() {
   const [guides, setGuides] = useState([]);
@@ -28,7 +33,7 @@ export default function TheGuide() {
   const [selected, setSelected] = useState(null);
 
   useEffect(function () {
-    client.fetch('*[_type == "guide"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, category, date, image, preview, body }')
+    client.fetch('*[_type == "guide"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, category, date, image, images, preview, link, body }')
       .then(function (data) { setGuides(data); setLoading(false); })
       .catch(function () { setLoading(false); });
   }, []);
@@ -125,10 +130,39 @@ export default function TheGuide() {
   );
 }
 
+function renderBlockText(block, i) {
+  if (block._type === "block" && block.children) {
+    var children = block.children.map(function (child, j) {
+      var text = child.text;
+      if (!text) return null;
+      if (child.marks && child.marks.length > 0 && block.markDefs) {
+        var linkMark = null;
+        child.marks.forEach(function (markKey) { block.markDefs.forEach(function (def) { if (def._key === markKey && def._type === "link") { linkMark = def; } }); });
+        if (linkMark) { return (<a key={j} href={linkMark.href} target="_blank" rel="noopener noreferrer" style={{ color: c.red, textDecoration: "underline", textUnderlineOffset: "3px" }}>{text}</a>); }
+        var isBold = child.marks.indexOf("strong") >= 0;
+        var isItalic = child.marks.indexOf("em") >= 0;
+        if (isBold || isItalic) { return <span key={j} style={{ fontWeight: isBold ? "600" : "inherit", fontStyle: isItalic ? "italic" : "inherit" }}>{text}</span>; }
+      }
+      return <span key={j}>{text}</span>;
+    });
+    if (block.style === "h2") { return <h2 key={i} style={{ fontFamily: "'DM Serif Display', serif", fontSize: "22px", fontWeight: "400", margin: "24px 0 8px", color: c.black }}>{children}</h2>; }
+    if (block.style === "h3") { return <h3 key={i} style={{ fontFamily: "'DM Serif Display', serif", fontSize: "18px", fontWeight: "400", margin: "20px 0 6px", color: c.black }}>{children}</h3>; }
+    if (block.style === "blockquote") { return (<div key={i} style={{ padding: "20px", margin: "20px 0", borderLeft: "3px solid " + c.red, borderRight: "3px solid " + c.red, textAlign: "center" }}><p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "18px", fontStyle: "italic", color: c.ink, margin: 0, lineHeight: "1.4" }}>{children}</p></div>); }
+    return <p key={i} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", color: c.ink, margin: "0 0 16px", lineHeight: "1.7" }}>{children}</p>;
+  }
+  if (block._type === "image" && block.asset) { return (<div key={i} style={{ margin: "20px 0", borderRadius: "3px", overflow: "hidden" }}><img src={urlFor(block).width(800).url()} alt="" style={{ width: "100%", height: "auto", display: "block" }} /></div>); }
+  return null;
+}
+
 function GuideDetail({ guide, onClose }) {
+  const [currentImg, setCurrentImg] = useState(0);
+  var allImages = [];
+  if (guide.image) allImages.push(guide.image);
+  if (guide.images) allImages = allImages.concat(guide.images);
+
   return (
     <div style={{ minHeight: "100vh", background: c.cream, fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
-      <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet" />
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 20px", borderBottom: "1px solid " + c.pale, position: "sticky", top: 0, background: c.cream + "F2", backdropFilter: "blur(12px)", zIndex: 10 }}>
         <span onClick={onClose} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, cursor: "pointer" }}>Back</span>
@@ -136,10 +170,22 @@ function GuideDetail({ guide, onClose }) {
         <div style={{ width: "40px" }} />
       </div>
 
-      <div style={{ height: "260px", overflow: "hidden", background: guide.image ? "none" : "linear-gradient(135deg, " + c.warm + ", " + c.parchment + ")", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        {guide.image ? (
-          <img src={urlFor(guide.image).width(1000).url()} alt={guide.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      {/* Swipeable images */}
+      <div style={{ position: "relative", height: "260px", overflow: "hidden", background: allImages.length > 0 ? "none" : "linear-gradient(135deg, " + c.warm + ", " + c.parchment + ")" }}>
+        {allImages.length > 0 ? (
+          <img src={urlFor(allImages[currentImg]).width(1000).url()} alt={guide.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         ) : null}
+        {allImages.length > 1 && (
+          <div>
+            <div onClick={function () { setCurrentImg(currentImg > 0 ? currentImg - 1 : allImages.length - 1); }} style={{ position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)", width: "36px", height: "36px", borderRadius: "50%", background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#fff", fontSize: "18px" }}>‹</div>
+            <div onClick={function () { setCurrentImg(currentImg < allImages.length - 1 ? currentImg + 1 : 0); }} style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", width: "36px", height: "36px", borderRadius: "50%", background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#fff", fontSize: "18px" }}>›</div>
+            <div style={{ position: "absolute", bottom: "12px", left: "50%", transform: "translateX(-50%)", display: "flex", gap: "6px" }}>
+              {allImages.map(function (_, i) {
+                return <div key={i} style={{ width: "7px", height: "7px", borderRadius: "50%", background: i === currentImg ? "#fff" : "rgba(255,255,255,0.4)" }} />;
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       <div style={{ padding: "24px 20px 0" }}>
@@ -150,17 +196,19 @@ function GuideDetail({ guide, onClose }) {
 
       <div style={{ padding: "0 20px 20px" }}>
         {guide.body && guide.body.map(function (block, i) {
-          if (block._type === "block" && block.children) {
-            var text = block.children.map(function (child) { return child.text; }).join("");
-            if (block.style === "h2") return <h2 key={i} style={{ fontFamily: "'DM Serif Display', serif", fontSize: "22px", fontWeight: "400", margin: "24px 0 8px" }}>{text}</h2>;
-            return <p key={i} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", color: c.ink, margin: "0 0 16px", lineHeight: "1.7" }}>{text}</p>;
-          }
-          if (block._type === "image" && block.asset) {
-            return <div key={i} style={{ margin: "20px 0", overflow: "hidden" }}><img src={urlFor(block).width(800).url()} alt="" style={{ width: "100%", height: "auto" }} /></div>;
-          }
-          return null;
+          return renderBlockText(block, i);
         })}
       </div>
+
+      {guide.link && (
+        <div style={{ padding: "0 20px 24px" }}>
+          <a href={guide.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+            <div style={{ textAlign: "center", padding: "14px", border: "1px solid " + c.black, borderRadius: "3px", cursor: "pointer" }}>
+              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase", color: c.black }}>READ MORE</span>
+            </div>
+          </a>
+        </div>
+      )}
 
       <HonestyBox />
       <footer style={{ padding: "24px 24px 40px", textAlign: "center", borderTop: "1px solid " + c.pale }}>
