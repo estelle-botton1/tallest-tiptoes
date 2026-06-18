@@ -17,6 +17,15 @@ var c = {
   white: "#FBF8F4",
 };
 
+function hasAsset(img) {
+  return img && img.asset;
+}
+
+function safeImages(arr) {
+  if (!arr) return [];
+  return arr.filter(hasAsset);
+}
+
 var mainTabs = ["Outfit Guide", "Explore"];
 var moods = ["All", "Night Out", "Weekend", "Workwear", "Chilled Out", "Closet Must Haves", "Little Fancier"];
 
@@ -36,10 +45,10 @@ export default function HisNotHers() {
       .catch(function () { setLoading(false); });
   }, []);
 
-  var outfitItems = items.filter(function (i) { return i.category === "Outfit Guide"; });
-  var exploreItems = items.filter(function (i) { return i.category === "Explore"; });
+  var outfitItems = items.filter(function (i) { return i.category && i.category.toLowerCase() === "outfit guide"; });
+  var exploreItems = items.filter(function (i) { return i.category && i.category.toLowerCase() === "explore"; });
 
-  var filteredOutfits = activeMood === "All" ? outfitItems : outfitItems.filter(function (o) { return o.mood === activeMood; });
+  var filteredOutfits = activeMood === "All" ? outfitItems : outfitItems.filter(function (o) { return o.mood && o.mood.toLowerCase() === activeMood.toLowerCase(); });
   var leftCol = filteredOutfits.filter(function (_, i) { return i % 2 === 0; });
   var rightCol = filteredOutfits.filter(function (_, i) { return i % 2 === 1; });
 
@@ -53,13 +62,11 @@ export default function HisNotHers() {
 
       <NavBar />
 
-      {/* Header */}
       <div style={{ padding: "32px 20px 0" }}>
         <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "32px", fontWeight: "400", margin: "0 0 6px" }}>His Not Hers</h1>
         <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", fontStyle: "italic", color: c.muted, margin: "0" }}>We did the research. You just pick.</p>
       </div>
 
-      {/* Main tabs */}
       <div style={{ display: "flex", gap: "0", padding: "20px 20px 0", borderBottom: "1px solid " + c.pale }}>
         {mainTabs.map(function (tab) {
           return (
@@ -73,10 +80,8 @@ export default function HisNotHers() {
         })}
       </div>
 
-      {/* OUTFIT GUIDE TAB */}
       {activeTab === "Outfit Guide" && (
         <div>
-          {/* Mood filters */}
           <div style={{ display: "flex", gap: "6px", padding: "16px 20px 20px", overflowX: "auto", WebkitOverflowScrolling: "touch", scrollbarWidth: "none" }}>
             {moods.map(function (mood) {
               return (
@@ -104,7 +109,6 @@ export default function HisNotHers() {
             </div>
           )}
 
-          {/* Masonry grid — same as The Edit */}
           {filteredOutfits.length > 0 && (
             <div style={{ display: "flex", gap: "12px", padding: "0 20px 40px" }}>
               <div style={{ flex: 1 }}>
@@ -122,7 +126,6 @@ export default function HisNotHers() {
         </div>
       )}
 
-      {/* EXPLORE TAB */}
       {activeTab === "Explore" && (
         <div>
           <div style={{ padding: "20px 20px 8px", fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, fontStyle: "italic" }}>Things we are into right now.</div>
@@ -142,7 +145,8 @@ export default function HisNotHers() {
           {exploreItems.length > 0 && (
             <div style={{ padding: "0 20px 40px" }}>
               {exploreItems.map(function (item) {
-                var heroImg = item.images && item.images.length > 0 ? item.images[0] : item.image;
+                var safe = safeImages(item.images);
+                var heroImg = safe.length > 0 ? safe[0] : (hasAsset(item.image) ? item.image : null);
                 return (
                   <div key={item._id} onClick={function () { setSelected(item); }} style={{ cursor: "pointer", marginBottom: "2px" }}>
                     <div style={{ height: "320px", overflow: "hidden" }}>
@@ -178,10 +182,10 @@ export default function HisNotHers() {
   );
 }
 
-/* Outfit card — masonry tile, same as The Edit */
 function OutfitCard({ outfit, onClick }) {
   var h = 200 + (outfit._id ? outfit._id.charCodeAt(0) % 80 : 40);
-  var heroImg = outfit.images && outfit.images.length > 0 ? outfit.images[0] : outfit.image;
+  var safe = safeImages(outfit.images);
+  var heroImg = safe.length > 0 ? safe[0] : (hasAsset(outfit.image) ? outfit.image : null);
 
   return (
     <div onClick={onClick} style={{ cursor: "pointer", marginBottom: "12px" }}>
@@ -203,22 +207,22 @@ function OutfitCard({ outfit, onClick }) {
   );
 }
 
-/* Shared image gallery */
 function ImageGallery({ images, title }) {
+  var safe = safeImages(images);
   const [currentImg, setCurrentImg] = useState(0);
-  if (!images || images.length === 0) {
+  if (safe.length === 0) {
     return <div style={{ height: "420px", background: "linear-gradient(135deg, " + c.warm + ", " + c.parchment + ")" }} />;
   }
 
   return (
     <div style={{ position: "relative", height: "460px", overflow: "hidden" }}>
-      <img src={urlFor(images[currentImg]).width(1000).url()} alt={title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-      {images.length > 1 && (
+      <img src={urlFor(safe[currentImg]).width(1000).url()} alt={title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      {safe.length > 1 && (
         <div>
-          <div onClick={function () { setCurrentImg(currentImg > 0 ? currentImg - 1 : images.length - 1); }} style={{ position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)", width: "36px", height: "36px", borderRadius: "50%", background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#fff", fontSize: "18px" }}>‹</div>
-          <div onClick={function () { setCurrentImg(currentImg < images.length - 1 ? currentImg + 1 : 0); }} style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", width: "36px", height: "36px", borderRadius: "50%", background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#fff", fontSize: "18px" }}>›</div>
+          <div onClick={function () { setCurrentImg(currentImg > 0 ? currentImg - 1 : safe.length - 1); }} style={{ position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)", width: "36px", height: "36px", borderRadius: "50%", background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#fff", fontSize: "18px" }}>‹</div>
+          <div onClick={function () { setCurrentImg(currentImg < safe.length - 1 ? currentImg + 1 : 0); }} style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", width: "36px", height: "36px", borderRadius: "50%", background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#fff", fontSize: "18px" }}>›</div>
           <div style={{ position: "absolute", bottom: "12px", left: "50%", transform: "translateX(-50%)", display: "flex", gap: "6px" }}>
-            {images.map(function (_, i) {
+            {safe.map(function (_, i) {
               return <div key={i} style={{ width: "7px", height: "7px", borderRadius: "50%", background: i === currentImg ? "#fff" : "rgba(255,255,255,0.4)" }} />;
             })}
           </div>
@@ -228,13 +232,16 @@ function ImageGallery({ images, title }) {
   );
 }
 
-/* Detail view — works for both Outfit Guide and Explore */
 function ItemDetail({ item, section, onClose }) {
   const [copied, setCopied] = useState(false);
 
   var allImages = [];
-  if (item.image) allImages.push(item.image);
-  if (item.images) allImages = allImages.concat(item.images);
+  if (hasAsset(item.image)) allImages.push(item.image);
+  if (item.images) {
+    item.images.forEach(function (img) {
+      if (hasAsset(img)) allImages.push(img);
+    });
+  }
 
   var isOutfitGuide = section === "Outfit Guide";
 
@@ -258,17 +265,14 @@ function ItemDetail({ item, section, onClose }) {
     <div style={{ background: c.cream, minHeight: "100vh", fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet" />
 
-      {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 20px", borderBottom: "1px solid " + c.pale, position: "sticky", top: 0, background: c.cream + "F2", backdropFilter: "blur(12px)", zIndex: 10 }}>
         <span onClick={onClose} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, cursor: "pointer" }}>Back</span>
         <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: "16px", color: c.black }}>His Not Hers</span>
         <span onClick={handleShare} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: copied ? c.red : c.muted, cursor: "pointer" }}>{copied ? "Copied!" : "Share"}</span>
       </div>
 
-      {/* Swipeable images */}
       <ImageGallery images={allImages} title={item.title} />
 
-      {/* Title / meta */}
       <div style={{ padding: "24px 20px 8px" }}>
         <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: c.red }}>
           {item.date ? new Date(item.date).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : ""}{item.mood ? " \u00B7 " + item.mood : ""}
@@ -278,7 +282,6 @@ function ItemDetail({ item, section, onClose }) {
         {!isOutfitGuide && item.price && <div style={{ fontFamily: "'DM Serif Display', serif", fontSize: "22px", color: c.black, marginTop: "8px" }}>{item.price}</div>}
       </div>
 
-      {/* Note */}
       {item.note && (
         <div style={{ padding: "12px 20px 20px" }}>
           <div style={{ padding: "16px", background: c.parchment, borderRadius: "3px", borderLeft: "3px solid " + c.red }}>
@@ -287,7 +290,6 @@ function ItemDetail({ item, section, onClose }) {
         </div>
       )}
 
-      {/* Outfit breakdown — same as The Edit */}
       {item.outfitPieces && item.outfitPieces.length > 0 && (
         <div style={{ padding: "0 20px 20px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px" }}>
@@ -297,8 +299,8 @@ function ItemDetail({ item, section, onClose }) {
           {item.outfitPieces.map(function (piece, i) {
             var pieceContent = (
               <div style={{ display: "flex", alignItems: "stretch", marginBottom: "8px", borderRadius: "3px", overflow: "hidden", border: "1px solid " + c.pale, background: c.white, cursor: piece.link ? "pointer" : "default" }}>
-                <div style={{ width: "80px", flexShrink: 0, overflow: "hidden", background: piece.image ? "none" : "linear-gradient(135deg, " + c.pale + ", " + c.warm + "44)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  {piece.image ? (
+                <div style={{ width: "80px", flexShrink: 0, overflow: "hidden", background: hasAsset(piece.image) ? "none" : "linear-gradient(135deg, " + c.pale + ", " + c.warm + "44)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  {hasAsset(piece.image) ? (
                     <img src={urlFor(piece.image).width(200).url()} alt={piece.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   ) : (
                     <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "8px", color: c.muted, opacity: 0.4 }}>PHOTO</span>
@@ -322,7 +324,6 @@ function ItemDetail({ item, section, onClose }) {
         </div>
       )}
 
-      {/* Shop link */}
       {item.link && (
         <div style={{ padding: "0 20px 24px" }}>
           <a href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
