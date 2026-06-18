@@ -54,14 +54,12 @@ export default function HisNotHers() {
   var leftCol = filteredOutfits.filter(function (_, i) { return i % 2 === 0; });
   var rightCol = filteredOutfits.filter(function (_, i) { return i % 2 === 1; });
 
-  var location = useLocation();
-
   useEffect(function () {
-    if (location.state && location.state.selectedId && products.length > 0) {
-      var match = products.find(function (p) { return p._id === location.state.selectedId; });
+    if (location.state && location.state.selectedId && items.length > 0) {
+      var match = items.find(function (i) { return i._id === location.state.selectedId; });
       if (match) setSelected(match);
     }
-  }, [products, location.state]);
+  }, [items, location.state]);
 
   if (selected) {
     return <ItemDetail item={selected} section={activeTab} onClose={function () { setSelected(null); }} />;
