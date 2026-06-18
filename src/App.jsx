@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import TermsAndConditions from "../pages/terms-and-conditions";
+import PrivacyPolicy from "../pages/privacy-policy";
 import Homepage from "../pages/homepage-final";
 import TheForum from "../pages/the-forum";
 import TheEdit from "../pages/the-edit";
@@ -10,6 +12,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/" element={<Homepage />} />
         <Route path="/the-forum" element={<TheForum />} />
         <Route path="/the-edit" element={<TheEdit />} />

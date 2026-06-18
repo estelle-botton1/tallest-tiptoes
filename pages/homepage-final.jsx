@@ -441,6 +441,10 @@ export default function Homepage() {
           <a href="https://shopmy.us/sophiazami/closet" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.muted, textDecoration: "none" }}>ShopMy</a>
         </div>
         <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.light, margin: 0 }}>2026 Tallest Tiptoes</p>
+        <div style={{ display: "flex", justifyContent: "center", gap: "16px", marginTop: "12px" }}>
+          <Link to="/privacy-policy" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", color: c.light, textDecoration: "none" }}>Privacy Policy</Link>
+          <Link to="/terms-and-conditions" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", color: c.light, textDecoration: "none" }}>Terms & Conditions</Link>
+        </div>
       </footer>
     </div>
   );
