@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import NavBar from "../src/NavBar";
 import HonestyBox from "../src/HonestyBox";
 import { client, urlFor } from "../src/sanityClient";
-import { useLocation } from "react-router-dom";
 
 var c = {
   red: "#A33B2E",
@@ -70,7 +69,7 @@ export default function HisNotHers() {
       if (match) setSelected(match);
     }
   }, [products, location.state]);
-  
+
   if (selected) {
     return <ItemDetail item={selected} section={activeTab} onClose={function () { setSelected(null); }} />;
   }
