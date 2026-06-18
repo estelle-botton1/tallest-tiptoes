@@ -45,11 +45,11 @@ export default function TheForum() {
   var location = useLocation();
 
   useEffect(function () {
-    if (location.state && location.state.selectedId && products.length > 0) {
-      var match = products.find(function (p) { return p._id === location.state.selectedId; });
-      if (match) setSelected(match);
+    if (location.state && location.state.selectedId && posts.length > 0) {
+      var matchIndex = posts.findIndex(function (p) { return p._id === location.state.selectedId; });
+      if (matchIndex >= 0) setSelectedIndex(matchIndex);
     }
-  }, [products, location.state]);
+  }, [posts, location.state]);
 
   if (selectedIndex !== null && posts[selectedIndex]) {
     return (
