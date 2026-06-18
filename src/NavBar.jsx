@@ -10,6 +10,7 @@ var c = {
 };
 
 var sections = [
+  { name: "Home", path: "/" },
   { name: "The Forum", path: "/the-forum" },
   { name: "The Edit", path: "/the-edit" },
   { name: "The Shop", path: "/the-shop" },
