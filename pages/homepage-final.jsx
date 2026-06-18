@@ -23,7 +23,7 @@ function ForumPreview() {
   if (!featured) { return (<div><div style={{ height: "220px", background: "linear-gradient(135deg, " + c.parchment + ", " + c.warm + "88)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2px", color: c.muted, opacity: 0.4 }}>FEATURED IMAGE</span></div><h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "20px", fontWeight: "400", fontStyle: "italic", margin: "12px 0 6px" }}>Coming soon</h3></div>); }
   return (
     <div>
-      <Link to="/the-forum" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+     <Link to="/the-forum" state={{ selectedId: featured._id }} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
         <div style={{ height: "220px", borderRadius: "3px", overflow: "hidden", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", background: hasAsset(featured.image) ? "none" : "linear-gradient(135deg, " + c.parchment + ", " + c.warm + "88)", marginBottom: "12px" }}>
           {hasAsset(featured.image) && <img src={urlFor(featured.image).width(800).url()} alt={featured.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
           {featured.format && (<div style={{ position: "absolute", top: "12px", left: "12px", padding: "4px 12px", background: c.red, borderRadius: "2px" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "9px", fontWeight: "600", letterSpacing: "1.5px", textTransform: "uppercase", color: c.cream }}>{featured.format}</span></div>)}
@@ -36,7 +36,7 @@ function ForumPreview() {
         <div style={{ display: "flex", gap: "12px", marginTop: "16px" }}>
           {side.map(function (post) {
             return (
-              <Link key={post._id} to="/the-forum" style={{ flex: 1, textDecoration: "none", color: "inherit" }}>
+              <Link key={post._id} to="/the-forum" state={{ selectedId: post._id }} style={{ flex: 1, textDecoration: "none", color: "inherit" }}>
                 <div style={{ height: "120px", borderRadius: "3px", overflow: "hidden", background: hasAsset(post.image) ? "none" : "linear-gradient(135deg, " + c.warm + ", " + c.cream + ")" }}>{hasAsset(post.image) && <img src={urlFor(post.image).width(400).url()} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}</div>
                 <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "9px", letterSpacing: "2px", color: post.format === "Vlog" ? c.ink : c.oldRose, display: "block", marginTop: "8px" }}>{post.format || "POST"}</span>
                 <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "15px", fontWeight: "400", fontStyle: "italic", margin: "3px 0 0" }}>{post.title}</p>
