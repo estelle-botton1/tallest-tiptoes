@@ -46,11 +46,11 @@ export default function TheGuide() {
   var location = useLocation();
 
   useEffect(function () {
-    if (location.state && location.state.selectedId && products.length > 0) {
-      var match = products.find(function (p) { return p._id === location.state.selectedId; });
+    if (location.state && location.state.selectedId && guides.length > 0) {
+      var match = guides.find(function (g) { return g._id === location.state.selectedId; });
       if (match) setSelected(match);
     }
-  }, [products, location.state]);
+  }, [guides, location.state]);
 
   if (selected) {
     return <GuideDetail guide={selected} onClose={function () { setSelected(null); }} />;
