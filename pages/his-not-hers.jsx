@@ -180,7 +180,7 @@ export default function HisNotHers() {
 
 /* Outfit card — masonry tile, same as The Edit */
 function OutfitCard({ outfit, onClick }) {
-  var h = 200 + Math.floor(Math.random() * 80);
+  var h = 200 + (outfit._id ? outfit._id.charCodeAt(0) % 80 : 40);
   var heroImg = outfit.images && outfit.images.length > 0 ? outfit.images[0] : outfit.image;
 
   return (
