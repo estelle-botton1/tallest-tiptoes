@@ -47,13 +47,6 @@ export default function HisNotHers() {
       .catch(function () { setLoading(false); });
   }, []);
 
-  useEffect(function () {
-    if (location.state && location.state.selectedId && items.length > 0) {
-      var match = items.find(function (i) { return i._id === location.state.selectedId; });
-      if (match) setSelected(match);
-    }
-  }, [items, location.state]);
-
   var outfitItems = items.filter(function (i) { return i.category && i.category.toLowerCase() === "outfit guide"; });
   var exploreItems = items.filter(function (i) { return i.category && i.category.toLowerCase() === "explore"; });
 
