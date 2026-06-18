@@ -67,8 +67,17 @@ function FigureSitting({ style }) {
 function Divider() {
   return (
     <div style={{ display: "flex", alignItems: "center", padding: "32px 0", gap: "16px" }}>
-      <div style={{ flex: 1, height: "2.5px", background: c.warm }} />
+      <div style={{ flex: 1, height: "1.5px", background: c.warm }} />
       <StarSketch />
+      <div style={{ flex: 1, height: "1.5px", background: c.warm }} />
+    </div>
+  );
+}
+
+function BorderDivider() {
+  return (
+    <div style={{ display: "flex", alignItems: "center", padding: "32px 0", gap: "0px" }}>
+      <div style={{ flex: 1, height: "2.5px", background: c.warm }} />
       <div style={{ flex: 1, height: "2.5px", background: c.warm }} />
     </div>
   );
@@ -351,7 +360,7 @@ export default function Homepage() {
       <NavBar />
       <HeroDynamic />
 
-      <Divider />
+      <BorderDivider />
 
       <section style={{ padding: "0 20px 0", ...fadeIn(0.15) }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
