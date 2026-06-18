@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import NavBar from "../src/NavBar";
 import HonestyBox from "../src/HonestyBox";
 import { client, urlFor } from "../src/sanityClient";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 var c = {
   red: "#A33B2E",
