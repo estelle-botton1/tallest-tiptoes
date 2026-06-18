@@ -21,6 +21,10 @@ var c = {
   white: "#FBF8F4",
 };
 
+function hasAsset(img) {
+  return img && img.asset;
+}
+
 function StarSketch({ style }) {
   return (
     <svg viewBox="0 0 20 20" style={{ width: "12px", height: "12px", ...style }}>
@@ -62,8 +66,9 @@ function FigureSitting({ style }) {
 
 function Divider() {
   return (
-    <div style={{ display: "flex", alignItems: "center", padding: "32px 0px", gap: "0px" }}>
+    <div style={{ display: "flex", alignItems: "center", padding: "32px 0", gap: "16px" }}>
       <div style={{ flex: 1, height: "2.5px", background: c.warm }} />
+      <StarSketch />
       <div style={{ flex: 1, height: "2.5px", background: c.warm }} />
     </div>
   );
@@ -72,7 +77,7 @@ function Divider() {
 function ForumPreview() {
   const [posts, setPosts] = useState([]);
   useEffect(function () {
-    client.fetch('*[_type == "forumPost"] |  order(coalesce(sortOrder, 999) asc, _createdAt desc) [0...3] { _id, title, format, date, preview, image }')
+    client.fetch('*[_type == "forumPost"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) [0...3] { _id, title, format, date, preview, image }')
       .then(function (data) { setPosts(data); });
   }, []);
 
@@ -92,8 +97,8 @@ function ForumPreview() {
 
   return (
     <Link to="/the-forum" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
-      <div style={{ height: "220px", borderRadius: "3px", overflow: "hidden", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", background: featured.image ? "none" : "linear-gradient(135deg, " + c.parchment + ", " + c.warm + "88)", marginBottom: "12px" }}>
-        {featured.image && <img src={urlFor(featured.image).width(800).url()} alt={featured.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
+      <div style={{ height: "220px", borderRadius: "3px", overflow: "hidden", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", background: hasAsset(featured.image) ? "none" : "linear-gradient(135deg, " + c.parchment + ", " + c.warm + "88)", marginBottom: "12px" }}>
+        {hasAsset(featured.image) && <img src={urlFor(featured.image).width(800).url()} alt={featured.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
         {featured.format && (
           <div style={{ position: "absolute", top: "12px", left: "12px", padding: "4px 12px", background: c.red, borderRadius: "2px" }}>
             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "9px", fontWeight: "600", letterSpacing: "1.5px", textTransform: "uppercase", color: c.cream }}>{featured.format}</span>
@@ -108,8 +113,8 @@ function ForumPreview() {
           {side.map(function (post) {
             return (
               <div key={post._id} style={{ flex: 1 }}>
-                <div style={{ height: "120px", borderRadius: "3px", overflow: "hidden", background: post.image ? "none" : "linear-gradient(135deg, " + c.warm + ", " + c.cream + ")" }}>
-                  {post.image && <img src={urlFor(post.image).width(400).url()} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
+                <div style={{ height: "120px", borderRadius: "3px", overflow: "hidden", background: hasAsset(post.image) ? "none" : "linear-gradient(135deg, " + c.warm + ", " + c.cream + ")" }}>
+                  {hasAsset(post.image) && <img src={urlFor(post.image).width(400).url()} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
                 </div>
                 <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "9px", letterSpacing: "2px", color: post.format === "Vlog" ? c.ink : c.oldRose, display: "block", marginTop: "8px" }}>{post.format || "POST"}</span>
                 <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "15px", fontWeight: "400", fontStyle: "italic", margin: "3px 0 0" }}>{post.title}</p>
@@ -150,37 +155,43 @@ function EditPreview() {
   var right = outfits.filter(function (_, i) { return i % 2 === 1; });
 
   return (
-    <Link to="/the-edit" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+    <div>
       <div style={{ display: "flex", gap: "10px" }}>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px" }}>
           {left.map(function (o) {
             return (
-              <div key={o._id} style={{ height: "200px", borderRadius: "3px", overflow: "hidden", background: o.image ? "none" : "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")" }}>
-                {o.image && <img src={urlFor(o.image).width(400).url()} alt={o.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
-              </div>
+              <Link key={o._id} to="/the-edit" state={{ selectedId: o._id }} style={{ textDecoration: "none", color: "inherit" }}>
+                <div style={{ height: "200px", borderRadius: "3px", overflow: "hidden", background: hasAsset(o.image) ? "none" : "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")" }}>
+                  {hasAsset(o.image) && <img src={urlFor(o.image).width(400).url()} alt={o.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
+                </div>
+              </Link>
             );
           })}
         </div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", marginTop: "28px" }}>
           {right.map(function (o) {
             return (
-              <div key={o._id} style={{ height: "200px", borderRadius: "3px", overflow: "hidden", background: o.image ? "none" : "linear-gradient(160deg, " + c.cream + ", " + c.warm + "66)" }}>
-                {o.image && <img src={urlFor(o.image).width(400).url()} alt={o.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
-              </div>
+              <Link key={o._id} to="/the-edit" state={{ selectedId: o._id }} style={{ textDecoration: "none", color: "inherit" }}>
+                <div style={{ height: "200px", borderRadius: "3px", overflow: "hidden", background: hasAsset(o.image) ? "none" : "linear-gradient(160deg, " + c.cream + ", " + c.warm + "66)" }}>
+                  {hasAsset(o.image) && <img src={urlFor(o.image).width(400).url()} alt={o.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
+                </div>
+              </Link>
             );
           })}
         </div>
       </div>
       {outfits[0] && (
-        <div style={{ marginTop: "14px", padding: "12px 14px", background: c.white, borderRadius: "3px", border: "1px solid " + c.pale, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div>
-            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: c.muted }}>LATEST</span>
-            <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "15px", fontStyle: "italic", margin: "2px 0 0" }}>{outfits[0].title}</p>
+        <Link to="/the-edit" state={{ selectedId: outfits[0]._id }} style={{ textDecoration: "none", color: "inherit" }}>
+          <div style={{ marginTop: "14px", padding: "12px 14px", background: c.white, borderRadius: "3px", border: "1px solid " + c.pale, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div>
+              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: c.muted }}>LATEST</span>
+              <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "15px", fontStyle: "italic", margin: "2px 0 0" }}>{outfits[0].title}</p>
+            </div>
+            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.red, fontStyle: "italic" }}>{outfits[0].mood}</span>
           </div>
-          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.red, fontStyle: "italic" }}>{outfits[0].mood}</span>
-        </div>
+        </Link>
       )}
-    </Link>
+    </div>
   );
 }
 
@@ -196,7 +207,7 @@ function ShopPreview() {
       <Link to="/the-shop" style={{ textDecoration: "none", color: "inherit", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
         {[{ label: "MADE BY ME", bg: c.black, t: c.cream }, { label: "COLLECTED", bg: c.warm, t: c.black }, { label: "MY CLOSET", bg: c.parchment, t: c.black }].map(function (item, i) {
           return (
-            <div key={i} style={{ cursor: "pointer" }}>
+            <div key={i}>
               <div style={{ aspectRatio: "3/4", background: item.bg, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "2px" }}>
                 <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "8px", letterSpacing: "1px", color: item.t, opacity: 0.4 }}>PHOTO</span>
               </div>
@@ -209,59 +220,75 @@ function ShopPreview() {
   }
 
   return (
-    <Link to="/the-shop" style={{ textDecoration: "none", color: "inherit", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
       {products.map(function (product) {
-        var img = product.images && product.images.length > 0 ? product.images[0] : null;
+        var img = product.images && product.images.length > 0 && hasAsset(product.images[0]) ? product.images[0] : null;
         return (
-          <div key={product._id} style={{ cursor: "pointer" }}>
+          <Link key={product._id} to="/the-shop" state={{ selectedId: product._id }} style={{ textDecoration: "none", color: "inherit" }}>
             <div style={{ aspectRatio: "3/4", overflow: "hidden", background: img ? "none" : "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "2px" }}>
               {img ? <img src={urlFor(img).width(300).url()} alt={product.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "8px", color: c.muted, opacity: 0.4 }}>PHOTO</span>}
             </div>
             <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", margin: "6px 0 2px", color: c.black }}>{product.title}</p>
             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.ink }}>{product.price}</span>
-          </div>
+          </Link>
         );
       })}
-    </Link>
+    </div>
   );
 }
 
 function HisNotHersPreview() {
   const [items, setItems] = useState([]);
   useEffect(function () {
-    client.fetch('*[_type == "mensItem"] | order(_createdAt desc) [0...3] { _id, title, brand, price, image }')
+    client.fetch('*[_type == "mensItem" && category == "Outfit Guide"] | order(_createdAt desc) [0...4] { _id, title, mood, image, images }')
       .then(function (data) { setItems(data); });
   }, []);
 
-  return (
-    <Link to="/his-not-hers" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
-      {["Splurge", "Wardrobe Basics", "Outfit Guide"].map(function (cat, i) {
-        return (
-          <div key={cat} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 0", borderBottom: i < 2 ? "1px solid " + c.pale : "none", cursor: "pointer" }}>
-            <div>
-              <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "18px", fontWeight: "400", margin: "0 0 2px" }}>{cat}</p>
-              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", fontStyle: "italic", color: c.light }}>{i === 0 ? "Go big" : i === 1 ? "Start here" : "Full looks, no guessing"}</span>
-            </div>
-            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", color: c.light }}>{">"}</span>
-          </div>
-        );
-      })}
-      {items.length > 0 && (
-        <div style={{ display: "flex", gap: "8px", marginTop: "16px" }}>
-          {items.map(function (item) {
-            return (
-              <div key={item._id} style={{ flex: 1 }}>
-                <div style={{ aspectRatio: "1", overflow: "hidden", borderRadius: "2px", background: item.image ? "none" : "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")" }}>
-                  {item.image && <img src={urlFor(item.image).width(250).url()} alt={item.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
-                </div>
-                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", margin: "6px 0 0", color: c.black }}>{item.title}</p>
-                {item.price && <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.muted }}>{item.price}</span>}
-              </div>
-            );
-          })}
+  if (items.length === 0) {
+    return (
+      <Link to="/his-not-hers" style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <div style={{ flex: 1, height: "200px", background: "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")", borderRadius: "3px" }} />
+          <div style={{ flex: 1, height: "200px", background: "linear-gradient(160deg, " + c.parchment + ", " + c.cream + ")", borderRadius: "3px", marginTop: "28px" }} />
         </div>
-      )}
-    </Link>
+      </Link>
+    );
+  }
+
+  var left = items.filter(function (_, i) { return i % 2 === 0; });
+  var right = items.filter(function (_, i) { return i % 2 === 1; });
+
+  return (
+    <div style={{ display: "flex", gap: "10px" }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px" }}>
+        {left.map(function (item) {
+          var safe = item.images && item.images.length > 0 && item.images[0] && item.images[0].asset ? item.images[0] : (item.image && item.image.asset ? item.image : null);
+          return (
+            <Link key={item._id} to="/his-not-hers" state={{ selectedId: item._id }} style={{ textDecoration: "none", color: "inherit" }}>
+              <div style={{ height: "200px", borderRadius: "3px", overflow: "hidden", background: safe ? "none" : "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")" }}>
+                {safe && <img src={urlFor(safe).width(400).url()} alt={item.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
+              </div>
+              <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "14px", fontStyle: "italic", margin: "6px 0 0", color: c.black }}>{item.title}</p>
+              {item.mood && <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.muted, fontStyle: "italic" }}>{item.mood}</span>}
+            </Link>
+          );
+        })}
+      </div>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", marginTop: "28px" }}>
+        {right.map(function (item) {
+          var safe = item.images && item.images.length > 0 && item.images[0] && item.images[0].asset ? item.images[0] : (item.image && item.image.asset ? item.image : null);
+          return (
+            <Link key={item._id} to="/his-not-hers" state={{ selectedId: item._id }} style={{ textDecoration: "none", color: "inherit" }}>
+              <div style={{ height: "200px", borderRadius: "3px", overflow: "hidden", background: safe ? "none" : "linear-gradient(160deg, " + c.cream + ", " + c.warm + "66)" }}>
+                {safe && <img src={urlFor(safe).width(400).url()} alt={item.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
+              </div>
+              <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "14px", fontStyle: "italic", margin: "6px 0 0", color: c.black }}>{item.title}</p>
+              {item.mood && <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.muted, fontStyle: "italic" }}>{item.mood}</span>}
+            </Link>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
@@ -272,12 +299,12 @@ function GuidePreview() {
       .then(function (data) { setGuides(data); });
   }, []);
 
-  var catBgs = { Restaurants: c.warm, Hosting: c.parchment, Weekend: c.pale, Travel: c.nude + "88" };
+  var catBgs = { "What I'm Eating": c.warm, "Where I'm Going": c.nude + "88", "How I'm Hosting": c.parchment, "Things I'm Liking": c.pale };
 
   if (guides.length === 0) {
     return (
       <Link to="/the-guide" style={{ textDecoration: "none", color: "inherit", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
-        {[{ title: "Restaurants", bg: c.warm }, { title: "Hosting", bg: c.parchment }, { title: "Weekend", bg: c.pale }, { title: "Travel", bg: c.nude + "88" }].map(function (g, i) {
+        {[{ title: "What I'm Eating", bg: c.warm }, { title: "Where I'm Going", bg: c.parchment }, { title: "How I'm Hosting", bg: c.pale }, { title: "Things I'm Liking", bg: c.nude + "88" }].map(function (g, i) {
           return (
             <div key={i} style={{ background: g.bg, borderRadius: "3px", padding: "20px 16px", display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: "100px" }}>
               <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "17px", fontStyle: "italic", margin: "0", color: c.black }}>{g.title}</p>
@@ -294,11 +321,11 @@ function GuidePreview() {
       {guides.map(function (guide) {
         var bg = catBgs[guide.category] || c.warm;
         return (
-          <div key={guide._id} style={{ borderRadius: "3px", overflow: "hidden", position: "relative", minHeight: "120px", background: guide.image ? "none" : bg, display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-            {guide.image && <img src={urlFor(guide.image).width(400).url()} alt={guide.title} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover" }} />}
-            <div style={{ position: "relative", zIndex: 1, padding: "16px", background: guide.image ? "linear-gradient(transparent, rgba(0,0,0,0.5))" : "none" }}>
-              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "9px", letterSpacing: "1.5px", textTransform: "uppercase", color: guide.image ? "#F6F0E8" : c.red }}>{guide.category}</span>
-              <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "15px", fontStyle: "italic", margin: "2px 0 0", color: guide.image ? "#F6F0E8" : c.black }}>{guide.title}</p>
+          <div key={guide._id} style={{ borderRadius: "3px", overflow: "hidden", position: "relative", minHeight: "120px", background: hasAsset(guide.image) ? "none" : bg, display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+            {hasAsset(guide.image) && <img src={urlFor(guide.image).width(400).url()} alt={guide.title} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover" }} />}
+            <div style={{ position: "relative", zIndex: 1, padding: "16px", background: hasAsset(guide.image) ? "linear-gradient(transparent, rgba(0,0,0,0.5))" : "none" }}>
+              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "9px", letterSpacing: "1.5px", textTransform: "uppercase", color: hasAsset(guide.image) ? "#F6F0E8" : c.red }}>{guide.category}</span>
+              <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "15px", fontStyle: "italic", margin: "2px 0 0", color: hasAsset(guide.image) ? "#F6F0E8" : c.black }}>{guide.title}</p>
             </div>
           </div>
         );
@@ -326,8 +353,7 @@ export default function Homepage() {
 
       <Divider />
 
-      {/* 01 — THE FORUM */}
-      <section style={{ padding: "28px 20px 0", ...fadeIn(0.15) }}>
+      <section style={{ padding: "0 20px 0", ...fadeIn(0.15) }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
           <Link to="/the-forum" style={{ textDecoration: "none", color: "inherit" }}>
             <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>01</span>
@@ -340,7 +366,6 @@ export default function Homepage() {
 
       <Divider />
 
-      {/* 02 — THE EDIT */}
       <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.2) }}>
         <FigureWalking style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15 }} />
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
@@ -355,7 +380,6 @@ export default function Homepage() {
 
       <Divider />
 
-      {/* 03 — THE SHOP */}
       <section style={{ padding: "0 20px", ...fadeIn(0.25) }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
           <Link to="/the-shop" style={{ textDecoration: "none", color: "inherit" }}>
@@ -370,7 +394,6 @@ export default function Homepage() {
 
       <Divider />
 
-      {/* 04 — HIS NOT HERS */}
       <section style={{ padding: "0 20px", ...fadeIn(0.3) }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
           <Link to="/his-not-hers" style={{ textDecoration: "none", color: "inherit" }}>
@@ -384,7 +407,6 @@ export default function Homepage() {
 
       <Divider />
 
-      {/* 05 — THE GUIDE */}
       <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.35) }}>
         <FigureSitting style={{ position: "absolute", top: "-8px", right: "20px", opacity: 0.15 }} />
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
@@ -402,7 +424,6 @@ export default function Homepage() {
       <SubscribeBox />
       <HonestyBox />
 
-      {/* Footer */}
       <footer style={{ padding: "32px 24px 48px", textAlign: "center", borderTop: "1px solid " + c.pale }}>
         <p style={{ fontFamily: "'Caveat', cursive", fontSize: "24px", color: c.black, margin: "0 0 16px" }}>Tallest Tiptoes</p>
         <div style={{ display: "flex", justifyContent: "center", gap: "24px", marginBottom: "20px" }}>

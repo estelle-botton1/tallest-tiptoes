@@ -6,7 +6,7 @@ export default {
     { name: 'title', title: 'Title', type: 'string' },
     { name: 'sortOrder', title: 'Display Order (1 = first)', type: 'number' },
     { name: 'category', title: 'Section', type: 'string', options: { list: ['Outfit Guide', 'Explore'] } },
-    { name: 'mood', title: 'Mood (Outfit Guide only)', type: 'string', options: { list: ['Night Out', 'Weekend', 'Workwear', 'Chilled Out', 'Closet Must Haves', 'Little Fancier'] } },
+    { name: 'mood', title: 'Mood (Outfit Guide only)', type: 'string', options: { list: ['Night Out', 'Weekend', 'Workwear', 'Chill', 'Closet Must Haves', 'Little Fancier'] } },
     { name: 'date', title: 'Date', type: 'date' },
     { name: 'brand', title: 'Brand', type: 'string' },
     { name: 'price', title: 'Price', type: 'string' },

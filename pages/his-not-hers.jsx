@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import NavBar from "../src/NavBar";
 import HonestyBox from "../src/HonestyBox";
 import { client, urlFor } from "../src/sanityClient";
@@ -27,7 +28,7 @@ function safeImages(arr) {
 }
 
 var mainTabs = ["Outfit Guide", "Explore"];
-var moods = ["All", "Night Out", "Weekend", "Workwear", "Chilled Out", "Closet Must Haves", "Little Fancier"];
+var moods = ["All", "Night Out", "Weekend", "Workwear", "Chill", "Closet Must Haves", "Little Fancier"];
 
 export default function HisNotHers() {
   const [activeTab, setActiveTab] = useState("Outfit Guide");
@@ -35,6 +36,7 @@ export default function HisNotHers() {
   const [selected, setSelected] = useState(null);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  var location = useLocation();
 
   useEffect(function () {
     client.fetch('*[_type == "mensItem"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, category, mood, brand, price, link, note, date, image, images, outfitPieces, _createdAt }')
@@ -44,6 +46,13 @@ export default function HisNotHers() {
       })
       .catch(function () { setLoading(false); });
   }, []);
+
+  useEffect(function () {
+    if (location.state && location.state.selectedId && items.length > 0) {
+      var match = items.find(function (i) { return i._id === location.state.selectedId; });
+      if (match) setSelected(match);
+    }
+  }, [items, location.state]);
 
   var outfitItems = items.filter(function (i) { return i.category && i.category.toLowerCase() === "outfit guide"; });
   var exploreItems = items.filter(function (i) { return i.category && i.category.toLowerCase() === "explore"; });
