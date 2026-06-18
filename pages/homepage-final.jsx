@@ -362,19 +362,6 @@ export default function Homepage() {
 
       <BorderDivider />
 
-      <section style={{ padding: "0 20px 0", ...fadeIn(0.15) }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-          <Link to="/the-forum" style={{ textDecoration: "none", color: "inherit" }}>
-            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>01</span>
-            <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Forum</h2>
-          </Link>
-          <Link to="/the-forum" style={linkStyle}>View all</Link>
-        </div>
-        <ForumPreview />
-      </section>
-
-      <Divider />
-
       <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.2) }}>
         <FigureWalking style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15 }} />
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
@@ -385,6 +372,19 @@ export default function Homepage() {
           <Link to="/the-edit" style={linkStyle}>See all</Link>
         </div>
         <EditPreview />
+      </section>
+
+      <Divider />
+
+      <section style={{ padding: "0 20px 0", ...fadeIn(0.15) }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
+          <Link to="/the-forum" style={{ textDecoration: "none", color: "inherit" }}>
+            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>01</span>
+            <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Forum</h2>
+          </Link>
+          <Link to="/the-forum" style={linkStyle}>View all</Link>
+        </div>
+        <ForumPreview />
       </section>
 
       <Divider />

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import NavBar from "../src/NavBar";
 import HonestyBox from "../src/HonestyBox";
 import { client, urlFor } from "../src/sanityClient";
+import { useLocation } from "react-router-dom";
 
 var c = {
   red: "#A33B2E",
@@ -41,6 +42,15 @@ export default function TheGuide() {
   var filtered = activeCat === "All" ? guides : guides.filter(function (g) { return g.category === activeCat; });
   var featured = filtered.length > 0 ? filtered[0] : null;
   var rest = filtered.length > 1 ? filtered.slice(1) : [];
+
+  var location = useLocation();
+
+  useEffect(function () {
+    if (location.state && location.state.selectedId && products.length > 0) {
+      var match = products.find(function (p) { return p._id === location.state.selectedId; });
+      if (match) setSelected(match);
+    }
+  }, [products, location.state]);
 
   if (selected) {
     return <GuideDetail guide={selected} onClose={function () { setSelected(null); }} />;

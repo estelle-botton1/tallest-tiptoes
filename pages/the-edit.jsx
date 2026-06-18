@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import NavBar from "../src/NavBar";
 import HonestyBox from "../src/HonestyBox";
 import { client, urlFor } from "../src/sanityClient";
+import { useLocation } from "react-router-dom";
 
 var c = {
   red: "#A33B2E",
@@ -30,6 +31,15 @@ export default function TheEdit() {
       .then(function (data) { setOutfits(data); setLoading(false); })
       .catch(function () { setLoading(false); });
   }, []);
+
+  var location = useLocation();
+
+  useEffect(function () {
+    if (location.state && location.state.selectedId && outfits.length > 0) {
+      var match = outfits.find(function (o) { return o._id === location.state.selectedId; });
+      if (match) setSelected(match);
+    }
+  }, [outfits, location.state]);
 
   var filtered = activeMood === "All" ? outfits : outfits.filter(function (o) { return o.mood === activeMood; });
   var leftCol = filtered.filter(function (_, i) { return i % 2 === 0; });

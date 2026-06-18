@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import NavBar from "../src/NavBar";
 import HonestyBox from "../src/HonestyBox";
 import { client, urlFor } from "../src/sanityClient";
+import { useLocation } from "react-router-dom";
 
 var c = {
   red: "#A33B2E",
@@ -35,6 +36,15 @@ export default function TheShop() {
       .then(function (data) { setProducts(data); setLoading(false); })
       .catch(function () { setLoading(false); });
   }, []);
+
+  var location = useLocation();
+
+  useEffect(function () {
+    if (location.state && location.state.selectedId && products.length > 0) {
+      var match = products.find(function (p) { return p._id === location.state.selectedId; });
+      if (match) setSelected(match);
+    }
+  }, [products, location.state]);
 
   var filtered = activeTab === "all" ? products : products.filter(function (p) { return p.category === activeTab; });
 

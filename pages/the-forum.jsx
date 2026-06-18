@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import NavBar from "../src/NavBar";
 import HonestyBox from "../src/HonestyBox";
 import { client, urlFor } from "../src/sanityClient";
+import { useLocation } from "react-router-dom";
 
 var c = {
   red: "#A33B2E",
@@ -40,6 +41,15 @@ export default function TheForum() {
 
   var featured = posts.length > 0 ? posts[0] : null;
   var rest = posts.length > 1 ? posts.slice(1) : [];
+
+  var location = useLocation();
+
+  useEffect(function () {
+    if (location.state && location.state.selectedId && products.length > 0) {
+      var match = products.find(function (p) { return p._id === location.state.selectedId; });
+      if (match) setSelected(match);
+    }
+  }, [products, location.state]);
 
   if (selectedIndex !== null && posts[selectedIndex]) {
     return (
