@@ -33,7 +33,7 @@ export default function TheGuide() {
   const [activeCat, setActiveCat] = useState("All");
   const [selected, setSelected] = useState(null);
 
-  useEffect(function () {client.f
+  useEffect(function () {
     client.fetch('*[_type == "guide"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, category, date, image, images, preview, link, linkLabel, body }')
       .then(function (data) { setGuides(data); setLoading(false); })
       .catch(function () { setLoading(false); });
@@ -174,13 +174,8 @@ function GuideDetail({ guide, onClose }) {
     <div style={{ minHeight: "100vh", background: c.cream, fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet" />
 
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 20px", borderBottom: "1px solid " + c.pale, position: "sticky", top: 0, background: c.cream + "F2", backdropFilter: "blur(12px)", zIndex: 10 }}>
-        <span onClick={onClose} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, cursor: "pointer" }}>Back</span>
-        <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: "16px", color: c.black }}>The Guide</span>
-        <div style={{ width: "40px" }} />
-      </div>
+      <NavBar />
 
-      {/* Swipeable images */}
       <div style={{ position: "relative", height: "260px", overflow: "hidden", background: allImages.length > 0 ? "none" : "linear-gradient(135deg, " + c.warm + ", " + c.parchment + ")" }}>
         {allImages.length > 0 ? (
           <img src={urlFor(allImages[currentImg]).width(1000).url()} alt={guide.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -214,14 +209,14 @@ function GuideDetail({ guide, onClose }) {
         <div style={{ padding: "0 20px 24px" }}>
           <a href={guide.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
             <div style={{ textAlign: "center", padding: "14px", border: "1px solid " + c.black, borderRadius: "3px", cursor: "pointer" }}>
-            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase", color: c.black }}>{guide.linkLabel || "READ MORE"}</span>
+              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase", color: c.black }}>{guide.linkLabel || "READ MORE"}</span>
             </div>
           </a>
         </div>
       )}
 
       <HonestyBox />
-      
+
       <footer style={{ padding: "32px 24px 48px", textAlign: "center", borderTop: "1px solid " + c.pale }}>
         <p style={{ fontFamily: "'Caveat', cursive", fontSize: "24px", color: c.black, margin: "0 0 16px" }}>Tallest Tiptoes</p>
         <div style={{ display: "flex", justifyContent: "center", gap: "24px", marginBottom: "20px" }}>
