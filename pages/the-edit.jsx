@@ -1,215 +1,216 @@
 import { useState, useEffect } from "react";
 import NavBar from "../src/NavBar";
 import HonestyBox from "../src/HonestyBox";
+import SubscribeBox from "../src/SubscribeBox";
+import HeroDynamic from "../src/HeroDynamic";
 import { client, urlFor } from "../src/sanityClient";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-var c = {
-  red: "#A33B2E",
-  oldRose: "#B98589",
-  ink: "#3D3633",
-  black: "#1A1A1A",
-  cream: "#F6F0E8",
-  parchment: "#EDE4D8",
-  warm: "#E0D2C2",
-  pale: "#EAE2D8",
-  muted: "#8A7E72",
-  light: "#B8AA9C",
-  white: "#FBF8F4",
-};
+var c = { red: "#A33B2E", oldRose: "#B98589", ink: "#3D3633", black: "#1A1A1A", nude: "#F0DDD0", cream: "#F6F0E8", parchment: "#EDE4D8", warm: "#E0D2C2", pale: "#EAE2D8", muted: "#8A7E72", light: "#B8AA9C", white: "#FBF8F4" };
+function hasAsset(img) { return img && img.asset; }
 
-var moods = ["All", "Errands", "Dinner", "Weekend", "Event", "Daytime", "Night Out", "Work", "Vacation"];
+function FigureWalking() { return (<svg viewBox="0 0 50 80" style={{ width: "38px", height: "58px" }}><circle cx="25" cy="8" r="5" stroke={c.ink} strokeWidth="1" fill="none" /><line x1="25" y1="13" x2="25" y2="42" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="20" x2="15" y2="30" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="22" x2="38" y2="28" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="42" x2="15" y2="65" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="42" x2="35" y2="62" stroke={c.ink} strokeWidth="1" /></svg>); }
 
-export default function TheEdit() {
-  const [outfits, setOutfits] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [activeMood, setActiveMood] = useState("All");
-  const [selected, setSelected] = useState(null);
-
-  useEffect(function () {
-   client.fetch('*[_type == "outfit"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, mood, date, image, images, note, items }')
-      .then(function (data) { setOutfits(data); setLoading(false); })
-      .catch(function () { setLoading(false); });
-  }, []);
-
-  var location = useLocation();
-
-  useEffect(function () {
-    if (location.state && location.state.selectedId && outfits.length > 0) {
-      var match = outfits.find(function (o) { return o._id === location.state.selectedId; });
-      if (match) setSelected(match);
-    }
-  }, [outfits, location.state]);
-
-  var filtered = activeMood === "All" ? outfits : outfits.filter(function (o) { return o.mood === activeMood; });
-  var leftCol = filtered.filter(function (_, i) { return i % 2 === 0; });
-  var rightCol = filtered.filter(function (_, i) { return i % 2 === 1; });
-
-  if (selected) {
-    return <OutfitDetail outfit={selected} onClose={function () { setSelected(null); }} />;
-  }
-
+function Divider() {
   return (
-    <div style={{ minHeight: "100vh", background: c.cream, fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
-      <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet" />
-      <NavBar />
-
-      <div style={{ padding: "32px 20px 0" }}>
-        <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "32px", fontWeight: "400", margin: "0 0 6px" }}>The Edit</h1>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", fontStyle: "italic", color: c.muted, margin: "0" }}>What I wore and where I wore it</p>
-      </div>
-
-      <div style={{ display: "flex", gap: "6px", padding: "20px 20px 24px", overflowX: "auto", WebkitOverflowScrolling: "touch", scrollbarWidth: "none" }}>
-        {moods.map(function (mood) {
-          return (
-            <button key={mood} onClick={function () { setActiveMood(mood); }} style={{ padding: "7px 16px", fontSize: "11px", fontFamily: "'Cormorant Garamond', serif", fontWeight: "600", letterSpacing: "1px", textTransform: "uppercase", whiteSpace: "nowrap", background: activeMood === mood ? c.black : "transparent", color: activeMood === mood ? c.cream : c.ink, border: "1px solid " + (activeMood === mood ? c.black : c.light), borderRadius: "2px", cursor: "pointer" }}>{mood}</button>
-          );
-        })}
-      </div>
-
-      {loading && (
-        <div style={{ padding: "60px 20px", textAlign: "center" }}>
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.muted, fontStyle: "italic" }}>Loading...</p>
-        </div>
-      )}
-
-      {!loading && filtered.length === 0 && (
-        <div style={{ padding: "60px 20px", textAlign: "center" }}>
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", color: c.muted, fontStyle: "italic" }}>Coming soon</p>
-        </div>
-      )}
-
-      {filtered.length > 0 && (
-        <div style={{ display: "flex", gap: "12px", padding: "0 20px 40px" }}>
-          <div style={{ flex: 1 }}>
-            {leftCol.map(function (outfit) {
-              return <OutfitCard key={outfit._id} outfit={outfit} onClick={function () { setSelected(outfit); }} />;
-            })}
-          </div>
-          <div style={{ flex: 1, marginTop: "32px" }}>
-            {rightCol.map(function (outfit) {
-              return <OutfitCard key={outfit._id} outfit={outfit} onClick={function () { setSelected(outfit); }} />;
-            })}
-          </div>
-        </div>
-      )}
-
-      <HonestyBox />
-      <footer style={{ padding: "24px 24px 40px", textAlign: "center", borderTop: "1px solid " + c.pale }}>
-        <p style={{ fontFamily: "'Caveat', cursive", fontSize: "20px", color: c.black, margin: "0" }}>Tallest Tiptoes</p>
-      </footer>
+    <div style={{ display: "flex", alignItems: "center", padding: "32px 0", gap: "16px" }}>
+      <div style={{ flex: 1, height: "1px", background: c.warm }} />
+      <div style={{ width: "4px", height: "4px", borderRadius: "50%", background: c.light }} />
+      <div style={{ flex: 1, height: "1px", background: c.warm }} />
     </div>
   );
 }
 
-function OutfitCard({ outfit, onClick }) {
-  var h = 200 + Math.floor(Math.random() * 80);
+function BorderDivider() { return (<div style={{ display: "flex", alignItems: "center", padding: "32px 0" }}><div style={{ flex: 1, height: "2.5px", background: c.warm }} /></div>); }
+
+function ForumPreview() {
+  const [posts, setPosts] = useState([]);
+  useEffect(function () { client.fetch('*[_type == "forumPost"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) [0...3] { _id, title, format, date, preview, image }').then(function (data) { setPosts(data); }); }, []);
+  var featured = posts.length > 0 ? posts[0] : null;
+  var side = posts.length > 1 ? posts.slice(1, 3) : [];
+  if (!featured) { return (<div><div style={{ height: "220px", background: "linear-gradient(135deg, " + c.parchment + ", " + c.warm + "88)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2px", color: c.muted, opacity: 0.4 }}>FEATURED IMAGE</span></div><h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "20px", fontWeight: "400", fontStyle: "italic", margin: "12px 0 6px" }}>Coming soon</h3></div>); }
   return (
-    <div onClick={onClick} style={{ cursor: "pointer", marginBottom: "12px" }}>
-      <div style={{ height: h + "px", borderRadius: "3px", overflow: "hidden", background: outfit.image ? "none" : "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
-        {outfit.image ? (
-          <img src={urlFor(outfit.image).width(400).url()} alt={outfit.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-        ) : (
-          <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "9px", color: c.muted, opacity: 0.4 }}>PHOTO</span>
-        )}
-        {outfit.date && (
-          <div style={{ position: "absolute", bottom: "8px", left: "8px", background: c.cream + "CC", padding: "3px 8px", borderRadius: "2px" }}>
-            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", color: c.ink }}>{new Date(outfit.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
-          </div>
-        )}
-      </div>
-      <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "14px", fontStyle: "italic", margin: "8px 0 0", lineHeight: "1.3", color: c.black }}>{outfit.title}</p>
-      {outfit.mood && <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.muted, fontStyle: "italic" }}>{outfit.mood}</span>}
-    </div>
-  );
-}
-
-function OutfitDetail({ outfit, onClose }) {
-  const [currentImg, setCurrentImg] = useState(0);
-  var allImages = [];
-  if (outfit.image) allImages.push(outfit.image);
-  if (outfit.images) allImages = allImages.concat(outfit.images);
-  if (allImages.length === 0) allImages = [null];
-
-  return (
-    <div style={{ minHeight: "100vh", background: c.cream, fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
-      <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
-
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 20px", borderBottom: "1px solid " + c.pale, position: "sticky", top: 0, background: c.cream + "F2", backdropFilter: "blur(12px)", zIndex: 10 }}>
-        <span onClick={onClose} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, cursor: "pointer" }}>Back</span>
-        <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: "16px", color: c.black }}>The Edit</span>
-        <div style={{ width: "40px" }} />
-      </div>
-
-      <div style={{ position: "relative", height: "460px", overflow: "hidden", background: "linear-gradient(135deg, " + c.warm + ", " + c.parchment + ")" }}>
-        {allImages[currentImg] ? (
-          <img src={urlFor(allImages[currentImg]).width(1000).url()} alt={outfit.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-        ) : null}
-
-        {allImages.length > 1 && (
-          <div>
-            <div onClick={function () { setCurrentImg(currentImg > 0 ? currentImg - 1 : allImages.length - 1); }} style={{ position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)", width: "36px", height: "36px", borderRadius: "50%", background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#fff", fontSize: "18px" }}>‹</div>
-            <div onClick={function () { setCurrentImg(currentImg < allImages.length - 1 ? currentImg + 1 : 0); }} style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", width: "36px", height: "36px", borderRadius: "50%", background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#fff", fontSize: "18px" }}>›</div>
-            <div style={{ position: "absolute", bottom: "12px", left: "50%", transform: "translateX(-50%)", display: "flex", gap: "6px" }}>
-              {allImages.map(function (_, i) {
-                return <div key={i} style={{ width: "7px", height: "7px", borderRadius: "50%", background: i === currentImg ? "#fff" : "rgba(255,255,255,0.4)" }} />;
-              })}
-            </div>
-          </div>
-        )}
-      </div>
-
-      <div style={{ padding: "24px 20px 8px" }}>
-        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: c.red }}>
-          {outfit.date ? new Date(outfit.date).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : ""}{outfit.mood ? " \u00B7 " + outfit.mood : ""}
-        </span>
-        <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "24px", fontWeight: "400", fontStyle: "italic", margin: "6px 0 0", lineHeight: "1.3" }}>{outfit.title}</h2>
-      </div>
-
-      {outfit.note && (
-        <div style={{ padding: "12px 20px 20px" }}>
-          <div style={{ padding: "16px", background: c.parchment, borderRadius: "3px", borderLeft: "3px solid " + c.red }}>
-            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", fontStyle: "italic", color: c.ink, margin: "0", lineHeight: "1.6" }}>{outfit.note}</p>
-          </div>
+    <div>
+      <Link to="/the-forum" state={{ selectedId: featured._id }} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+        <div style={{ height: "220px", borderRadius: "3px", overflow: "hidden", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", background: hasAsset(featured.image) ? "none" : "linear-gradient(135deg, " + c.parchment + ", " + c.warm + "88)", marginBottom: "12px" }}>
+          {hasAsset(featured.image) && <img src={urlFor(featured.image).width(800).url()} alt={featured.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
+          {featured.format && (<div style={{ position: "absolute", top: "12px", left: "12px", padding: "4px 12px", background: c.red, borderRadius: "2px" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "9px", fontWeight: "600", letterSpacing: "1.5px", textTransform: "uppercase", color: c.cream }}>{featured.format}</span></div>)}
         </div>
-      )}
-
-      {outfit.items && outfit.items.length > 0 && (
-        <div style={{ padding: "0 20px 20px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px" }}>
-            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>THE BREAKDOWN</span>
-            <div style={{ flex: 1, height: "1px", background: c.pale }} />
-          </div>
-          {outfit.items.map(function (item, i) {
-            var itemContent = (
-              <div style={{ display: "flex", alignItems: "stretch", marginBottom: "8px", borderRadius: "3px", overflow: "hidden", border: "1px solid " + c.pale, background: c.white, cursor: item.link ? "pointer" : "default" }}>
-                <div style={{ width: "80px", flexShrink: 0, overflow: "hidden", background: item.image ? "none" : "linear-gradient(135deg, " + c.pale + ", " + c.warm + "44)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  {item.image ? (
-                    <img src={urlFor(item.image).width(200).url()} alt={item.piece} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  ) : (
-                    <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "8px", color: c.muted, opacity: 0.4 }}>PHOTO</span>
-                  )}
-                </div>
-                <div style={{ padding: "12px 14px", flex: 1, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div>
-                    <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "15px", fontStyle: "italic", margin: "0 0 2px", color: c.black }}>{item.piece}</p>
-                    <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.muted }}>{item.brand}</span>
-                  </div>
-                  <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", fontWeight: "600", color: c.red }}>{item.price}</span>
-                </div>
-              </div>
+        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: c.red }}>{featured.format || "POST"}</span>
+        <h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "20px", fontWeight: "400", fontStyle: "italic", margin: "6px 0 6px", lineHeight: "1.3" }}>{featured.title}</h3>
+        {featured.preview && <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.muted, margin: "0 0 4px", lineHeight: "1.5" }}>{featured.preview}</p>}
+      </Link>
+      {side.length > 0 && (
+        <div style={{ display: "flex", gap: "12px", marginTop: "16px" }}>
+          {side.map(function (post) {
+            return (
+              <Link key={post._id} to="/the-forum" state={{ selectedId: post._id }} style={{ flex: 1, textDecoration: "none", color: "inherit" }}>
+                <div style={{ height: "120px", borderRadius: "3px", overflow: "hidden", background: hasAsset(post.image) ? "none" : "linear-gradient(135deg, " + c.warm + ", " + c.cream + ")" }}>{hasAsset(post.image) && <img src={urlFor(post.image).width(400).url()} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}</div>
+                <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "9px", letterSpacing: "2px", color: post.format === "Vlog" ? c.ink : c.oldRose, display: "block", marginTop: "8px" }}>{post.format || "POST"}</span>
+                <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "15px", fontWeight: "400", fontStyle: "italic", margin: "3px 0 0" }}>{post.title}</p>
+              </Link>
             );
-
-            if (item.link) {
-              return <a key={i} href={item.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "inherit" }}>{itemContent}</a>;
-            }
-            return <div key={i}>{itemContent}</div>;
           })}
         </div>
       )}
+    </div>
+  );
+}
 
+function EditPreview() {
+  const [outfits, setOutfits] = useState([]);
+  useEffect(function () { client.fetch('*[_type == "outfit"] | order(_createdAt desc) [0...4] { _id, title, mood, image }').then(function (data) { setOutfits(data); }); }, []);
+  if (outfits.length === 0) { return (<Link to="/the-edit" style={{ textDecoration: "none", color: "inherit", display: "block" }}><div style={{ display: "flex", gap: "10px" }}><div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px" }}><div style={{ height: "210px", background: "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")", borderRadius: "3px" }} /><div style={{ height: "150px", background: "linear-gradient(160deg, " + c.parchment + ", " + c.cream + ")", borderRadius: "3px" }} /></div><div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", marginTop: "28px" }}><div style={{ height: "190px", background: "linear-gradient(160deg, " + c.cream + ", " + c.warm + "66)", borderRadius: "3px" }} /><div style={{ height: "170px", background: "linear-gradient(160deg, " + c.pale + ", " + c.cream + ")", borderRadius: "3px" }} /></div></div></Link>); }
+  var left = outfits.filter(function (_, i) { return i % 2 === 0; });
+  var right = outfits.filter(function (_, i) { return i % 2 === 1; });
+  return (
+    <div>
+      <div style={{ display: "flex", gap: "10px" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px" }}>
+          {left.map(function (o) { return (<Link key={o._id} to="/the-edit" state={{ selectedId: o._id }} style={{ textDecoration: "none", color: "inherit" }}><div style={{ height: "200px", borderRadius: "3px", overflow: "hidden", background: hasAsset(o.image) ? "none" : "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")" }}>{hasAsset(o.image) && <img src={urlFor(o.image).width(400).url()} alt={o.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}</div></Link>); })}
+        </div>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", marginTop: "28px" }}>
+          {right.map(function (o) { return (<Link key={o._id} to="/the-edit" state={{ selectedId: o._id }} style={{ textDecoration: "none", color: "inherit" }}><div style={{ height: "200px", borderRadius: "3px", overflow: "hidden", background: hasAsset(o.image) ? "none" : "linear-gradient(160deg, " + c.cream + ", " + c.warm + "66)" }}>{hasAsset(o.image) && <img src={urlFor(o.image).width(400).url()} alt={o.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}</div></Link>); })}
+        </div>
+      </div>
+      {outfits[0] && (<Link to="/the-edit" state={{ selectedId: outfits[0]._id }} style={{ textDecoration: "none", color: "inherit" }}><div style={{ marginTop: "14px", padding: "12px 14px", background: c.white, borderRadius: "3px", border: "1px solid " + c.pale, display: "flex", justifyContent: "space-between", alignItems: "center" }}><div><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: c.muted }}>LATEST</span><p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "15px", fontStyle: "italic", margin: "2px 0 0" }}>{outfits[0].title}</p></div><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.red, fontStyle: "italic" }}>{outfits[0].mood}</span></div></Link>)}
+    </div>
+  );
+}
+
+function ShopPreview() {
+  const [products, setProducts] = useState([]);
+  useEffect(function () { client.fetch('*[_type == "product"] | order(_createdAt desc) [0...3] { _id, title, price, category, images }').then(function (data) { setProducts(data); }); }, []);
+  if (products.length === 0) { return (<Link to="/the-shop" style={{ textDecoration: "none", color: "inherit", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>{[{ label: "MADE BY ME", bg: c.black, t: c.cream }, { label: "COLLECTED", bg: c.warm, t: c.black }, { label: "MY CLOSET", bg: c.parchment, t: c.black }].map(function (item, i) { return (<div key={i}><div style={{ aspectRatio: "3/4", background: item.bg, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "2px" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "8px", letterSpacing: "1px", color: item.t, opacity: 0.4 }}>PHOTO</span></div><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "9px", letterSpacing: "1.5px", textTransform: "uppercase", color: c.red, display: "block", marginTop: "6px" }}>{item.label}</span></div>); })}</Link>); }
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
+      {products.map(function (product) {
+        var img = product.images && product.images.length > 0 && hasAsset(product.images[0]) ? product.images[0] : null;
+        return (<Link key={product._id} to="/the-shop" state={{ selectedId: product._id }} style={{ textDecoration: "none", color: "inherit" }}><div style={{ aspectRatio: "3/4", overflow: "hidden", background: img ? "none" : "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "2px" }}>{img ? <img src={urlFor(img).width(300).url()} alt={product.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "8px", color: c.muted, opacity: 0.4 }}>PHOTO</span>}</div><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", margin: "6px 0 2px", color: c.black }}>{product.title}</p><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.ink }}>{product.price}</span></Link>);
+      })}
+    </div>
+  );
+}
+
+function HisNotHersPreview() {
+  const [items, setItems] = useState([]);
+  useEffect(function () { client.fetch('*[_type == "mensItem" && category == "Outfit Guide"] | order(_createdAt desc) [0...4] { _id, title, mood, image, images }').then(function (data) { setItems(data); }); }, []);
+  if (items.length === 0) { return (<Link to="/his-not-hers" style={{ textDecoration: "none", color: "inherit", display: "block" }}><div style={{ display: "flex", gap: "10px" }}><div style={{ flex: 1, height: "200px", background: "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")", borderRadius: "3px" }} /><div style={{ flex: 1, height: "200px", background: "linear-gradient(160deg, " + c.parchment + ", " + c.cream + ")", borderRadius: "3px", marginTop: "28px" }} /></div></Link>); }
+  var left = items.filter(function (_, i) { return i % 2 === 0; });
+  var right = items.filter(function (_, i) { return i % 2 === 1; });
+  return (
+    <div style={{ display: "flex", gap: "10px" }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px" }}>
+        {left.map(function (item) {
+          var safe = item.images && item.images.length > 0 && item.images[0] && item.images[0].asset ? item.images[0] : (item.image && item.image.asset ? item.image : null);
+          return (<Link key={item._id} to="/his-not-hers" state={{ selectedId: item._id }} style={{ textDecoration: "none", color: "inherit" }}><div style={{ height: "200px", borderRadius: "3px", overflow: "hidden", background: safe ? "none" : "linear-gradient(160deg, " + c.warm + ", " + c.parchment + ")" }}>{safe && <img src={urlFor(safe).width(400).url()} alt={item.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}</div><p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "14px", fontStyle: "italic", margin: "6px 0 0", color: c.black }}>{item.title}</p>{item.mood && <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.muted, fontStyle: "italic" }}>{item.mood}</span>}</Link>);
+        })}
+      </div>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", marginTop: "28px" }}>
+        {right.map(function (item) {
+          var safe = item.images && item.images.length > 0 && item.images[0] && item.images[0].asset ? item.images[0] : (item.image && item.image.asset ? item.image : null);
+          return (<Link key={item._id} to="/his-not-hers" state={{ selectedId: item._id }} style={{ textDecoration: "none", color: "inherit" }}><div style={{ height: "200px", borderRadius: "3px", overflow: "hidden", background: safe ? "none" : "linear-gradient(160deg, " + c.cream + ", " + c.warm + "66)" }}>{safe && <img src={urlFor(safe).width(400).url()} alt={item.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}</div><p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "14px", fontStyle: "italic", margin: "6px 0 0", color: c.black }}>{item.title}</p>{item.mood && <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.muted, fontStyle: "italic" }}>{item.mood}</span>}</Link>);
+        })}
+      </div>
+    </div>
+  );
+}
+
+function GuidePreview() {
+  const [guides, setGuides] = useState([]);
+  useEffect(function () { client.fetch('*[_type == "guide"] | order(_createdAt desc) [0...4] { _id, title, category, image }').then(function (data) { setGuides(data); }); }, []);
+  var catBgs = { "What I'm Eating": c.warm, "Where I'm Going": c.nude + "88", "How I'm Hosting": c.parchment, "Things I'm Liking": c.pale };
+  if (guides.length === 0) { return (<Link to="/the-guide" style={{ textDecoration: "none", color: "inherit", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>{[{ title: "What I'm Eating", bg: c.warm }, { title: "Where I'm Going", bg: c.parchment }, { title: "How I'm Hosting", bg: c.pale }, { title: "Things I'm Liking", bg: c.nude + "88" }].map(function (g, i) { return (<div key={i} style={{ background: g.bg, borderRadius: "3px", padding: "20px 16px", display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: "100px" }}><p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "17px", fontStyle: "italic", margin: "0", color: c.black }}>{g.title}</p><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.red, fontStyle: "italic" }}>Browse</span></div>); })}</Link>); }
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+      {guides.map(function (guide) {
+        var bg = catBgs[guide.category] || c.warm;
+        return (
+          <Link key={guide._id} to="/the-guide" state={{ selectedId: guide._id }} style={{ textDecoration: "none", color: "inherit" }}>
+            <div style={{ borderRadius: "3px", overflow: "hidden", position: "relative", minHeight: "120px", background: hasAsset(guide.image) ? "none" : bg, display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+              {hasAsset(guide.image) && <img src={urlFor(guide.image).width(400).url()} alt={guide.title} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover" }} />}
+              <div style={{ position: "relative", zIndex: 1, padding: "16px", background: hasAsset(guide.image) ? "linear-gradient(transparent, rgba(0,0,0,0.5))" : "none" }}>
+                <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "9px", letterSpacing: "1.5px", textTransform: "uppercase", color: hasAsset(guide.image) ? "#F6F0E8" : c.red }}>{guide.category}</span>
+                <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "15px", fontStyle: "italic", margin: "2px 0 0", color: hasAsset(guide.image) ? "#F6F0E8" : c.black }}>{guide.title}</p>
+              </div>
+            </div>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
+export default function Homepage() {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(function () { setTimeout(function () { setLoaded(true); }, 50); }, []);
+  var fadeIn = function (delay) { return { opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(24px)", transition: "all 0.7s cubic-bezier(0.22, 1, 0.36, 1) " + (delay || 0) + "s" }; };
+  var linkStyle = { fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.red, fontStyle: "italic", textDecoration: "none" };
+
+  return (
+    <div style={{ minHeight: "100vh", background: c.cream, fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
+      <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+      <NavBar />
+      <HeroDynamic />
+      <BorderDivider />
+
+      <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.2) }}>
+        <Link to="/the-edit" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
+          <Link to="/the-edit" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>01</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Edit</h2></Link>
+          <Link to="/the-edit" style={linkStyle}>See all</Link>
+        </div>
+        <EditPreview />
+      </section>
+
+      <Divider />
+
+      <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.15) }}>
+        <Link to="/the-forum" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
+          <Link to="/the-forum" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>02</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Forum</h2></Link>
+          <Link to="/the-forum" style={linkStyle}>See all</Link>
+        </div>
+        <ForumPreview />
+      </section>
+
+      <Divider />
+
+      <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.25) }}>
+        <Link to="/the-shop" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
+          <Link to="/the-shop" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>03</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Shop</h2><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", fontStyle: "italic", color: c.muted, margin: "4px 0 0" }}>Made, found, and from my closet</p></Link>
+          <Link to="/the-shop" style={linkStyle}>See all</Link>
+        </div>
+        <ShopPreview />
+      </section>
+
+      <Divider />
+
+      <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.3) }}>
+        <Link to="/his-not-hers" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
+          <Link to="/his-not-hers" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>04</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>His Not Hers</h2></Link>
+          <Link to="/his-not-hers" style={linkStyle}>See all</Link>
+        </div>
+        <HisNotHersPreview />
+      </section>
+
+      <Divider />
+
+      <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.35) }}>
+        <Link to="/the-guide" style={{ position: "absolute", top: "-8px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
+          <Link to="/the-guide" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>05</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Guide</h2></Link>
+          <Link to="/the-guide" style={linkStyle}>See all</Link>
+        </div>
+        <GuidePreview />
+      </section>
+
+      <Divider />
+      <SubscribeBox />
       <HonestyBox />
-      
+
       <footer style={{ padding: "32px 24px 48px", textAlign: "center", borderTop: "1px solid " + c.pale }}>
         <p style={{ fontFamily: "'Caveat', cursive", fontSize: "24px", color: c.black, margin: "0 0 16px" }}>Tallest Tiptoes</p>
         <div style={{ display: "flex", justifyContent: "center", gap: "24px", marginBottom: "20px" }}>
