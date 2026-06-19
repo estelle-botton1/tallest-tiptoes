@@ -33,8 +33,8 @@ export default function TheGuide() {
   const [activeCat, setActiveCat] = useState("All");
   const [selected, setSelected] = useState(null);
 
-  useEffect(function () {
-    client.fetch('*[_type == "guide"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, category, date, image, images, preview, link, body }')
+  useEffect(function () {client.f
+    client.fetch('*[_type == "guide"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, category, date, image, images, preview, link, linkLabel, body }')
       .then(function (data) { setGuides(data); setLoading(false); })
       .catch(function () { setLoading(false); });
   }, []);
