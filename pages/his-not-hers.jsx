@@ -270,12 +270,12 @@ function ItemDetail({ item, section, onClose }) {
           <a href="https://substack.com/@sophiazami" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.muted, textDecoration: "none" }}>Substack</a>
           <a href="https://shopmy.us/sophiazami/closet" target="_blank" rel="noopener noreferrer" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.muted, textDecoration: "none" }}>ShopMy</a>
         </div>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.light, margin: "0 0 4px" }}>Website by <a href="mailto:estellebotton1@gmail.com" style={{ color: c.light, textDecoration: "underline", textUnderlineOffset: "2px" }}>Estelle Botton</a></p>
         <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.light, margin: 0 }}>2026 Tallest Tiptoes</p>
         <div style={{ display: "flex", justifyContent: "center", gap: "16px", marginTop: "12px" }}>
           <Link to="/privacy-policy" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", color: c.light, textDecoration: "none" }}>Privacy Policy</Link>
           <Link to="/terms-and-conditions" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", color: c.light, textDecoration: "none" }}>Terms & Conditions</Link>
         </div>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "11px", color: c.muted, margin: "16px 0 0" }}>Website by <a href="mailto:estellebotton1@gmail.com" style={{ color: c.muted, textDecoration: "none" }}>Estelle Botton</a></p>
       </footer>
     </div>
   );
