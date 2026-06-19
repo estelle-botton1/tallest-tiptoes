@@ -172,9 +172,12 @@ function GuideDetail({ guide, onClose }) {
   return (
     <div style={{ minHeight: "100vh", background: c.cream, fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet" />
-
       <NavBar />
-
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", borderBottom: "1px solid " + c.pale }}>
+        <span onClick={onClose} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, cursor: "pointer" }}>← Back</span>
+        <span onClick={onClose} style={{ fontFamily: "'DM Serif Display', serif", fontSize: "16px", color: c.black, cursor: "pointer" }}>The Guide</span>
+        <div style={{ width: "40px" }} />
+      </div>
       <div style={{ position: "relative", height: "260px", overflow: "hidden", background: allImages.length > 0 ? "none" : "linear-gradient(135deg, " + c.warm + ", " + c.parchment + ")" }}>
         {allImages.length > 0 ? (
           <img src={urlFor(allImages[currentImg]).width(1000).url()} alt={guide.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
