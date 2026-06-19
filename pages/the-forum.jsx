@@ -74,7 +74,7 @@ export default function TheForum() {
       <NavBar />
       <div style={{ padding: "32px 20px 0" }}>
         <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "36px", fontWeight: "400", margin: "0 0 6px" }}>The Forum</h1>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", fontStyle: "italic", color: c.muted, margin: "0" }}>New drops every Thursday at 8 PM</p>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", fontStyle: "italic", color: c.muted, margin: "0" }}>New drops every Monday at 7 PM</p>
       </div>
       {loading && (<div style={{ padding: "60px 20px", textAlign: "center" }}><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.muted, fontStyle: "italic" }}>Loading...</p></div>)}
       {!loading && posts.length === 0 && (<div style={{ padding: "60px 20px", textAlign: "center" }}><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", color: c.muted, fontStyle: "italic" }}>Coming soon</p></div>)}
