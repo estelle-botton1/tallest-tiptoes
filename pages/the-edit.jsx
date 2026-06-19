@@ -222,6 +222,7 @@ function OutfitDetail({ outfit, onClose }) {
           <Link to="/privacy-policy" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", color: c.light, textDecoration: "none" }}>Privacy Policy</Link>
           <Link to="/terms-and-conditions" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", color: c.light, textDecoration: "none" }}>Terms & Conditions</Link>
         </div>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, margin: "16px 0 0" }}>Website by <a href="mailto:estellebotton1@gmail.com" style={{ color: c.muted, textDecoration: "none" }}>Estelle Botton</a></p>
       </footer>
     </div>
   );
