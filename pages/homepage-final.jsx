@@ -9,9 +9,18 @@ import { Link } from "react-router-dom";
 var c = { red: "#A33B2E", oldRose: "#B98589", ink: "#3D3633", black: "#1A1A1A", nude: "#F0DDD0", cream: "#F6F0E8", parchment: "#EDE4D8", warm: "#E0D2C2", pale: "#EAE2D8", muted: "#8A7E72", light: "#B8AA9C", white: "#FBF8F4" };
 function hasAsset(img) { return img && img.asset; }
 
-function StarSketch() { return (<svg viewBox="0 0 20 20" style={{ width: "12px", height: "12px" }}><line x1="10" y1="2" x2="10" y2="18" stroke={c.ink} strokeWidth="0.8" /><line x1="2" y1="10" x2="18" y2="10" stroke={c.ink} strokeWidth="0.8" /><line x1="4" y1="4" x2="16" y2="16" stroke={c.ink} strokeWidth="0.6" /><line x1="16" y1="4" x2="4" y2="16" stroke={c.ink} strokeWidth="0.6" /></svg>); }
 function FigureWalking() { return (<svg viewBox="0 0 50 80" style={{ width: "38px", height: "58px" }}><circle cx="25" cy="8" r="5" stroke={c.ink} strokeWidth="1" fill="none" /><line x1="25" y1="13" x2="25" y2="42" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="20" x2="15" y2="30" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="22" x2="38" y2="28" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="42" x2="15" y2="65" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="42" x2="35" y2="62" stroke={c.ink} strokeWidth="1" /></svg>); }
-function Divider() { return (<div style={{ display: "flex", alignItems: "center", padding: "32px 0", gap: "16px" }}><div style={{ flex: 1, height: "1.5px", background: c.warm }} /><StarSketch /><div style={{ flex: 1, height: "1.5px", background: c.warm }} /></div>); }
+
+function Divider() {
+  return (
+    <div style={{ display: "flex", alignItems: "center", padding: "32px 0", gap: "16px" }}>
+      <div style={{ flex: 1, height: "1px", background: c.warm }} />
+      <div style={{ width: "4px", height: "4px", borderRadius: "50%", background: c.light }} />
+      <div style={{ flex: 1, height: "1px", background: c.warm }} />
+    </div>
+  );
+}
+
 function BorderDivider() { return (<div style={{ display: "flex", alignItems: "center", padding: "32px 0" }}><div style={{ flex: 1, height: "2.5px", background: c.warm }} /></div>); }
 
 function ForumPreview() {
