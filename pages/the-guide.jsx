@@ -214,7 +214,7 @@ function GuideDetail({ guide, onClose }) {
         <div style={{ padding: "0 20px 24px" }}>
           <a href={guide.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
             <div style={{ textAlign: "center", padding: "14px", border: "1px solid " + c.black, borderRadius: "3px", cursor: "pointer" }}>
-              <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase", color: c.black }}>READ MORE</span>
+            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", fontWeight: "600", letterSpacing: "2px", textTransform: "uppercase", color: c.black }}>{guide.linkLabel || "READ MORE"}</span>
             </div>
           </a>
         </div>

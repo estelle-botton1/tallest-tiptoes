@@ -11,6 +11,7 @@ export default {
     { name: 'images', title: 'Additional Images', type: 'array', of: [{ type: 'image' }] },
     { name: 'preview', title: 'Preview Text', type: 'text' },
     { name: 'link', title: 'External Link', type: 'url' },
+    { name: 'linkLabel', title: 'Link Button Label', type: 'string' },
     { name: 'body', title: 'Body', type: 'array', of: [{ type: 'block' }, { type: 'image' }] },
   ],
 }
