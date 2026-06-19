@@ -10,8 +10,7 @@ var c = { red: "#A33B2E", oldRose: "#B98589", ink: "#3D3633", black: "#1A1A1A", 
 function hasAsset(img) { return img && img.asset; }
 
 function StarSketch() { return (<svg viewBox="0 0 20 20" style={{ width: "12px", height: "12px" }}><line x1="10" y1="2" x2="10" y2="18" stroke={c.ink} strokeWidth="0.8" /><line x1="2" y1="10" x2="18" y2="10" stroke={c.ink} strokeWidth="0.8" /><line x1="4" y1="4" x2="16" y2="16" stroke={c.ink} strokeWidth="0.6" /><line x1="16" y1="4" x2="4" y2="16" stroke={c.ink} strokeWidth="0.6" /></svg>); }
-function FigureWalking() { return (<svg viewBox="0 0 50 80" style={{ width: "28px", height: "44px" }}><circle cx="25" cy="8" r="5" stroke={c.ink} strokeWidth="1" fill="none" /><line x1="25" y1="13" x2="25" y2="42" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="20" x2="15" y2="30" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="22" x2="38" y2="28" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="42" x2="15" y2="65" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="42" x2="35" y2="62" stroke={c.ink} strokeWidth="1" /></svg>); }
-function FigureSitting() { return (<svg viewBox="0 0 50 60" style={{ width: "28px", height: "34px" }}><circle cx="25" cy="8" r="5" stroke={c.ink} strokeWidth="1" fill="none" /><line x1="25" y1="13" x2="25" y2="35" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="20" x2="15" y2="28" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="20" x2="35" y2="26" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="35" x2="38" y2="38" stroke={c.ink} strokeWidth="1" /><line x1="38" y1="38" x2="38" y2="52" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="35" x2="12" y2="38" stroke={c.ink} strokeWidth="1" /><line x1="12" y1="38" x2="12" y2="52" stroke={c.ink} strokeWidth="1" /></svg>); }
+function FigureWalking() { return (<svg viewBox="0 0 50 80" style={{ width: "38px", height: "58px" }}><circle cx="25" cy="8" r="5" stroke={c.ink} strokeWidth="1" fill="none" /><line x1="25" y1="13" x2="25" y2="42" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="20" x2="15" y2="30" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="22" x2="38" y2="28" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="42" x2="15" y2="65" stroke={c.ink} strokeWidth="1" /><line x1="25" y1="42" x2="35" y2="62" stroke={c.ink} strokeWidth="1" /></svg>); }
 function Divider() { return (<div style={{ display: "flex", alignItems: "center", padding: "32px 0", gap: "16px" }}><div style={{ flex: 1, height: "1.5px", background: c.warm }} /><StarSketch /><div style={{ flex: 1, height: "1.5px", background: c.warm }} /></div>); }
 function BorderDivider() { return (<div style={{ display: "flex", alignItems: "center", padding: "32px 0" }}><div style={{ flex: 1, height: "2.5px", background: c.warm }} /></div>); }
 
@@ -23,7 +22,7 @@ function ForumPreview() {
   if (!featured) { return (<div><div style={{ height: "220px", background: "linear-gradient(135deg, " + c.parchment + ", " + c.warm + "88)", borderRadius: "3px", display: "flex", alignItems: "center", justifyContent: "center" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2px", color: c.muted, opacity: 0.4 }}>FEATURED IMAGE</span></div><h3 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "20px", fontWeight: "400", fontStyle: "italic", margin: "12px 0 6px" }}>Coming soon</h3></div>); }
   return (
     <div>
-     <Link to="/the-forum" state={{ selectedId: featured._id }} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+      <Link to="/the-forum" state={{ selectedId: featured._id }} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
         <div style={{ height: "220px", borderRadius: "3px", overflow: "hidden", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", background: hasAsset(featured.image) ? "none" : "linear-gradient(135deg, " + c.parchment + ", " + c.warm + "88)", marginBottom: "12px" }}>
           {hasAsset(featured.image) && <img src={urlFor(featured.image).width(800).url()} alt={featured.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
           {featured.format && (<div style={{ position: "absolute", top: "12px", left: "12px", padding: "4px 12px", background: c.red, borderRadius: "2px" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "9px", fontWeight: "600", letterSpacing: "1.5px", textTransform: "uppercase", color: c.cream }}>{featured.format}</span></div>)}
@@ -158,10 +157,10 @@ export default function Homepage() {
       <Divider />
 
       <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.15) }}>
-        <Link to="/the-forum" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureSitting /></Link>
+        <Link to="/the-forum" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
           <Link to="/the-forum" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>02</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Forum</h2></Link>
-          <Link to="/the-forum" style={linkStyle}>View all</Link>
+          <Link to="/the-forum" style={linkStyle}>See all</Link>
         </div>
         <ForumPreview />
       </section>
@@ -172,7 +171,7 @@ export default function Homepage() {
         <Link to="/the-shop" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
           <Link to="/the-shop" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>03</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Shop</h2><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", fontStyle: "italic", color: c.muted, margin: "4px 0 0" }}>Made, found, and from my closet</p></Link>
-          <Link to="/the-shop" style={linkStyle}>View all</Link>
+          <Link to="/the-shop" style={linkStyle}>See all</Link>
         </div>
         <ShopPreview />
       </section>
@@ -180,10 +179,10 @@ export default function Homepage() {
       <Divider />
 
       <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.3) }}>
-        <Link to="/his-not-hers" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureSitting /></Link>
+        <Link to="/his-not-hers" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
           <Link to="/his-not-hers" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>04</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>His Not Hers</h2></Link>
-          <Link to="/his-not-hers" style={linkStyle}>Explore</Link>
+          <Link to="/his-not-hers" style={linkStyle}>See all</Link>
         </div>
         <HisNotHersPreview />
       </section>
@@ -194,7 +193,7 @@ export default function Homepage() {
         <Link to="/the-guide" style={{ position: "absolute", top: "-8px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
           <Link to="/the-guide" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>05</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Guide</h2></Link>
-          <Link to="/the-guide" style={linkStyle}>Browse</Link>
+          <Link to="/the-guide" style={linkStyle}>See all</Link>
         </div>
         <GuidePreview />
       </section>
