@@ -144,7 +144,7 @@ function ProductDetail({ product, onClose }) {
       <NavBar />
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 20px", borderBottom: "1px solid " + c.pale, position: "sticky", top: 0, background: c.cream + "F2", backdropFilter: "blur(12px)", zIndex: 10 }}>
         <span onClick={onClose} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, cursor: "pointer" }}>Back</span>
-        <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: "16px", color: c.black }}>The Shop</span>
+        <span onClick={onClose} style={{ fontFamily: "'DM Serif Display', serif", fontSize: "16px", color: c.black, cursor: "pointer" }}>The Shop</span>
         <div style={{ width: "40px" }} />
       </div>
 
