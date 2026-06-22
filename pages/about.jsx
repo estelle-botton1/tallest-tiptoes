@@ -37,10 +37,10 @@ export default function About() {
         <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "18px", color: c.ink, lineHeight: "1.8", margin: "0 0 32px", fontStyle: "italic" }}>Think of this as my notebook.</p>
 
         <div style={{ borderTop: "1px solid " + c.pale, paddingTop: "28px" }}>
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", color: c.muted, lineHeight: "1.7", margin: "0" }}>For personal styling inquiries and a copy of my pricing sheet, email <a href="mailto:sophiazami9@gmail.com" style={{ color: c.red, textDecoration: "none" }}>sophiazami9@gmail.com</a> or text <a href="sms:9177509895" style={{ color: c.red, textDecoration: "none" }}>917-750-9895</a></p>
+          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "17px", color: c.muted, lineHeight: "1.7", margin: "0" }}>For personal styling inquiries and a copy of my pricing sheet, email <a href="mailto:sophiazami9@gmail.com" style={{ color: c.red, textDecoration: "none" }}>sophiazami9@gmail.com</a> or text <a href="sms:9177509895" style={{ color: c.red, textDecoration: "none" }}>917-750-9895</a></p>
         </div>
         <div style={{ borderTop: "1px solid " + c.pale, paddingTop: "24px", marginTop: "32px" }}>
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.light, lineHeight: "1.7", margin: "0", fontStyle: "italic" }}>This site was designed and built by <a href="mailto:estellebotton1@gmail.com" style={{ color: c.muted, textDecoration: "none" }}>Estelle Botton</a>. For web design inquiries, reach out at <a href="mailto:estellebotton1@gmail.com" style={{ color: c.muted, textDecoration: "none" }}>estellebotton1@gmail.com</a> or <a href="sms:7323951199" style={{ color: c.muted, textDecoration: "none" }}>732-395-1199</a>.</p>
+          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", color: c.light, lineHeight: "1.7", margin: "0", fontStyle: "italic" }}>This site was designed and built by <a href="mailto:estellebotton1@gmail.com" style={{ color: c.muted, textDecoration: "none" }}>Estelle Botton</a>. For web design inquiries, reach out at <a href="mailto:estellebotton1@gmail.com" style={{ color: c.muted, textDecoration: "none" }}>estellebotton1@gmail.com</a> or <a href="sms:7323951199" style={{ color: c.muted, textDecoration: "none" }}>732-395-1199</a>.</p>
         </div>
       </div>
 
