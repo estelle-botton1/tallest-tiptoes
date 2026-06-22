@@ -16,6 +16,7 @@ var sections = [
   { name: "The Shop", path: "/the-shop" },
   { name: "His Not Hers", path: "/his-not-hers" },
   { name: "The Guide", path: "/the-guide" },
+  { name: "About", path: "/about" },
 ];
 
 export default function NavBar() {

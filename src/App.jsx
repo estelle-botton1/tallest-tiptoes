@@ -8,6 +8,7 @@ import TheEdit from "../pages/the-edit";
 import TheShop from "../pages/the-shop";
 import HisNotHers from "../pages/his-not-hers";
 import TheGuide from "../pages/the-guide";
+import About from "../pages/about";
 
 function ScrollToTop() {
   var location = useLocation();
@@ -30,6 +31,7 @@ function App() {
         <Route path="/the-guide" element={<TheGuide />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </BrowserRouter>
   );
