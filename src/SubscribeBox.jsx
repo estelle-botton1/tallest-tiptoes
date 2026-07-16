@@ -20,6 +20,7 @@ export default function SubscribeBox() {
 
   const [phone, setPhone] = useState("");
   const [selected, setSelected] = useState([]);
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState("idle");
 
   function toggleCategory(id) {
@@ -54,7 +55,7 @@ export default function SubscribeBox() {
 
   function handleSubmit() {
     var digits = phone.replace(/\D/g, "");
-    if (digits.length !== 10 || selected.length === 0) return;
+    if (digits.length !== 10 || selected.length === 0 || !consent) return;
 
     setStatus("sending");
 
@@ -64,6 +65,9 @@ export default function SubscribeBox() {
       body: JSON.stringify({
         phone: "+1" + digits,
         categories: selected,
+        smsConsent: true,
+        consentText:
+          "I agree to receive recurring SMS messages from Tallest Tiptoes. Msg & data rates may apply. Msg frequency varies. Reply STOP to unsubscribe, HELP for help.",
       }),
     })
       .then(function (res) {
@@ -71,6 +75,7 @@ export default function SubscribeBox() {
           setStatus("sent");
           setPhone("");
           setSelected([]);
+          setConsent(false);
         } else {
           setStatus("error");
           setTimeout(function () { setStatus("idle"); }, 3000);
@@ -82,7 +87,8 @@ export default function SubscribeBox() {
       });
   }
 
-  var isValid = phone.replace(/\D/g, "").length === 10 && selected.length > 0;
+  var isValid =
+    phone.replace(/\D/g, "").length === 10 && selected.length > 0 && consent;
 
   return (
     <section style={{ padding: "0 20px 20px" }}>
@@ -198,6 +204,55 @@ export default function SubscribeBox() {
               })}
             </div>
 
+            {/* SMS consent checkbox — required for Twilio A2P 10DLC compliance.
+                Must default to unchecked and must explicitly name the business. */}
+            <div style={{
+              marginBottom: "20px",
+              paddingTop: "16px",
+              borderTop: "1px solid rgba(255,255,255,0.15)",
+            }}>
+              <div
+                onClick={function () { setConsent(!consent); }}
+                style={{
+                  display: "flex", alignItems: "flex-start", gap: "12px",
+                  cursor: "pointer",
+                }}
+              >
+                <div style={{
+                  width: "18px", height: "18px", flexShrink: 0, marginTop: "2px",
+                  border: "1px solid " + (consent ? c.cream : "rgba(255,255,255,0.3)"),
+                  background: consent ? c.cream : "transparent",
+                  borderRadius: "2px",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  transition: "all 0.2s",
+                }}>
+                  {consent && (
+                    <span style={{ color: c.red, fontSize: "12px", lineHeight: "1" }}>&#10003;</span>
+                  )}
+                </div>
+                <p style={{
+                  fontFamily: "'Cormorant Garamond', serif", fontSize: "12px",
+                  color: c.light, margin: "0", lineHeight: "1.5",
+                }}>
+                  I agree to receive recurring SMS messages from{" "}
+                  <span style={{ color: c.cream }}>Tallest Tiptoes</span>. Msg &amp;
+                  data rates may apply. Msg frequency varies. Reply STOP to
+                  unsubscribe, HELP for help.{" "}
+                  <a
+                    href="/privacy-policy"
+                    onClick={function (e) { e.stopPropagation(); }}
+                    style={{ color: c.cream, textDecoration: "underline" }}
+                  >Privacy Policy</a>
+                  {" | "}
+                  <a
+                    href="/terms-and-conditions"
+                    onClick={function (e) { e.stopPropagation(); }}
+                    style={{ color: c.cream, textDecoration: "underline" }}
+                  >Terms &amp; Conditions</a>
+                </p>
+              </div>
+            </div>
+
             {/* Submit */}
             <div
               onClick={handleSubmit}
@@ -212,7 +267,7 @@ export default function SubscribeBox() {
               <span style={{
                 fontFamily: "'Cormorant Garamond', serif", fontSize: "13px",
                 fontWeight: "600", letterSpacing: "1.5px", textTransform: "uppercase",
-                color: c.cream,
+                color: isValid && status !== "sending" ? c.red : c.cream,
               }}>
                 {status === "sending" ? "SUBSCRIBING..." : status === "error" ? "TRY AGAIN" : "SUBSCRIBE"}
               </span>
