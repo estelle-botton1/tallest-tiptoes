@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import NavBar from "../src/NavBar";
 import HonestyBox from "../src/HonestyBox";
 import { client, urlFor } from "../src/sanityClient";
-import { useLocation } from "react-router-dom";
 
 var c = {
   red: "#A33B2E",
@@ -50,6 +49,24 @@ export default function TheForum() {
       if (matchIndex >= 0) setSelectedIndex(matchIndex);
     }
   }, [posts, location.state]);
+
+  const [searchParams] = useSearchParams();
+
+  useEffect(function () {
+    var postId = searchParams.get("post");
+    if (postId && posts.length > 0) {
+      var matchIndex = posts.findIndex(function (p) { return p._id === postId; });
+      if (matchIndex >= 0) setSelectedIndex(matchIndex);
+    }
+  }, [posts, searchParams]);
+
+  useEffect(function () {
+    if (selectedIndex !== null && posts[selectedIndex]) {
+      window.history.replaceState(null, "", "/the-forum?post=" + posts[selectedIndex]._id);
+    } else if (selectedIndex === null) {
+      window.history.replaceState(null, "", "/the-forum");
+    }
+  }, [selectedIndex, posts]);
 
   if (selectedIndex !== null && posts[selectedIndex]) {
     return (
@@ -155,10 +172,14 @@ function PostDetail({ post, postIndex, totalPosts, onClose, onNext }) {
     <div style={{ minHeight: "100vh", background: c.cream, fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
       <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet" />
       <NavBar />
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 20px", borderBottom: "1px solid " + c.pale, position: "sticky", top: 0, background: c.cream + "F2", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", zIndex: 10 }}>
-        <span onClick={onClose} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, cursor: "pointer" }}>Back</span>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 20px", borderBottom: "1px solid " + c.pale }}>
+        <span onClick={onClose} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, cursor: "pointer" }}>← Back</span>
         <span onClick={onClose} style={{ fontFamily: "'DM Serif Display', serif", fontSize: "16px", color: c.black, cursor: "pointer" }}>The Forum</span>
-        <div style={{ width: "40px" }} />
+        <span onClick={function () {
+          var url = "https://tallest-tiptoes.com/the-forum?post=" + post._id;
+          if (navigator.share) { navigator.share({ title: post.title, url: url }); }
+          else { navigator.clipboard.writeText(url); }
+        }} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, cursor: "pointer" }}>Share</span>
       </div>
       <div style={{ height: "300px", overflow: "hidden", background: post.image ? "none" : "linear-gradient(135deg, " + c.parchment + ", " + c.warm + "88)", display: "flex", alignItems: "center", justifyContent: "center" }}>
         {post.image ? (<img src={urlFor(post.image).width(1000).url()} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />) : isVideo && post.videoUrl ? (<a href={post.videoUrl} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}><div style={{ width: "56px", height: "56px", borderRadius: "50%", background: c.black + "CC", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}><div style={{ width: 0, height: 0, borderTop: "10px solid transparent", borderBottom: "10px solid transparent", borderLeft: "16px solid " + c.cream, marginLeft: "3px" }} /></div></a>) : null}
@@ -211,7 +232,7 @@ function PostDetail({ post, postIndex, totalPosts, onClose, onNext }) {
         )}
       </div>
       <HonestyBox />
-      
+
       <footer style={{ padding: "32px 24px 48px", textAlign: "center", borderTop: "1px solid " + c.pale }}>
         <p style={{ fontFamily: "'Caveat', cursive", fontSize: "24px", color: c.black, margin: "0 0 16px" }}>Tallest Tiptoes</p>
         <div style={{ display: "flex", justifyContent: "center", gap: "24px", marginBottom: "20px" }}>
