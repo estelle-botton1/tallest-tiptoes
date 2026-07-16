@@ -4,6 +4,7 @@ import HonestyBox from "../src/HonestyBox";
 import { client, urlFor } from "../src/sanityClient";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 
+
 var c = { red: "#A33B2E", oldRose: "#B98589", ink: "#3D3633", black: "#1A1A1A", cream: "#F6F0E8", parchment: "#EDE4D8", warm: "#E0D2C2", nude: "#D8C8B8", pale: "#EAE2D8", muted: "#8A7E72", light: "#B8AA9C", white: "#FBF8F4" };
 
 var categories = ["All", "What I'm Eating", "Where I'm Going", "How I'm Hosting", "Things I'm Liking"];
