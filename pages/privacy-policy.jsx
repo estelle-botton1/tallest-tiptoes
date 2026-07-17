@@ -15,22 +15,23 @@ export default function PrivacyPolicy() {
       <NavBar />
       <div style={{ padding: "32px 20px 60px", maxWidth: "640px", margin: "0 auto" }}>
         <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "28px", fontWeight: "400", margin: "0 0 6px" }}>Privacy Policy</h1>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.muted, margin: "0 0 32px" }}>Last Updated: June 2026</p>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "12px", color: c.muted, margin: "0 0 32px" }}>Last Updated: July 2026</p>
 
         <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "18px", fontWeight: "400", margin: "24px 0 8px" }}>Information We Collect</h2>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.ink, lineHeight: "1.7", margin: "0 0 16px" }}>When you subscribe to our SMS program, we collect your phone number and content preferences. When you submit to our Honesty Box, submissions are anonymous and no personal information is collected. We do not collect browsing data, cookies, or tracking information beyond what is necessary to operate the website.</p>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.ink, lineHeight: "1.7", margin: "0 0 16px" }}>When you subscribe to our SMS program, we collect your phone number and content category preferences. When you submit to our Honesty Box, submissions are anonymous and no personal information is collected. We do not collect browsing data, cookies, or tracking information beyond what is necessary to operate the website.</p>
 
         <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "18px", fontWeight: "400", margin: "24px 0 8px" }}>How We Use Your Information</h2>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.ink, lineHeight: "1.7", margin: "0 0 16px" }}>Your phone number is used solely to send you text message notifications about new content and updates from Tallest Tiptoes based on the categories you selected. We do not use your information for any other purpose.</p>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.ink, lineHeight: "1.7", margin: "0 0 16px" }}>Your phone number is used solely to send you text message notifications about new content and updates from Tallest Tiptoes based on the categories you selected. By signing up, you agree to receive recurring text messages from Tallest Tiptoes. Message frequency varies. Message and data rates may apply. We do not use your information for any other purpose.</p>
 
         <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "18px", fontWeight: "400", margin: "24px 0 8px" }}>Information Sharing</h2>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.ink, lineHeight: "1.7", margin: "0 0 16px" }}>We do not sell, trade, or share your personal information with third parties. Your phone number is stored securely and used only for the purposes described above. We use Twilio to deliver text messages, and your phone number is shared with Twilio solely for message delivery.</p>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.ink, lineHeight: "1.7", margin: "0 0 16px", fontWeight: "600" }}>We do not share, sell, rent, or otherwise disclose your mobile phone number or SMS messaging consent to any third parties or affiliates for marketing or promotional purposes. No mobile information will be shared with third parties or affiliates for marketing or promotional purposes under any circumstances.</p>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.ink, lineHeight: "1.7", margin: "0 0 16px" }}>We use Twilio strictly as a messaging service provider to deliver text messages on our behalf. Your phone number is shared with Twilio solely to enable message delivery, and Twilio is contractually prohibited from using that information for its own marketing purposes.</p>
 
         <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "18px", fontWeight: "400", margin: "24px 0 8px" }}>Data Security</h2>
         <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.ink, lineHeight: "1.7", margin: "0 0 16px" }}>We take reasonable measures to protect your personal information. However, no method of electronic storage or transmission is completely secure, and we cannot guarantee absolute security.</p>
 
         <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "18px", fontWeight: "400", margin: "24px 0 8px" }}>Opt-Out</h2>
-        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.ink, lineHeight: "1.7", margin: "0 0 16px" }}>You can opt out of SMS messages at any time by replying STOP to any text message. Your phone number will be deactivated from our subscriber list.</p>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.ink, lineHeight: "1.7", margin: "0 0 16px" }}>You can opt out of SMS messages at any time by replying <strong>STOP</strong> to any text message. Your phone number will be deactivated from our subscriber list. Reply <strong>HELP</strong> for help.</p>
 
         <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "18px", fontWeight: "400", margin: "24px 0 8px" }}>Changes to This Policy</h2>
         <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", color: c.ink, lineHeight: "1.7", margin: "0 0 16px" }}>We may update this Privacy Policy from time to time. Any changes will be reflected on this page with an updated date.</p>
