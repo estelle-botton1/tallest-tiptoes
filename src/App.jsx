@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import TermsAndConditions from "../pages/terms-and-conditions";
-import PrivacyPolicy from "../pages/privacy-policy";
 import Homepage from "../pages/homepage-final";
 import TheForum from "../pages/the-forum";
 import TheEdit from "../pages/the-edit";
@@ -29,8 +27,6 @@ function App() {
         <Route path="/the-shop" element={<TheShop />} />
         <Route path="/his-not-hers" element={<HisNotHers />} />
         <Route path="/the-guide" element={<TheGuide />} />
-        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/about" element={<About />} />
       </Routes>
     </BrowserRouter>
