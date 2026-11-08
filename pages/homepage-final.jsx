@@ -160,7 +160,7 @@ export default function Homepage() {
       <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.2) }}>
         <Link to="/the-edit" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-          <Link to="/the-edit" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>01</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Edit</h2><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", fontStyle: "italic", color: c.muted, margin: "4px 0 0" }}>Outfits I wore. Things I found.</p></Link>
+          <Link to="/the-edit" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>01</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Edit</h2><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", fontStyle: "italic", color: c.ink, margin: "4px 0 0" }}>Outfits I wore. Things I found.</p></Link>
           <Link to="/the-edit" style={linkStyle}>See all</Link>
         </div>
         <Link to="/the-edit" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", color: c.red, textDecoration: "underline", display: "inline-block", margin: "2px 0 14px" }}>Click to shop the edit &#8594;</Link>
@@ -172,7 +172,7 @@ export default function Homepage() {
       <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.15) }}>
         <Link to="/the-forum" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-          <Link to="/the-forum" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>02</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Forum</h2><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", fontStyle: "italic", color: c.muted, margin: "4px 0 0" }}>Essays on clothes, and everything around them.</p></Link>
+          <Link to="/the-forum" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>02</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Forum</h2><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", fontStyle: "italic", color: c.ink, margin: "4px 0 0" }}>Essays on clothes, and everything around them.</p></Link>
           <Link to="/the-forum" style={linkStyle}>See all</Link>
         </div>
         <ForumPreview />
@@ -183,7 +183,7 @@ export default function Homepage() {
       <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.25) }}>
         <Link to="/the-shop" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-          <Link to="/the-shop" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>03</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Shop</h2><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", fontStyle: "italic", color: c.muted, margin: "4px 0 0" }}>Shop special things I've made and collected.</p></Link>
+          <Link to="/the-shop" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>03</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Shop</h2><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", fontStyle: "italic", color: c.ink, margin: "4px 0 0" }}>Shop special things I've made and collected.</p></Link>
           <Link to="/the-shop" style={linkStyle}>See all</Link>
         </div>
         <ShopPreview />
@@ -194,7 +194,7 @@ export default function Homepage() {
       <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.35) }}>
         <Link to="/the-guide" style={{ position: "absolute", top: "-8px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-          <Link to="/the-guide" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>04</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Guide</h2><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", fontStyle: "italic", color: c.muted, margin: "4px 0 0" }}>Where I'm going, what I'm eating, how I'm hosting.</p></Link>
+          <Link to="/the-guide" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>04</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Guide</h2><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", fontStyle: "italic", color: c.ink, margin: "4px 0 0" }}>Where I'm going, what I'm eating, how I'm hosting.</p></Link>
           <Link to="/the-guide" style={linkStyle}>See all</Link>
         </div>
         <GuidePreview />
@@ -205,7 +205,7 @@ export default function Homepage() {
       <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.3) }}>
         <Link to="/his-not-hers" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-          <Link to="/his-not-hers" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>05</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>His Not Hers</h2><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", fontStyle: "italic", color: c.muted, margin: "4px 0 0" }}>My picks for men's wardrobes.</p></Link>
+          <Link to="/his-not-hers" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>05</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>His Not Hers</h2><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "15px", fontStyle: "italic", color: c.ink, margin: "4px 0 0" }}>My picks for men's wardrobes.</p></Link>
           <Link to="/his-not-hers" style={linkStyle}>See all</Link>
         </div>
         <HisNotHersPreview />
