@@ -152,14 +152,18 @@ export default function Homepage() {
       <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
       <NavBar />
       <HeroDynamic />
+      <div style={{ textAlign: "center", padding: "0 24px 4px" }}>
+        <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", fontStyle: "italic", color: c.ink, margin: 0 }}>New here? Start with The Edit - tap a look to shop it.</p>
+      </div>
       <BorderDivider />
 
       <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.2) }}>
         <Link to="/the-edit" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-          <Link to="/the-edit" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>01</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Edit</h2></Link>
+          <Link to="/the-edit" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>01</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Edit</h2><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", fontStyle: "italic", color: c.muted, margin: "4px 0 0" }}>Outfits I wore. Things I found.</p></Link>
           <Link to="/the-edit" style={linkStyle}>See all</Link>
         </div>
+        <Link to="/the-edit" style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "16px", color: c.red, textDecoration: "underline", display: "inline-block", margin: "2px 0 14px" }}>Click to shop the edit &#8594;</Link>
         <EditPreview />
       </section>
 
@@ -187,24 +191,24 @@ export default function Homepage() {
 
       <Divider />
 
-      <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.3) }}>
-        <Link to="/his-not-hers" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
+      <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.35) }}>
+        <Link to="/the-guide" style={{ position: "absolute", top: "-8px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-          <Link to="/his-not-hers" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>04</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>His Not Hers</h2></Link>
-          <Link to="/his-not-hers" style={linkStyle}>See all</Link>
+          <Link to="/the-guide" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>04</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Guide</h2></Link>
+          <Link to="/the-guide" style={linkStyle}>See all</Link>
         </div>
-        <HisNotHersPreview />
+        <GuidePreview />
       </section>
 
       <Divider />
 
-      <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.35) }}>
-        <Link to="/the-guide" style={{ position: "absolute", top: "-8px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
+      <section style={{ padding: "0 20px", position: "relative", ...fadeIn(0.3) }}>
+        <Link to="/his-not-hers" style={{ position: "absolute", top: "-5px", right: "20px", opacity: 0.15, zIndex: 2 }}><FigureWalking /></Link>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "16px" }}>
-          <Link to="/the-guide" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>05</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>The Guide</h2></Link>
-          <Link to="/the-guide" style={linkStyle}>See all</Link>
+          <Link to="/his-not-hers" style={{ textDecoration: "none", color: "inherit" }}><span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>05</span><h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "26px", fontWeight: "400", margin: "4px 0 0" }}>His Not Hers</h2></Link>
+          <Link to="/his-not-hers" style={linkStyle}>See all</Link>
         </div>
-        <GuidePreview />
+        <HisNotHersPreview />
       </section>
 
       <Divider />
