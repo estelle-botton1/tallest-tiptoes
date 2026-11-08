@@ -14,8 +14,8 @@ var sections = [
   { name: "The Forum", path: "/the-forum" },
   { name: "The Edit", path: "/the-edit" },
   { name: "The Shop", path: "/the-shop" },
-  { name: "His Not Hers", path: "/his-not-hers" },
   { name: "The Guide", path: "/the-guide" },
+  { name: "His Not Hers", path: "/his-not-hers" },
   { name: "About", path: "/about" },
 ];
 
