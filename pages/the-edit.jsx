@@ -4,13 +4,16 @@ import HonestyBox from "../src/HonestyBox";
 import { client, urlFor } from "../src/sanityClient";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 
+
 var c = {
   red: "#A33B2E", oldRose: "#B98589", ink: "#3D3633", black: "#1A1A1A",
   cream: "#F6F0E8", parchment: "#EDE4D8", warm: "#E0D2C2", pale: "#EAE2D8",
   muted: "#8A7E72", light: "#B8AA9C", white: "#FBF8F4",
 };
 
+
 var moods = ["All", "Errands", "Dinner", "Weekend", "Event", "Daytime", "Night Out", "Work", "Vacation"];
+
 
 export default function TheEdit() {
   const [outfits, setOutfits] = useState([]);
@@ -18,11 +21,13 @@ export default function TheEdit() {
   const [activeMood, setActiveMood] = useState("All");
   const [selected, setSelected] = useState(null);
 
+
   useEffect(function () {
     client.fetch('*[_type == "outfit"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, mood, date, image, images, note, items }')
       .then(function (data) { setOutfits(data); setLoading(false); })
       .catch(function () { setLoading(false); });
   }, []);
+
 
   var location = useLocation();
   useEffect(function () {
@@ -31,6 +36,7 @@ export default function TheEdit() {
       if (match) setSelected(match);
     }
   }, [outfits, location.state]);
+
 
   const [searchParams] = useSearchParams();
   useEffect(function () {
@@ -41,16 +47,20 @@ export default function TheEdit() {
     }
   }, [outfits, searchParams]);
 
+
   useEffect(function () {
     if (selected) { window.history.replaceState(null, "", "/the-edit?outfit=" + selected._id); }
     else { window.history.replaceState(null, "", "/the-edit"); }
   }, [selected]);
 
+
   var filtered = activeMood === "All" ? outfits : outfits.filter(function (o) { return o.mood === activeMood; });
   var leftCol = filtered.filter(function (_, i) { return i % 2 === 0; });
   var rightCol = filtered.filter(function (_, i) { return i % 2 === 1; });
 
-  if (selected) { return <OutfitDetail outfit={selected} onClose={function () { setSelected(null); }} />; }
+
+  if (selected) { return <OutfitDetail outfit={selected} allOutfits={filtered} onOpen={function (o) { setSelected(o); window.scrollTo(0, 0); }} onClose={function () { setSelected(null); }} />; }
+
 
   return (
     <div style={{ minHeight: "100vh", background: c.cream, fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
@@ -77,6 +87,7 @@ export default function TheEdit() {
   );
 }
 
+
 function OutfitCard({ outfit, onClick }) {
   var h = 260 + (outfit._id ? outfit._id.charCodeAt(0) % 80 : 40);
   return (
@@ -91,12 +102,28 @@ function OutfitCard({ outfit, onClick }) {
   );
 }
 
-function OutfitDetail({ outfit, onClose }) {
+
+function OutfitDetail({ outfit, allOutfits, onOpen, onClose }) {
   const [currentImg, setCurrentImg] = useState(0);
   var allImages = [];
   if (outfit.image) allImages.push(outfit.image);
   if (outfit.images) allImages = allImages.concat(outfit.images);
   if (allImages.length === 0) allImages = [null];
+
+
+  // Next outfit: the one shown directly below this one in the Edit grid
+  // (same column in the two-column layout); at the end of a column, wrap to
+  // the top of the other column. Hidden when there is only one outfit.
+  var nextOutfit = null;
+  if (allOutfits && allOutfits.length > 1) {
+    var outfitIdx = allOutfits.findIndex(function (o) { return o._id === outfit._id; });
+    if (outfitIdx >= 0) {
+      var nextIdx = outfitIdx + 2;
+      if (nextIdx >= allOutfits.length) nextIdx = outfitIdx % 2 === 0 ? 1 : 0;
+      if (nextIdx < allOutfits.length && nextIdx !== outfitIdx) nextOutfit = allOutfits[nextIdx];
+    }
+  }
+
 
   return (
     <div style={{ minHeight: "100vh", background: c.cream, fontFamily: "'Playfair Display', Georgia, serif", color: c.black }}>
@@ -112,6 +139,7 @@ function OutfitDetail({ outfit, onClose }) {
         }} style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, cursor: "pointer" }}>Share</span>
       </div>
 
+
       <div style={{ position: "relative", height: "460px", overflow: "hidden", background: "linear-gradient(135deg, " + c.warm + ", " + c.parchment + ")" }}>
         {allImages[currentImg] ? (<img src={urlFor(allImages[currentImg]).width(1000).url()} alt={outfit.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />) : null}
         {allImages.length > 1 && (
@@ -123,12 +151,15 @@ function OutfitDetail({ outfit, onClose }) {
         )}
       </div>
 
+
       <div style={{ padding: "24px 20px 8px" }}>
         <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2px", textTransform: "uppercase", color: c.red }}>{outfit.date ? new Date(outfit.date).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : ""}{outfit.mood ? " \u00B7 " + outfit.mood : ""}</span>
         <h2 style={{ fontFamily: "'DM Serif Display', serif", fontSize: "24px", fontWeight: "400", fontStyle: "italic", margin: "6px 0 0", lineHeight: "1.3" }}>{outfit.title}</h2>
       </div>
 
+
       {outfit.note && (<div style={{ padding: "12px 20px 20px" }}><div style={{ padding: "16px", background: c.parchment, borderRadius: "3px", borderLeft: "3px solid " + c.red }}><p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "14px", fontStyle: "italic", color: c.ink, margin: "0", lineHeight: "1.6" }}>{outfit.note}</p></div></div>)}
+
 
       {outfit.items && outfit.items.length > 0 && (
         <div style={{ padding: "0 20px 20px" }}>
@@ -153,6 +184,22 @@ function OutfitDetail({ outfit, onClose }) {
           })}
         </div>
       )}
+
+
+      {nextOutfit && (
+        <div style={{ padding: "10px 20px 28px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "14px" }}>
+            <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "10px", letterSpacing: "2.5px", textTransform: "uppercase", color: c.muted }}>NEXT OUTFIT</span>
+            <div style={{ flex: 1, height: "1px", background: c.pale }} />
+          </div>
+          <div onClick={function () { onOpen(nextOutfit); }} style={{ cursor: "pointer" }}>
+            <p style={{ fontFamily: "'DM Serif Display', serif", fontSize: "19px", fontStyle: "italic", margin: "0", lineHeight: "1.3", color: c.black }}>{nextOutfit.title}</p>
+            {nextOutfit.mood && (<p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", color: c.muted, margin: "4px 0 0" }}>{nextOutfit.mood}</p>)}
+            <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "13px", fontWeight: "600", color: c.red, margin: "8px 0 0", textDecoration: "underline" }}>Next outfit →</p>
+          </div>
+        </div>
+      )}
+
 
       <HonestyBox />
       <footer style={{ padding: "32px 24px 48px", textAlign: "center", borderTop: "1px solid " + c.pale }}>
