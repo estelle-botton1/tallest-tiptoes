@@ -111,16 +111,16 @@ function OutfitDetail({ outfit, allOutfits, onOpen, onClose }) {
   if (allImages.length === 0) allImages = [null];
 
 
-  // Next outfit: the one shown directly below this one in the Edit grid
-  // (same column in the two-column layout); at the end of a column, wrap to
-  // the top of the other column. Hidden when there is only one outfit.
+  // Next outfit: the next one in the Edit's order (the order the outfits
+  // appear in the grid); after the last one, wrap to the first.
+  // Hidden when there is only one outfit.
   var nextOutfit = null;
   if (allOutfits && allOutfits.length > 1) {
     var outfitIdx = allOutfits.findIndex(function (o) { return o._id === outfit._id; });
     if (outfitIdx >= 0) {
-      var nextIdx = outfitIdx + 2;
-      if (nextIdx >= allOutfits.length) nextIdx = outfitIdx % 2 === 0 ? 1 : 0;
-      if (nextIdx < allOutfits.length && nextIdx !== outfitIdx) nextOutfit = allOutfits[nextIdx];
+      var nextIdx = outfitIdx + 1;
+      if (nextIdx >= allOutfits.length) nextIdx = 0;
+      nextOutfit = allOutfits[nextIdx];
     }
   }
 
