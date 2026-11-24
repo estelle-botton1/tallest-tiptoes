@@ -23,7 +23,7 @@ export default function TheEdit() {
 
 
   useEffect(function () {
-    client.fetch('*[_type == "outfit"] | order(coalesce(sortOrder, 999) asc, _createdAt desc) { _id, title, mood, date, image, images, note, items }')
+    client.fetch('*[_type == "outfit"] | order(_createdAt desc) { _id, title, mood, date, image, images, note, items }')
       .then(function (data) { setOutfits(data); setLoading(false); })
       .catch(function () { setLoading(false); });
   }, []);
@@ -111,8 +111,8 @@ function OutfitDetail({ outfit, allOutfits, onOpen, onClose }) {
   if (allImages.length === 0) allImages = [null];
 
 
-  // Next outfit: the next one in the Edit's order (the order the outfits
-  // appear in the grid); after the last one, wrap to the first.
+  // Next outfit: newest to oldest, matching the Edit grid.
+  // After the last one, wrap to the first.
   // Hidden when there is only one outfit.
   var nextOutfit = null;
   if (allOutfits && allOutfits.length > 1) {
